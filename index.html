@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#17132b">
+  <meta name="description" content="NOVERSE: Explore. Play. Discover.">
+
+  <title>NOVERSE</title>
+
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-icon">🪐</span>
+      <span>NOVERSE</span>
+    </div>
+    <button class="settings" aria-label="Configuración">⚙</button>
+  </header>
+
+  <main class="main-content">
+
+    <section class="welcome">
+      <p class="eyebrow">A UNIVERSE OF EXPERIENCES</p>
+      <h1>¿Qué quieres<br>descubrir hoy?</h1>
+      <p>Un nuevo juego, una nueva experiencia.</p>
+    </section>
+
+    <section class="featured">
+      <div class="section-heading">
+        <h2>Destacados</h2>
+        <span>Explora</span>
+      </div>
+      <div id="featured-games" class="featured-grid"></div>
+    </section>
+
+    <section class="catalog">
+      <div class="section-heading">
+        <h2>Todos los juegos</h2>
+        <span id="game-count">0 juegos</span>
+      </div>
+
+      <nav id="categories" class="categories"
+        aria-label="Categorías de juegos">
+      </nav>
+
+      <div id="games-grid" class="games-grid"></div>
+    </section>
+
+  </main>
+
+  <footer>
+    <span>NOVERSE</span>
+    <p>Explore. Play. Discover. ✦</p>
+  </footer>
+
+  <script src="js/app.js"></script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("./sw.js")
+          .catch(error => console.error("Offline:", error));
+      });
+    }
+  </script>
+</body>
+</html>
