@@ -1827,3 +1827,18 @@ body[data-theme="glassy"] .game-card .game-status {
 @media(prefers-reduced-motion:reduce){
   .echo-key.is-lit,.echo-key.is-lit::after{animation:none}
 }
+
+
+/* NOVERSE v0.9.6 — Echo Six: salto más lento y visible */
+.echo-key.is-lit{
+  animation:echo-crayon-hit .62s cubic-bezier(.2,.9,.25,1);
+}
+.echo-key.is-lit::after{
+  animation:echo-sticker-pop .48s cubic-bezier(.2,1.5,.4,1) both;
+}
+@keyframes echo-crayon-hit{
+  0%{transform:scale(.97) rotate(-1deg)}
+  35%{transform:translateY(-9px) scale(1.06) rotate(1deg)}
+  65%{transform:translateY(-7px) scale(1.035) rotate(-.4deg)}
+  100%{transform:translateY(-7px) scale(1.035) rotate(0)}
+}
