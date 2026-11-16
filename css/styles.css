@@ -2236,3 +2236,52 @@ body[data-theme="material"] .coming-screen{background:radial-gradient(circle at 
 @keyframes coming-message-in{from{opacity:0;transform:translateY(7px);filter:blur(4px)}to{opacity:1;transform:translateY(0);filter:blur(0)}}
 @media(max-width:560px){.home-mode-switch{margin-bottom:10px}.coming-screen{min-height:clamp(260px,43vh,410px);padding:22px 16px}.coming-orbit{width:98px;height:98px}.coming-orbit span{inset:29px}}
 @media(prefers-reduced-motion:reduce){.home-mode,.coming-orbit,.message-change{animation:none!important;transition:none!important}}
+
+
+/* NOVERSE v1.05 — iconografía y fondo de universo */
+body{
+  background-color:var(--background);
+  background-image:url("../images/noverse-app-background.png"),
+    radial-gradient(ellipse at 85% 8%,#287c7628 0,transparent 32rem),
+    radial-gradient(ellipse at 0% 42%,#8ba94312 0,transparent 30rem);
+  background-position:center center,center,center;
+  background-size:cover,auto,auto;
+  background-repeat:no-repeat;
+  background-attachment:fixed;
+}
+.brand-icon{background:#11101b;box-shadow:0 7px 22px #0005}
+.brand-icon img{display:block;width:34px;height:34px;object-fit:contain}
+.onboarding-mark img{display:block;width:100%;height:100%;object-fit:contain}
+.bottom-nav{grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;padding:6px;width:min(440px,calc(100% - 24px))}
+.bottom-nav-item{
+  min-width:0;min-height:54px;display:flex;flex-direction:row;align-items:center;justify-content:center;gap:0;
+  border-radius:19px;color:#fff;opacity:.76;font-size:12px;font-weight:850;
+  transition:background .28s ease,opacity .22s ease,transform .38s cubic-bezier(.2,1.45,.35,1),gap .28s ease;
+}
+.bottom-nav-item svg{
+  flex:0 0 auto;width:25px;height:25px;fill:none;stroke:#fff;stroke-width:2.45;
+  stroke-linecap:round;stroke-linejoin:round;overflow:visible;
+  transition:transform .38s cubic-bezier(.2,1.6,.35,1),filter .28s ease;
+}
+.bottom-nav-item span{
+  display:inline-block;max-width:0;overflow:hidden;white-space:nowrap;opacity:0;
+  color:#fff;transform:translateX(-5px);font-size:11px;letter-spacing:.1px;
+  transition:max-width .3s ease,opacity .2s ease,transform .3s ease;
+}
+.bottom-nav-item.active{
+  gap:8px;opacity:1;color:#fff;background:#ffffff1b;transform:translateY(-2px);
+  box-shadow:inset 0 1px #ffffff20,0 5px 16px #0002;
+}
+.bottom-nav-item.active svg{transform:translateY(-1px) scale(1.42);filter:drop-shadow(0 2px 7px #ffffff45)}
+.bottom-nav-item.active span{max-width:112px;opacity:1;transform:translateX(0)}
+body[data-theme="glassy"] .bottom-nav-item{color:#fff}
+body[data-theme="glassy"] .bottom-nav-item.active{background:#ffffff2b}
+body[data-theme="material"] .bottom-nav-item.active{background:#303038}
+@media(max-width:370px){
+  .bottom-nav-item.active{gap:6px}
+  .bottom-nav-item.active span{font-size:10px}
+  .bottom-nav-item svg{width:23px;height:23px}
+}
+@media(prefers-reduced-motion:reduce){
+  .bottom-nav-item,.bottom-nav-item svg,.bottom-nav-item span{transition:none!important}
+}
