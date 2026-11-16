@@ -58,6 +58,8 @@
     card.className = "game-card";
     card.style.setProperty("--game-primary", game.palette.primary);
     card.style.setProperty("--game-surface", game.palette.surface);
+    card.style.setProperty("--game-background", game.palette.background);
+    card.style.setProperty("--game-secondary", game.palette.secondary);
     const art = document.createElement("div");
     art.className = "game-art";
     art.setAttribute("aria-hidden", "true");
