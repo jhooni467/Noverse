@@ -11,6 +11,24 @@
   const settingsScreen = document.querySelector("#settings-screen");
   const settingsOpen = document.querySelector("#settings-open");
   const settingsBack = document.querySelector("#settings-back");
+  const themeButtons = [...document.querySelectorAll("[data-theme-choice]")];
+  const allowedThemes = ["default", "glassy", "material"];
+  function applyTheme(theme, save = true) {
+    const selected = allowedThemes.includes(theme) ? theme : "default";
+    document.body.dataset.theme = selected;
+    themeButtons.forEach(button => {
+      const active = button.dataset.themeChoice === selected;
+      button.setAttribute("aria-pressed", String(active));
+    });
+    if (save) {
+      try { localStorage.setItem("noverse-theme", selected); } catch (_) {}
+    }
+  }
+  let savedTheme = "default";
+  try { savedTheme = localStorage.getItem("noverse-theme") || "default"; } catch (_) {}
+  applyTheme(savedTheme, false);
+  themeButtons.forEach(button => button.addEventListener("click", () => applyTheme(button.dataset.themeChoice)));
+
   let settingsVisible = false;
   function openSettings() {
     settingsVisible = true;
