@@ -33,7 +33,8 @@
       shortInfo: "Un reto de memoria musical. Escucha y observa una secuencia, repítela en el orden correcto y cada ronda añadirá un nuevo sonido. El desafío no tiene fin.",
       category: "Habilidad", icon: "♫", featured: true, duration: "Infinita", difficulty: "Progresiva",
       palette: { primary: "#b69aff", secondary: "#59dfc5", background: "#171329", surface: "#282044", glow: "#9d82ff" },
-      previews: ["Recuerda seis sonidos", "Supera tu récord"],
+      previews: ["Recuerda seis sonidos", "Supera tu récord"]
+    },
     {
       id: "game-05", name: "Próximo universo", description: "Descubre una experiencia relajante.",
       shortInfo: "Una experiencia tranquila para explorar a tu ritmo.",
