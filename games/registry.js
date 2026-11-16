@@ -20,11 +20,12 @@
       previews: ["Ordena los degradados", "Completa cada paleta"]
     },
     {
-      id: "game-03", name: "Próximo desafío", description: "Demuestra tu habilidad.",
-      shortInfo: "Un desafío de precisión y reflejos llegará pronto.",
-      category: "Habilidad", icon: "⚡", featured: false, duration: "Por definir", difficulty: "Por definir",
-      palette: { primary: "#ffd36a", secondary: "#ff8b67", background: "#43232a", surface: "#633642", glow: "#ff9b5c" },
-      previews: ["Pon a prueba tu habilidad", "Próximamente"]
+      id: "game-03", name: "Cloud Hopper",
+      description: "Guía a Nubi entre arcos de cristal.",
+      shortInfo: "Un arcade de vuelo y reflejos. Impúlsate con cada toque, esquiva los arcos luminosos y supera tu propio récord.",
+      category: "Arcade", icon: "☁", featured: true, duration: "Libre", difficulty: "Progresiva",
+      palette: { primary: "#8debe0", secondary: "#ffb887", background: "#172b55", surface: "#293b69", glow: "#9c9aff" },
+      previews: ["Acompaña a Nubi", "Cruza los arcos de cristal"]
     },
     {
       id: "game-04", name: "Próxima aventura", description: "Explora algo diferente.",
