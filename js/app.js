@@ -8,6 +8,8 @@
   const featured = $("#featured-games");
   const categoryBar = $("#categories");
   const gameCount = $("#game-count");
+  const surprisePlay = $("#surprise-play");
+  const homePlayed = $("#home-played");
   const homeScreen = $("#home-screen");
   const statsScreen = $("#stats-screen");
   const statsContent = $("#stats-content");
@@ -108,16 +110,18 @@
   function createCard(game) {
     const card = document.createElement("article");
     card.className = "game-card";
+    card.dataset.game = game.id;
     card.style.setProperty("--game-primary", game.palette.primary);
     card.style.setProperty("--game-surface", game.palette.surface);
     card.style.setProperty("--game-background", game.palette.background);
     card.style.setProperty("--game-secondary", game.palette.secondary);
+    card.style.setProperty("--game-glow", game.palette.glow);
     const art = document.createElement("div");
     art.className = "game-art"; art.setAttribute("aria-hidden", "true"); art.textContent = game.icon;
     const title = document.createElement("h3"); title.textContent = game.name;
     const description = document.createElement("p"); description.textContent = game.description;
     const status = document.createElement("span"); status.className = "game-status";
-    status.textContent = game.available ? "VER FICHA" : "PRÓXIMAMENTE";
+    status.textContent = game.available ? "✦ DESCUBRIR" : "PRÓXIMAMENTE";
     card.append(art, title, description, status);
     if (game.available) {
       card.tabIndex = 0; card.setAttribute("role", "button");
@@ -145,7 +149,7 @@
   }
   function renderFeatured() {
     featured.replaceChildren();
-    Registry.getAll().filter(game => game.featured).forEach(game => featured.appendChild(createCard(game)));
+    Registry.getAll().filter(game => game.featured && game.available).forEach(game => featured.appendChild(createCard(game)));
   }
   function renderCategories() {
     categoryBar.replaceChildren();
@@ -216,6 +220,12 @@
   }
 
   renderCategories(); renderFeatured(); renderGames(); renderStats(); initOnboarding();
+  if (surprisePlay) surprisePlay.addEventListener("click", () => {
+    const options = Registry.getAll().filter(game => game.available);
+    if (!options.length) return;
+    GameManager.openDetails(options[Math.floor(Math.random() * options.length)].id);
+  });
+  if (homePlayed) { const played = readNumber("noverse-games-played"); homePlayed.textContent = played ? `${played} partidas iniciadas · sigue explorando` : "Tu próxima aventura te espera"; }
   document.addEventListener("noverse:catalog-updated", () => { renderFeatured(); renderGames(); });
   document.addEventListener("noverse:stats-updated", renderStats);
   window.NOVERSE = window.NOVERSE || {};

@@ -11,8 +11,8 @@
   <link rel="apple-touch-icon" href="icons/noverse-192.svg">
   <meta name="description" content="NOVERSE: Explore. Play. Discover.">
   <title>NOVERSE</title>
-  <link rel="manifest" href="manifest.json?v=1.02">
-  <link rel="stylesheet" href="css/styles.css?v=1.02">
+  <link rel="manifest" href="manifest.json?v=1.03">
+  <link rel="stylesheet" href="css/styles.css?v=1.03">
 </head>
 <body>
   <header class="topbar">
@@ -29,10 +29,10 @@
     <section class="welcome">
       <p class="eyebrow">GAME HUB · EXPLORA TU PRÓXIMO JUEGO</p>
       <h1>¿Qué quieres<br>descubrir hoy?</h1>
-      <p>Un nuevo juego, una nueva experiencia.</p>
+      <p>Pequeños juegos. Grandes universos.</p><div class="welcome-actions"><button id="surprise-play" type="button">Jugar algo <span>✦</span></button><span id="home-played">Tu próxima aventura te espera</span></div>
     </section>
     <section class="featured">
-      <div class="section-heading"><h2>Destacados</h2><span>Explora</span></div>
+      <div class="section-heading"><h2>Para descubrir</h2><span>SELECCIÓN NOVERSE</span></div>
       <div id="featured-games" class="featured-grid"></div>
     </section>
     <section class="catalog">
@@ -88,7 +88,7 @@
           <span class="theme-option-check" aria-hidden="true">✓</span>
         </button>
       </div>
-      <p class="settings-version">NOVERSE · Versión 1.02</p>
+      <p class="settings-version">NOVERSE · Versión 1.03</p>
     </div>
   </section>
 
@@ -105,7 +105,7 @@
     <header class="game-topbar">
       <button id="game-back" class="game-back" type="button" aria-label="Volver a los detalles"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
       <h1 id="game-title">Minijuego</h1>
-      <span class="game-brand-mark" aria-hidden="true">✦</span>
+      <button id="game-audio-toggle" class="game-audio-toggle" type="button" aria-label="Silenciar música ambiental" aria-pressed="true" title="Música ambiental">♫</button>
     </header>
     <div id="game-root" class="game-root" aria-live="polite"></div>
   </section>
@@ -128,13 +128,14 @@
   <p id="game-notice" class="game-notice" role="status" hidden></p>
   <footer><span>NOVERSE</span><p>Explore. Play. Discover. ✦</p></footer>
 
-  <script src="core/game-manager.js?v=1.02"></script>
-  <script src="games/registry.js?v=1.02"></script>
-  <script src="games/star-catcher.js?v=1.02"></script>
-  <script src="games/color-cascade.js?v=1.02"></script>
-  <script src="games/cloud-hopper.js?v=1.02"></script>
-  <script src="games/echo-six.js?v=1.02"></script>
-  <script src="js/app.js?v=1.02"></script>
+  <script src="core/ambient-audio.js?v=1.03"></script>
+  <script src="core/game-manager.js?v=1.03"></script>
+  <script src="games/registry.js?v=1.03"></script>
+  <script src="games/star-catcher.js?v=1.03"></script>
+  <script src="games/color-cascade.js?v=1.03"></script>
+  <script src="games/cloud-hopper.js?v=1.03"></script>
+  <script src="games/echo-six.js?v=1.03"></script>
+  <script src="js/app.js?v=1.03"></script>
 
   <script>
     if (window.Capacitor?.isNativePlatform?.()) {
