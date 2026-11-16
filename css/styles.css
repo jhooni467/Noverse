@@ -1016,3 +1016,64 @@ body, .main-content, .detail-screen, .game-screen {
 @media (prefers-reduced-motion: reduce) {
   .color-tile, .color-win, .color-win-symbol, .color-button { animation: none !important; transition: none !important; }
 }
+
+
+/* NOVERSE v0.6.3 — alineación de iconos y arrastre estable */
+.settings {
+  display:grid;
+  place-items:center;
+  padding:0;
+  line-height:0;
+  flex:0 0 46px;
+}
+.settings svg {
+  display:block;
+  width:22px;
+  height:22px;
+  margin:0;
+  flex:none;
+}
+.nav-back,.game-back {
+  display:grid;
+  place-items:center;
+  padding:0;
+  line-height:0;
+  flex:0 0 44px;
+}
+.nav-back svg,.game-back svg {
+  display:block;
+  width:22px;
+  height:22px;
+  margin:0;
+  flex:none;
+}
+.color-board { touch-action:none; }
+.color-tile { touch-action:none; user-select:none; -webkit-user-select:none; }
+.color-placeholder {
+  flex:1 1 0;
+  min-width:0;
+  max-width:112px;
+  border:2px dashed #65dfc588;
+  border-radius:clamp(12px,2vw,22px);
+  background:#65dfc51a;
+  box-shadow:inset 0 0 20px #65dfc51a;
+  animation:placeholder-pulse .65s ease-in-out infinite alternate;
+}
+.color-drag-ghost {
+  position:fixed;
+  z-index:99999;
+  pointer-events:none;
+  border:2px solid #fff;
+  border-radius:clamp(12px,2vw,22px);
+  box-shadow:0 22px 48px #03171999,0 0 0 5px #65dfc555;
+  opacity:.98;
+  transform:scale(1.06);
+  will-change:left,top;
+}
+@keyframes placeholder-pulse {
+  from { opacity:.45; transform:scale(.97); }
+  to { opacity:1; transform:scale(1.01); }
+}
+@media(max-width:520px) {
+  .color-placeholder { border-radius:11px; }
+}
