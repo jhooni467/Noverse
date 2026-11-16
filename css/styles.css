@@ -759,3 +759,143 @@ body.game-is-open { overflow:hidden; }
 @media(prefers-reduced-motion:reduce) {
   .game-card,.color-tile,.color-button {transition:none!important;}
 }
+
+
+/* NOVERSE v0.6.1 — legibilidad mejorada + identidad diferenciada */
+.eyebrow {font-size:12px;letter-spacing:1.5px;}
+.welcome p:last-child {font-size:18px;line-height:1.5;}
+.section-heading h2 {font-size:clamp(24px,3vw,29px);}
+.section-heading span {font-size:15px;}
+.game-card {padding:13px;}
+.game-card h3 {font-size:clamp(18px,2vw,21px);line-height:1.3;}
+.game-card p {font-size:15px;line-height:1.5;}
+.game-status {font-size:12px;padding:7px 11px;}
+.category {font-size:15px;padding:11px 17px;}
+footer {font-size:14px;}
+.detail-topbar {font-size:12px;letter-spacing:1.4px;}
+.detail-category {font-size:12px;padding:8px 13px;}
+.detail-hero h1 {font-size:clamp(34px,7vw,54px);}
+.detail-hero p {font-size:clamp(17px,1.8vw,20px);line-height:1.7;}
+.detail-meta small {font-size:12px;}
+.detail-meta strong {font-size:16px;}
+.detail-section-heading h2 {font-size:22px;}
+.detail-section-heading span {font-size:11px;}
+.preview-shot strong {font-size:15px;line-height:1.4;}
+.detail-play {font-size:19px;letter-spacing:1.5px;}
+.game-topbar h1 {font-size:clamp(21px,3vw,28px);}
+.game-back,.nav-back {font-size:34px;}
+/* Color Cascade: identidad propia, distinta del universo espacial de Star Catcher */
+.detail-screen[data-game-id="game-02"] {
+  background:
+    radial-gradient(ellipse at 12% 18%,#65dfc533,transparent 35%),
+    radial-gradient(ellipse at 88% 78%,#ff986e22,transparent 38%),
+    #102f36;
+}
+.detail-screen[data-game-id="game-02"] .detail-hero {
+  border:1px solid #65dfc555;
+  background:linear-gradient(135deg,#1b4a50 0%,#163c43 55%,#214d4c 100%);
+  box-shadow:0 24px 65px #061d20aa, inset 0 1px #ffffff16;
+}
+.detail-screen[data-game-id="game-02"] .detail-orb-one {
+  background:radial-gradient(circle,#65dfc5,transparent 68%);opacity:.2;
+}
+.detail-screen[data-game-id="game-02"] .detail-orb-two {
+  background:radial-gradient(circle,#ff986e,transparent 70%);opacity:.18;
+}
+.detail-screen[data-game-id="game-02"] .detail-game-icon {
+  border-radius:23px;
+  background:linear-gradient(135deg,#65dfc5 0 32%,#f5d46e 32% 63%,#ff986e 63% 100%);
+  color:#102f36;
+  box-shadow:0 12px 35px #65dfc533,inset 0 1px #ffffff88;
+}
+.detail-screen[data-game-id="game-02"] .detail-category {
+  background:#65dfc51e;color:#8af0da;
+}
+.detail-screen[data-game-id="game-02"] .detail-meta span {
+  border-color:#65dfc52b;background:#ffffff0b;
+}
+.detail-screen[data-game-id="game-02"] .detail-meta strong,
+.detail-screen[data-game-id="game-02"] .detail-section-heading span {color:#65dfc5;}
+.detail-screen[data-game-id="game-02"] .preview-shot {
+  border-color:#65dfc533;
+  background:linear-gradient(145deg,#1b4a50,#102f36);
+}
+.detail-screen[data-game-id="game-02"] .preview-shot::before {
+  width:90px;height:90px;right:18px;top:18px;
+  border:12px solid #65dfc5;border-right-color:#f5d46e;border-bottom-color:#ff986e;
+}
+.detail-screen[data-game-id="game-02"] .preview-shot::after {
+  width:42px;height:42px;right:42px;top:42px;
+  border:0;background:#f5d46e55;
+}
+.detail-screen[data-game-id="game-02"] .preview-shot-two {
+  background:linear-gradient(145deg,#285b59,#173b42);
+}
+.detail-screen[data-game-id="game-02"] .preview-shot-two span {color:#ffb08d;}
+.detail-screen[data-game-id="game-02"] .detail-play {
+  background:#65dfc5;color:#102f36;
+  box-shadow:0 10px 32px #65dfc533;
+}
+/* Juego Color Cascade: estudio de color, paneles verde petróleo y acentos coral */
+.game-screen[data-game-id="game-02"] {
+  background:
+    radial-gradient(ellipse at 50% 0%,#65dfc51c,transparent 55%),
+    #102f36;
+}
+.game-screen[data-game-id="game-02"] .game-topbar {color:#e9fff8;}
+.game-screen[data-game-id="game-02"] .game-back {
+  background:#1b4a50;border-color:#65dfc544;color:#8af0da;
+}
+.color-game {
+  --cc-bg:#102f36;--cc-surface:#1b4a50;--cc-accent:#65dfc5;--cc-text:#f1fff9;
+  color:var(--cc-text);
+}
+.color-kicker {background:#65dfc51c;color:#8af0da;font-size:13px;}
+.color-intro h2 {font-size:clamp(31px,4.5vw,48px);}
+.color-intro p {font-size:clamp(16px,1.8vw,19px);color:#c4e3dc;line-height:1.65;}
+.color-levelbar span {
+  padding:11px 15px;border-color:#65dfc533;background:#1b4a50;
+  color:#e1f7ef;font-size:14px;
+}
+.color-board {
+  border-color:#65dfc566;
+  background:
+    radial-gradient(ellipse at 50% 0%,#65dfc51c,transparent 65%),
+    linear-gradient(145deg,#1b4a50,#153b43);
+  box-shadow:inset 0 0 55px #061d2055,0 18px 45px #061d2055;
+}
+.color-tile {
+  border:2px solid #ffffff8a;
+  box-shadow:0 12px 28px #061d2055,inset 0 1px #ffffff88;
+}
+.color-tile:active,.color-tile.dragging {
+  border-color:#fff;box-shadow:0 18px 38px #061d2077,0 0 0 4px #65dfc544;
+}
+.color-tile::after {font-size:13px;}
+.color-direction {color:#bde4d9;font-size:13px;letter-spacing:1px;}
+.color-feedback {color:#c7eee2;font-size:16px;line-height:1.5;}
+.color-button {min-height:54px;padding:0 25px;font-size:16px;border-radius:16px;}
+.color-button.primary {
+  background:#65dfc5;color:#102f36;
+  box-shadow:0 8px 24px #65dfc533;
+}
+.color-win {
+  border-color:#65dfc566;background:#1b4a50;
+}
+.color-win h3 {font-size:28px;color:#8af0da;}
+.color-win p {font-size:16px;line-height:1.5;color:#d4eee6;}
+@media(max-width:520px) {
+  .game-card h3 {font-size:18px;}
+  .game-card p {font-size:14px;}
+  .detail-hero p {font-size:17px;}
+  .detail-meta small {font-size:11px;}
+  .detail-meta strong {font-size:15px;}
+  .color-levelbar span {font-size:12px;padding:9px 10px;}
+  .color-intro p {font-size:16px;}
+  .color-tile::after {font-size:11px;}
+  .color-direction {font-size:11px;}
+}
+@media(orientation:landscape) and (max-height:600px) {
+  .color-intro p {font-size:14px;}
+  .color-levelbar span {font-size:12px;padding:7px 10px;}
+}
