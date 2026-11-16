@@ -258,7 +258,7 @@
         localStorage.setItem("noverse-color-cascade-completed", String(done + 1));
         localStorage.setItem("noverse-color-cascade-best-level", String(Math.max(bestLevel, level)));
       } catch (_) {}
-      document.dispatchEvent(new CustomEvent("noverse:stats-updated"));
+      window.NOVERSE.GameManager?.recordCompleted?.();
       feedback.textContent = "¡Degradado perfecto!";
       win.hidden = false;
       win.className = "color-win";
