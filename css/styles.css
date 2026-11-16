@@ -2312,3 +2312,27 @@ body[data-theme="material"] .home-mode.active{background:#37313f;color:#e9dcff;b
 @keyframes noverse-tab-out{to{opacity:0;transform:translate3d(-8px,0,0)}}
 @keyframes coming-message-in{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
 @keyframes onboarding-copy{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+
+/* NOVERSE 1.09 — Liquid Glass: menos desenfoque, más material y reflejo */
+body[data-theme="glassy"] .topbar{backdrop-filter:blur(14px) saturate(155%);-webkit-backdrop-filter:blur(14px) saturate(155%)}
+body[data-theme="glassy"] .welcome{backdrop-filter:blur(16px) saturate(155%);-webkit-backdrop-filter:blur(16px) saturate(155%)}
+body[data-theme="glassy"] .settings,
+body[data-theme="glassy"] .category,
+body[data-theme="glassy"] .theme-option,
+body[data-theme="glassy"] .settings-screen .nav-back{backdrop-filter:blur(12px) saturate(155%);-webkit-backdrop-filter:blur(12px) saturate(155%)}
+body[data-theme="glassy"] .settings-screen{backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+body[data-theme="glassy"] .game-card{backdrop-filter:blur(13px) saturate(145%);-webkit-backdrop-filter:blur(13px) saturate(145%)}
+body[data-theme="glassy"] .game-card .game-art{backdrop-filter:blur(10px) saturate(140%);-webkit-backdrop-filter:blur(10px) saturate(140%)}
+body[data-theme="glassy"] .game-card .game-status{backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+body[data-theme="glassy"] .home-mode-switch,
+body[data-theme="glassy"] .bottom-nav{backdrop-filter:blur(12px) saturate(150%);-webkit-backdrop-filter:blur(12px) saturate(150%)}
+
+/* La presión crea una lente/burbuja localizada, no un simple encogimiento. */
+.liquid-pressable{position:relative;isolation:isolate}
+.liquid-pressable:after{content:"";position:absolute;z-index:8;inset:1px;pointer-events:none;border-radius:inherit;opacity:0;transform:scale(.82);background:radial-gradient(circle at var(--liquid-x,50%) var(--liquid-y,50%),#ffffff65 0%,#ffffff24 20%,#ffffff08 43%,transparent 70%);box-shadow:inset 0 1px 1px #ffffff70,inset 0 -1px 1px #ffffff20;transition:opacity .16s ease,transform .32s cubic-bezier(.18,.8,.2,1)}
+.liquid-pressable.is-liquid-pressed:after{opacity:1;transform:scale(1.04)}
+body[data-theme="glassy"] .liquid-pressable.is-liquid-pressed{border-color:#ffffff78;box-shadow:inset 0 1px 1px #ffffff75,0 8px 24px #0005}
+body[data-theme="glassy"] .bottom-nav-item.is-liquid-pressed:after,
+body[data-theme="glassy"] .home-mode.is-liquid-pressed:after{border-radius:inherit;background:radial-gradient(circle at var(--liquid-x,50%) var(--liquid-y,50%),#ffffff80 0%,#ffffff2b 24%,transparent 68%)}
+@media(prefers-reduced-motion:reduce){.liquid-pressable:after{transition:none}}
