@@ -22,8 +22,7 @@ if (native) {
     } catch (error) { console.warn("NOVERSE: status bar", error); }
     try { await SplashScreen.hide(); } catch (_) {}
   };
-  document.addEventListener("DOMContentLoaded", configureSystemUI, { once: true });
-  window.addEventListener("load", configureSystemUI, { once: true });
+  configureSystemUI();
 
   document.addEventListener("click", event => {
     if (event.target.closest(".bottom-nav-item,.game-card,.settings,.detail-play,.nav-back,.game-back,.theme-option")) {
