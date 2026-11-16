@@ -10,6 +10,7 @@ const FILES = [
   "./icons/noverse-mark.svg",
 
   "./images/noverse-app-background.svg",
+  "./core/ambient-audio.js?v=" + VERSION,
   "./core/game-manager.js?v=" + VERSION,
   "./games/registry.js?v=" + VERSION,
   "./games/star-catcher.js?v=" + VERSION,
