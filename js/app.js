@@ -57,7 +57,11 @@
     });
   }
   function animateTab(nextTab) {
-    if (!["home", "store", "stats"].includes(nextTab) || nextTab === activeTab) return;
+    if (!["home", "store", "stats"].includes(nextTab)) return;
+    if (nextTab === activeTab) {
+      if (activeTab === "store" && window.NOVERSE.Store?.isDetailOpen()) window.NOVERSE.Store.closeDetail();
+      return;
+    }
     if (activeTab === "store" && window.NOVERSE.Store?.isDetailOpen()) window.NOVERSE.Store.closeDetail();
     const token = ++tabToken, outgoing = tabScreen(activeTab), incoming = tabScreen(nextTab);
     outgoing.classList.remove("tab-enter"); outgoing.classList.add("tab-exit");
