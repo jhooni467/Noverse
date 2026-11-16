@@ -140,6 +140,7 @@
         bestNode.textContent = String(best).padStart(2, "0");
         try { localStorage.setItem("noverse-echo-six-best", String(best)); } catch (_) {}
       }
+      window.NOVERSE.GameManager?.recordCompleted?.();
       $("[data-result]").textContent = "Llegaste a la ronda " + round + ".";
       $("[data-end-best]").textContent = String(best).padStart(2, "0");
       end.hidden = false;
