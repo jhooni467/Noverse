@@ -10,7 +10,7 @@ if (native) {
   window.NOVERSE.Native = Object.freeze({
     isNative: true,
     tap: async () => {
-      try { await Haptics.impact({ style: ImpactStyle.Dark }); } catch (_) {}
+      try { await Haptics.impact({ style: ImpactStyle.Light }); } catch (_) {}
     }
   });
 
