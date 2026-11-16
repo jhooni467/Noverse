@@ -23,9 +23,11 @@ jobs:
           distribution: temurin
           java-version: "21"
       - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
+        uses: android-actions/setup-android@v4
         with:
-          packages: "platform-tools,platforms;android-35,build-tools;35.0.0"
+          packages: ""
+      - name: Install Android build packages
+        run: sdkmanager "platform-tools" "platforms;android-35" "build-tools;35.0.0"
       - name: Keep the same debug signing key for APK updates
         uses: actions/cache@v4
         with:
