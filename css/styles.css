@@ -1077,3 +1077,29 @@ body, .main-content, .detail-screen, .game-screen {
 @media(max-width:520px) {
   .color-placeholder { border-radius:11px; }
 }
+
+
+/* NOVERSE v0.6.4 — instalación PWA */
+.topbar-actions {
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.install-app {
+  min-height:42px;
+  padding:0 15px;
+  border:1px solid #c9f36b66;
+  border-radius:14px;
+  background:#c9f36b;
+  color:#20320b;
+  font-size:13px;
+  font-weight:900;
+  box-shadow:0 7px 20px #c9f36b22;
+  transition:transform .2s ease,filter .2s ease;
+}
+.install-app:active { transform:scale(.96); filter:brightness(1.06); }
+.install-app[hidden] { display:none !important; }
+@media(max-width:380px) {
+  .topbar-actions { gap:7px; }
+  .install-app { min-height:40px; padding:0 10px; font-size:12px; }
+}
