@@ -58,6 +58,7 @@
   }
   function animateTab(nextTab) {
     if (!["home", "store", "stats"].includes(nextTab) || nextTab === activeTab) return;
+    if (activeTab === "store" && window.NOVERSE.Store?.isDetailOpen()) window.NOVERSE.Store.closeDetail();
     const token = ++tabToken, outgoing = tabScreen(activeTab), incoming = tabScreen(nextTab);
     outgoing.classList.remove("tab-enter"); outgoing.classList.add("tab-exit");
     window.setTimeout(() => {
@@ -70,6 +71,24 @@
     }, 130);
   }
   tabButtons.forEach(button => button.addEventListener("click", () => animateTab(button.dataset.tab)));
+  // Microinteracción Liquid Glass: una burbuja de luz sigue el punto de presión.
+  const liquidTargets = ".bottom-nav-item,.settings,.home-mode,.store-category,.store-app-card,.store-hero-card,.store-back,.store-more,.store-install,.store-detail-close,.theme-option,.nav-back,.detail-play,.welcome-actions button";
+  document.addEventListener("pointerdown", event => {
+    if (document.body.dataset.theme !== "glassy") return;
+    const target = event.target.closest(liquidTargets);
+    if (!target || target.disabled) return;
+    const rect = target.getBoundingClientRect();
+    target.style.setProperty("--liquid-x", ((event.clientX - rect.left) / Math.max(1, rect.width) * 100) + "%");
+    target.style.setProperty("--liquid-y", ((event.clientY - rect.top) / Math.max(1, rect.height) * 100) + "%");
+    target.classList.add("is-liquid-pressed");
+  }, {passive:true});
+  const releaseLiquid = () => document.querySelectorAll(".is-liquid-pressed").forEach(target => {
+    target.classList.remove("is-liquid-pressed");
+    window.setTimeout(() => { if (!target.classList.contains("is-liquid-pressed")) { target.style.removeProperty("--liquid-x"); target.style.removeProperty("--liquid-y"); } }, 260);
+  });
+  document.addEventListener("pointerup", releaseLiquid, {passive:true});
+  document.addEventListener("pointercancel", releaseLiquid, {passive:true});
+
 
   function refreshComingMessage(container) {
     const message = container?.querySelector(".coming-message");
