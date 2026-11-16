@@ -10,12 +10,11 @@ NOVERSE is a collection of independent casual games.
 - Portrait and landscape support
 - Adaptive mobile and tablet interface
 - Independent game modules
-- Central Game Manager
-- Central Game Registry
+- Central Game Manager and Game Registry
 - Colorful game-universe visual identity
 - No advertisements
 - No in-app purchases
-- Local progress and records (planned)
+- Local records for supported games
 
 ## Technology
 
@@ -26,44 +25,44 @@ NOVERSE is a collection of independent casual games.
 
 ## Project status
 
-**Version 0.3.0 — Game Registry**
+**Version 0.4.0 — First playable game**
 
-The catalog is now managed by a dedicated registry:
-- One central catalog for game metadata
-- Unique ID for every game
-- Categories and featured-game information
-- Availability status linked to Game Manager
-- Independent modules can register themselves
-- Catalog refreshes when a module becomes available
+### Star Catcher
+
+The first playable NOVERSE game is available:
+- 30-second arcade round
+- Tap the moving star to earn points
+- Live score and countdown
+- Personal best saved locally on the device
+- Replay after each round
+- Responsive touch-friendly play area
+
+### Core architecture
+
+- `core/game-manager.js` — launches and closes games
+- `games/registry.js` — catalog, categories, and module registration
+- `games/star-catcher.js` — first independent game module
+- `js/app.js` — catalog interface
+- `css/styles.css` — shared interface and game styles
 
 ## Registering a game module
 
-A future game module can register itself with its catalog ID:
+A module can register itself with an existing catalog ID:
 
 ```js
-window.NOVERSE.Registry.registerModule("game-01", {
+window.NOVERSE.Registry.registerModule("game-02", {
   mount(container, tools) {
-    const heading = document.createElement("h2");
-    heading.textContent = "My first NOVERSE game";
-    container.appendChild(heading);
-
+    // Build the game inside container.
     return {
       unmount() {
-        // Release timers, listeners, and resources here.
+        // Release timers, listeners, and resources.
       }
     };
   }
 });
 ```
 
-The ID must already exist in `games/registry.js`. The module's name is taken from the central catalog.
-
-## Project structure
-
-- `core/game-manager.js` — launches and closes games
-- `games/registry.js` — catalog, categories, and module registration
-- `js/app.js` — catalog interface
-- `games/` — independent game modules (being built)
+Every game owns its own logic and cleans up its resources when closed.
 
 ## Vision
 
