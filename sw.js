@@ -8,8 +8,8 @@ const FILES = [
   "./icons/noverse-192.svg",
   "./icons/noverse-512.svg",
   "./icons/noverse-mark.svg",
-  "./icons/noverse-icon.png",
-  "./images/noverse-app-background.png",
+
+  "./images/noverse-app-background.svg",
   "./core/game-manager.js?v=" + VERSION,
   "./games/registry.js?v=" + VERSION,
   "./games/star-catcher.js?v=" + VERSION,
