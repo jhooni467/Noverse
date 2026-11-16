@@ -1,9 +1,10 @@
 {
   "name": "noverse",
-  "version": "1.0.5",
+  "version": "1.0.8",
   "private": true,
   "description": "NOVERSE — Explore. Play. Discover.",
   "scripts": {
+    "verify": "node scripts/verify.mjs",
     "build:web": "node scripts/copy-web.mjs && node scripts/generate-brand-assets.mjs && esbuild js/native-android.js --bundle --platform=browser --format=iife --outfile=www/js/native-android.bundle.js",
     "build:android": "npm run build:web && cap sync android"
   },
