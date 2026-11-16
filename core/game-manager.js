@@ -14,6 +14,8 @@
   const detailBack = document.querySelector("#detail-back");
   const gameBack = document.querySelector("#game-back");
   const catalog = document.querySelector(".main-content");
+  const statsScreen = document.querySelector("#stats-screen");
+  const bottomNav = document.querySelector("#bottom-nav");
   const topbar = document.querySelector(".topbar");
   const footer = document.querySelector("footer");
   const notice = document.querySelector("#game-notice");
@@ -25,9 +27,13 @@
     notify.timer = setTimeout(() => { notice.hidden = true; }, 2400);
   }
   function setView(view) {
-    catalog.hidden = view !== "catalog";
-    topbar.hidden = view !== "catalog";
-    footer.hidden = view !== "catalog";
+    const inCatalog = view === "catalog";
+    const statsActive = document.body.dataset.activeTab === "stats";
+    catalog.hidden = !inCatalog || statsActive;
+    if (statsScreen) statsScreen.hidden = !inCatalog || !statsActive;
+    if (bottomNav) bottomNav.hidden = !inCatalog;
+    topbar.hidden = !inCatalog;
+    footer.hidden = !inCatalog;
     detailScreen.hidden = view !== "detail";
     gameScreen.hidden = view !== "game";
     document.body.classList.toggle("game-is-open", view !== "catalog");
