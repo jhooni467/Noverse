@@ -91,7 +91,7 @@
       const key = keyButtons[index];
       key.classList.add("is-lit");
       playNote(index);
-      later(() => key.classList.remove("is-lit"), 230);
+      later(() => key.classList.remove("is-lit"), 620);
     }
     function updateHud() {
       roundNode.textContent = String(round).padStart(2, "0");
@@ -103,7 +103,7 @@
       let time = 500;
       sequence.forEach(note => {
         later(() => hit(note), time);
-        time += 590;
+        time += 850;
       });
       later(() => {
         locked = false;
