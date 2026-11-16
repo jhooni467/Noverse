@@ -1768,3 +1768,62 @@ body[data-theme="glassy"] .game-card .game-status {
  .echo-keys{gap:6px;padding:4px 0}
  .echo-message{margin:4px 0}
 }
+
+
+/* NOVERSE v0.9.4 — Echo Six: feedback de tecla MUY visible */
+.echo-key{
+  position:relative;
+  isolation:isolate;
+  overflow:visible;
+}
+.echo-key.is-lit{
+  z-index:5;
+  filter:brightness(1.42) saturate(1.35);
+  transform:translateY(-7px) rotate(0deg) scale(1.035);
+  border-color:#fff !important;
+  outline:5px solid #392b48;
+  outline-offset:3px;
+  box-shadow:
+    0 0 0 9px #ffcf6b,
+    0 0 28px 13px color-mix(in srgb,var(--key-color) 90%,white),
+    5px 9px 0 #392b48,
+    inset 0 4px 0 #ffffff;
+  animation:echo-crayon-hit .42s cubic-bezier(.2,.9,.25,1);
+}
+.echo-key.is-lit::after{
+  content:"✦";
+  position:absolute;
+  z-index:3;
+  top:-17px;
+  right:-12px;
+  display:grid;
+  place-items:center;
+  width:35px;
+  height:35px;
+  border:2px solid #392b48;
+  border-radius:50% 42% 48% 38%;
+  background:#fff4a8;
+  color:#392b48;
+  font-size:23px;
+  line-height:1;
+  text-shadow:1px 1px #ffffff;
+  box-shadow:2px 3px 0 #392b48;
+  animation:echo-sticker-pop .3s cubic-bezier(.2,1.5,.4,1) both;
+}
+.echo-key.is-lit .echo-key-note{
+  color:#241832;
+  transform:scale(1.12);
+  text-shadow:1px 1px 0 #fff;
+}
+@keyframes echo-crayon-hit{
+  0%{transform:scale(.97) rotate(-1deg)}
+  45%{transform:translateY(-8px) scale(1.055) rotate(1deg)}
+  100%{transform:translateY(-7px) scale(1.035) rotate(0)}
+}
+@keyframes echo-sticker-pop{
+  from{opacity:0;transform:scale(.25) rotate(-35deg)}
+  to{opacity:1;transform:scale(1) rotate(12deg)}
+}
+@media(prefers-reduced-motion:reduce){
+  .echo-key.is-lit,.echo-key.is-lit::after{animation:none}
+}
