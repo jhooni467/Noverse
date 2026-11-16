@@ -494,3 +494,158 @@ body.game-is-open { overflow:hidden; }
   .detail-screen,.game-screen,.detail-orb,.detail-game-icon { animation:none !important; }
   .game-card,.category,.settings,.nav-back,.game-back,.detail-play,.star-start { transition:none !important; }
 }
+
+
+/* NOVERSE v0.5.1 — espacio ampliado + identidad real de Star Catcher */
+.main-content {
+  width: min(1500px, 96%);
+}
+.detail-topbar {
+  width: min(1400px, 96%);
+  margin-bottom: 16px;
+}
+.detail-content {
+  width: min(1400px, 96%);
+}
+.detail-hero {
+  min-height: clamp(250px, 36vh, 390px);
+  padding: clamp(34px, 6vw, 76px);
+}
+.detail-hero p {
+  max-width: 760px;
+  font-size: clamp(15px, 1.5vw, 18px);
+}
+.detail-game-icon {
+  width: clamp(88px, 10vw, 116px);
+  height: clamp(88px, 10vw, 116px);
+  font-size: clamp(48px, 5vw, 62px);
+}
+.detail-gallery {
+  margin: clamp(26px, 4vh, 42px) 0 22px;
+}
+.preview-gallery {
+  gap: clamp(12px, 2vw, 22px);
+}
+.preview-shot {
+  min-height: clamp(170px, 24vh, 280px);
+  padding: clamp(18px, 3vw, 30px);
+}
+.preview-shot span { font-size: clamp(46px, 6vw, 72px); }
+.detail-play {
+  min-height: clamp(60px, 8vh, 76px);
+  font-size: 18px;
+}
+.game-screen {
+  padding: calc(8px + env(safe-area-inset-top)) 0 calc(8px + env(safe-area-inset-bottom));
+}
+.game-topbar {
+  width: min(1600px, 96%);
+}
+.game-root {
+  width: min(1600px, 96%);
+  min-height: calc(100dvh - 70px);
+  padding-top: clamp(8px, 1.5vh, 18px);
+}
+.star-game {
+  --primary: var(--game-primary, #f6d66b);
+  --secondary: var(--game-secondary, #ff9d72);
+  --background: var(--game-background, #251d45);
+  --surface: var(--game-surface, #38295f);
+  --surface-light: color-mix(in srgb, var(--game-surface, #38295f) 72%, white);
+  --muted: #d4cdec;
+  width: 100%;
+  max-width: none;
+  min-height: calc(100dvh - 90px);
+  margin: 0 auto;
+  padding: clamp(10px, 2vh, 22px) clamp(4px, 1vw, 14px);
+  color: #fffaff;
+}
+.star-game-intro { margin: 0 auto clamp(14px, 2vh, 24px); }
+.star-game-kicker {
+  background: color-mix(in srgb, var(--game-primary) 18%, transparent);
+  color: var(--game-primary);
+}
+.star-game-intro h2 { font-size: clamp(27px, 4vw, 42px); }
+.star-game-intro p { color: #d4cdec; font-size: clamp(13px, 1.5vw, 16px); }
+.star-game-stats {
+  width: min(900px, 100%);
+  margin: 0 auto clamp(12px, 2vh, 20px);
+  gap: clamp(8px, 1.5vw, 16px);
+}
+.star-stat {
+  padding: clamp(12px, 2vh, 18px);
+  border-color: color-mix(in srgb, var(--game-primary) 22%, transparent);
+  background: color-mix(in srgb, var(--game-surface) 82%, transparent);
+  box-shadow: inset 0 1px #ffffff12, 0 8px 24px #100a2b30;
+}
+.star-stat span { color: #c9bfdf; }
+.star-stat strong { color: var(--game-primary); font-size: clamp(24px, 3vw, 32px); }
+.star-arena {
+  width: 100%;
+  height: clamp(320px, 52vh, 680px);
+  min-height: 280px;
+  border: 1px solid color-mix(in srgb, var(--game-primary) 48%, transparent);
+  border-radius: clamp(22px, 3vw, 34px);
+  background:
+    radial-gradient(circle at 14% 22%, #fff9 0 1px, transparent 2px),
+    radial-gradient(circle at 78% 68%, color-mix(in srgb, var(--game-primary) 80%, white) 0 1px, transparent 2px),
+    radial-gradient(circle at 56% 16%, #ffffffaa 0 1px, transparent 2px),
+    radial-gradient(ellipse at 50% 48%, color-mix(in srgb, var(--game-glow) 38%, var(--game-surface)) 0%, var(--game-background) 72%);
+  background-size: 83px 91px, 117px 109px, 143px 131px, auto;
+  box-shadow: inset 0 0 90px color-mix(in srgb, var(--game-glow) 22%, transparent), 0 18px 48px #09051f66;
+  animation: star-nebula-drift 22s linear infinite;
+}
+@keyframes star-nebula-drift {
+  from { background-position: 0 0, 0 0, 0 0, center; }
+  to { background-position: 83px 91px, -117px 109px, 143px -131px, center; }
+}
+.star-arena-hint { color: #eee8ff; }
+.star-target {
+  border-color: #fff3c9;
+  background: radial-gradient(circle at 35% 28%, #fff9d9, var(--game-primary) 68%, color-mix(in srgb, var(--game-secondary) 55%, var(--game-primary)));
+  color: color-mix(in srgb, var(--game-background) 78%, #10091f);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--game-primary) 65%, transparent), 0 0 48px color-mix(in srgb, var(--game-glow) 55%, transparent), inset 0 2px 5px #ffffffc9;
+}
+.star-game-result {
+  background: color-mix(in srgb, var(--game-background) 88%, transparent);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+.star-result-icon { color: var(--game-primary); text-shadow: 0 0 28px var(--game-glow); }
+.star-game-result p, .star-game-tip { color: #d4cdec; }
+.star-start {
+  min-width: min(280px, 100%);
+  min-height: 54px;
+  border-radius: 17px;
+  background: var(--game-primary);
+  color: var(--game-background);
+  box-shadow: 0 8px 30px color-mix(in srgb, var(--game-primary) 28%, transparent);
+}
+@media (min-width: 900px) {
+  .detail-hero { padding-left: clamp(48px, 8vw, 110px); }
+  .detail-content { padding-bottom: 22px; }
+  .star-game { display: flex; flex-direction: column; }
+  .star-arena { flex: 1 1 auto; }
+}
+@media (max-width: 520px) {
+  .main-content { width: 94%; }
+  .detail-content { width: 94%; }
+  .detail-hero { padding: 30px 22px 25px; }
+  .detail-meta span { flex: 1; }
+  .game-root { width: 94%; }
+  .star-game { padding-inline: 0; }
+  .star-arena { height: 50vh; min-height: 290px; }
+}
+@media (orientation: landscape) and (max-height: 600px) {
+  .star-game { min-height: auto; padding-top: 4px; }
+  .star-game-intro { margin-bottom: 8px; }
+  .star-game-intro h2 { margin: 5px 0; font-size: 24px; }
+  .star-game-intro p { font-size: 12px; }
+  .star-game-stats { margin-bottom: 8px; }
+  .star-stat { padding: 7px; }
+  .star-arena { height: 55vh; min-height: 180px; }
+  .star-game-actions { padding: 8px 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .star-arena { animation: none !important; }
+}
