@@ -16,7 +16,7 @@
       description: "Ordena colores y crea degradados perfectos.",
       shortInfo: "Pon a prueba tu percepción visual. Arrastra las fichas y acomoda los tonos del más claro al más oscuro para completar cada paleta.",
       category: "Puzzle", icon: "◈", featured: true, duration: "Libre", difficulty: "Progresiva",
-      palette: { primary: "#c4adff", secondary: "#ff9fc8", background: "#202044", surface: "#302d5c", glow: "#a58bff" },
+      palette: { primary: "#65dfc5", secondary: "#ff986e", background: "#102f36", surface: "#1b4a50", glow: "#52d8c4" },
       previews: ["Ordena los degradados", "Completa cada paleta"]
     },
     {
