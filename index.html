@@ -135,8 +135,14 @@
   <script src="games/cloud-hopper.js?v=1.02"></script>
   <script src="games/echo-six.js?v=1.02"></script>
   <script src="js/app.js?v=1.02"></script>
-  <script src="js/native-android.bundle.js" defer></script>
+
   <script>
+    if (window.Capacitor?.isNativePlatform?.()) {
+      const nativeBridge = document.createElement("script");
+      nativeBridge.src = "js/native-android.bundle.js";
+      nativeBridge.async = false;
+      document.body.appendChild(nativeBridge);
+    }
     let noverseInstallPrompt = null;
     const installButton = document.getElementById("install-app");
     window.addEventListener("beforeinstallprompt", event => {
