@@ -1,4 +1,3 @@
-
 {
   "name": "NOVERSE",
   "short_name": "NOVERSE",
@@ -7,7 +6,7 @@
   "scope": "./",
   "display": "standalone",
   "orientation": "any",
-  "background_color": "#100e1d",
-  "theme_color": "#17132b",
+  "background_color": "#09252b",
+  "theme_color": "#09252b",
   "icons": []
 }
