@@ -12,6 +12,9 @@
   const homePlayed = $("#home-played");
   const homeScreen = $("#home-screen");
   const statsScreen = $("#stats-screen");
+  const storeScreen = $("#store-screen");
+  const experiencePlaceholder = $("#experience-placeholder");
+  const homeModeButtons = [...document.querySelectorAll("[data-home-mode]")];
   const statsContent = $("#stats-content");
   const bottomNav = $("#bottom-nav");
   const settingsScreen = $("#settings-screen");
@@ -22,6 +25,7 @@
   const allowedThemes = ["default", "glassy", "material"];
   let activeCategory = "Todos";
   let activeTab = "home";
+  const loadingMessages = ["Materializando...", "Construyendo...", "Creando...", "En producción...", "Dando forma a nuevas ideas...", "Explorando nuevos universos...", "Preparando algo especial...", "Cargando nuevas posibilidades...", "Ajustando los últimos detalles...", "Diseñando lo que viene..."];
   let settingsReturnTab = "home";
   let settingsVisible = false;
   let tabToken = 0;
@@ -44,31 +48,51 @@
   applyTheme(savedTheme, false);
   themeButtons.forEach(button => button.addEventListener("click", () => applyTheme(button.dataset.themeChoice)));
 
+  function tabScreen(tab) { return tab === "home" ? homeScreen : tab === "store" ? storeScreen : statsScreen; }
+  function updateTabButtons(tab) {
+    tabButtons.forEach(button => {
+      const active = button.dataset.tab === tab;
+      button.classList.toggle("active", active);
+      button.setAttribute("aria-current", active ? "page" : "false");
+    });
+  }
   function animateTab(nextTab) {
-    if (!["home", "stats"].includes(nextTab) || nextTab === activeTab) return;
-    const token = ++tabToken;
-    const outgoing = activeTab === "home" ? homeScreen : statsScreen;
-    const incoming = nextTab === "home" ? homeScreen : statsScreen;
-    outgoing.classList.remove("tab-enter");
-    outgoing.classList.add("tab-exit");
+    if (!["home", "store", "stats"].includes(nextTab) || nextTab === activeTab) return;
+    const token = ++tabToken, outgoing = tabScreen(activeTab), incoming = tabScreen(nextTab);
+    outgoing.classList.remove("tab-enter"); outgoing.classList.add("tab-exit");
     window.setTimeout(() => {
       if (token !== tabToken) return;
-      outgoing.hidden = true;
-      outgoing.classList.remove("tab-exit");
-      incoming.hidden = false;
-      incoming.classList.remove("tab-exit");
-      incoming.classList.add("tab-enter");
-      activeTab = nextTab;
-      document.body.dataset.activeTab = nextTab;
-      tabButtons.forEach(button => {
-        const active = button.dataset.tab === nextTab;
-        button.classList.toggle("active", active);
-        button.setAttribute("aria-current", active ? "page" : "false");
-      });
+      outgoing.hidden = true; outgoing.classList.remove("tab-exit");
+      incoming.hidden = false; incoming.classList.remove("tab-exit"); incoming.classList.add("tab-enter");
+      activeTab = nextTab; document.body.dataset.activeTab = nextTab; updateTabButtons(nextTab);
       if (nextTab === "stats") renderStats();
+      if (nextTab === "store") refreshComingMessage(storeScreen);
     }, 130);
   }
   tabButtons.forEach(button => button.addEventListener("click", () => animateTab(button.dataset.tab)));
+
+  function refreshComingMessage(container) {
+    const message = container?.querySelector(".coming-message");
+    if (!message) return;
+    const options = loadingMessages.filter(value => value !== message.textContent);
+    message.classList.remove("message-change"); void message.offsetWidth;
+    message.textContent = options[Math.floor(Math.random() * options.length)];
+    message.classList.add("message-change");
+  }
+  homeModeButtons.forEach(button => button.addEventListener("click", () => {
+    const experiences = button.dataset.homeMode === "experiences";
+    homeModeButtons.forEach(item => {
+      const selected = item === button;
+      item.classList.toggle("active", selected); item.setAttribute("aria-pressed", String(selected));
+    });
+    featured.hidden = experiences; $(".catalog").hidden = experiences;
+    experiencePlaceholder.hidden = !experiences;
+    if (experiences) refreshComingMessage(experiencePlaceholder);
+  }));
+  window.setInterval(() => {
+    if (activeTab === "home" && experiencePlaceholder && !experiencePlaceholder.hidden) refreshComingMessage(experiencePlaceholder);
+    if (activeTab === "store") refreshComingMessage(storeScreen);
+  }, 3500);
 
   function renderStats() {
     const games = [
@@ -167,7 +191,7 @@
     if (settingsVisible) return;
     settingsReturnTab = activeTab;
     settingsVisible = true;
-    homeScreen.hidden = true; statsScreen.hidden = true; bottomNav.hidden = true;
+    homeScreen.hidden = true; statsScreen.hidden = true; storeScreen.hidden = true; bottomNav.hidden = true;
     $(".topbar").hidden = true; $("footer").hidden = true;
     settingsScreen.hidden = false; settingsScreen.scrollTop = 0;
     history.pushState({noverse:"settings"}, "", "#ajustes");
@@ -176,8 +200,13 @@
     if (!settingsVisible) return;
     settingsVisible = false; settingsScreen.hidden = true;
     $(".topbar").hidden = false; $("footer").hidden = false; bottomNav.hidden = false;
-    if (settingsReturnTab === "stats") { activeTab = "home"; animateTab("stats"); }
-    else { activeTab = "stats"; animateTab("home"); }
+    activeTab = settingsReturnTab;
+    document.body.dataset.activeTab = activeTab;
+    homeScreen.hidden = activeTab !== "home";
+    storeScreen.hidden = activeTab !== "store";
+    statsScreen.hidden = activeTab !== "stats";
+    updateTabButtons(activeTab);
+    if (activeTab === "stats") renderStats();
     if (location.hash === "#ajustes") history.replaceState({}, "", location.pathname + location.search);
   }
   settingsOpen.addEventListener("click", openSettings);
@@ -234,7 +263,7 @@
     getActiveTab: () => activeTab,
     handleBack: async () => {
       if (settingsVisible) { closeSettings(); return true; }
-      if (activeTab === "stats") { animateTab("home"); return true; }
+      if (activeTab !== "home") { animateTab("home"); return true; }
       return false;
     }
   });
