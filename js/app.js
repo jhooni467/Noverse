@@ -1,108 +1,64 @@
-/* =========================================================
-   NOVERSE — CATALOG APP
-   La interfaz obtiene sus juegos desde Game Registry.
-   ========================================================= */
-
+/* NOVERSE — CATALOG + GAME DETAIL */
 (() => {
   "use strict";
-
   const Registry = window.NOVERSE.Registry;
   const GameManager = window.NOVERSE.GameManager;
-
   const grid = document.querySelector("#games-grid");
   const featured = document.querySelector("#featured-games");
   const categoryBar = document.querySelector("#categories");
   const gameCount = document.querySelector("#game-count");
-
   let activeCategory = "Todos";
 
   function createCard(game) {
     const card = document.createElement("article");
     card.className = "game-card";
-
+    card.style.setProperty("--game-primary", game.palette.primary);
+    card.style.setProperty("--game-surface", game.palette.surface);
     const art = document.createElement("div");
     art.className = "game-art";
     art.setAttribute("aria-hidden", "true");
     art.textContent = game.icon;
-
-    const title = document.createElement("h3");
-    title.textContent = game.name;
-
-    const description = document.createElement("p");
-    description.textContent = game.description;
-
+    const title = document.createElement("h3"); title.textContent = game.name;
+    const description = document.createElement("p"); description.textContent = game.description;
     const status = document.createElement("span");
     status.className = "game-status";
-    status.textContent = game.available ? "JUGAR" : "PRÓXIMAMENTE";
-
+    status.textContent = game.available ? "VER FICHA" : "PRÓXIMAMENTE";
     card.append(art, title, description, status);
-
     if (game.available) {
       card.tabIndex = 0;
       card.setAttribute("role", "button");
-      card.setAttribute("aria-label", `Jugar ${game.name}`);
-
-      const open = () => GameManager.launch(game.id);
+      card.setAttribute("aria-label", `Ver detalles de ${game.name}`);
+      const open = () => GameManager.openDetails(game.id);
       card.addEventListener("click", open);
       card.addEventListener("keydown", event => {
-        if (event.key === "Enter" || event.key === " ") {
-          event.preventDefault();
-          open();
-        }
+        if (event.key === "Enter" || event.key === " ") { event.preventDefault(); open(); }
       });
     }
-
     return card;
   }
 
   function renderGames() {
-    const allGames = Registry.getAll();
-    const visibleGames = activeCategory === "Todos"
-      ? allGames
-      : allGames.filter(game => game.category === activeCategory);
-
+    const all = Registry.getAll();
+    const visible = activeCategory === "Todos" ? all : all.filter(game => game.category === activeCategory);
     grid.replaceChildren();
-    visibleGames.forEach(game => grid.appendChild(createCard(game)));
-    gameCount.textContent = `${visibleGames.length} juegos`;
+    visible.forEach(game => grid.appendChild(createCard(game)));
+    gameCount.textContent = `${visible.length} juegos`;
   }
-
   function renderFeatured() {
     featured.replaceChildren();
-
-    Registry.getAll()
-      .filter(game => game.featured)
-      .forEach(game => featured.appendChild(createCard(game)));
+    Registry.getAll().filter(game => game.featured).forEach(game => featured.appendChild(createCard(game)));
   }
-
   function renderCategories() {
     categoryBar.replaceChildren();
-
     Registry.getCategories().forEach(category => {
       const button = document.createElement("button");
-      button.type = "button";
-      button.className = "category";
-      button.textContent = category;
+      button.type = "button"; button.className = "category"; button.textContent = category;
       button.setAttribute("aria-pressed", String(category === activeCategory));
-
       if (category === activeCategory) button.classList.add("active");
-
-      button.addEventListener("click", () => {
-        activeCategory = category;
-        renderCategories();
-        renderGames();
-      });
-
+      button.addEventListener("click", () => { activeCategory = category; renderCategories(); renderGames(); });
       categoryBar.appendChild(button);
     });
   }
-
-  function renderCatalog() {
-    renderFeatured();
-    renderGames();
-  }
-
-  renderCategories();
-  renderCatalog();
-
-  document.addEventListener("noverse:catalog-updated", renderCatalog);
+  renderCategories(); renderFeatured(); renderGames();
+  document.addEventListener("noverse:catalog-updated", () => { renderFeatured(); renderGames(); });
 })();
