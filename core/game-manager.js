@@ -44,6 +44,8 @@
     if (!game.available) { notify("Este juego llegará próximamente ✦"); return false; }
     selectedGame = game;
     const palette = game.palette;
+    detailScreen.dataset.gameId = id;
+    gameScreen.dataset.gameId = id;
     detailScreen.style.setProperty("--game-primary", palette.primary);
     detailScreen.style.setProperty("--game-secondary", palette.secondary);
     detailScreen.style.setProperty("--game-background", palette.background);
