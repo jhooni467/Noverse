@@ -8,6 +8,32 @@
   const categoryBar = document.querySelector("#categories");
   const gameCount = document.querySelector("#game-count");
   let activeCategory = "Todos";
+  const settingsScreen = document.querySelector("#settings-screen");
+  const settingsOpen = document.querySelector("#settings-open");
+  const settingsBack = document.querySelector("#settings-back");
+  let settingsVisible = false;
+  function openSettings() {
+    settingsVisible = true;
+    document.querySelector(".main-content").hidden = true;
+    document.querySelector(".topbar").hidden = true;
+    document.querySelector("footer").hidden = true;
+    settingsScreen.hidden = false;
+    settingsScreen.scrollTop = 0;
+    history.pushState({noverse:"settings"}, "", "#ajustes");
+  }
+  function closeSettings() {
+    if (!settingsVisible) return;
+    settingsVisible = false;
+    settingsScreen.hidden = true;
+    document.querySelector(".main-content").hidden = false;
+    document.querySelector(".topbar").hidden = false;
+    document.querySelector("footer").hidden = false;
+    if (location.hash === "#ajustes") history.replaceState({}, "", location.pathname + location.search);
+  }
+  settingsOpen.addEventListener("click", openSettings);
+  settingsBack.addEventListener("click", closeSettings);
+  document.addEventListener("keydown", event => { if (event.key === "Escape" && settingsVisible) closeSettings(); });
+  window.addEventListener("popstate", () => { if (settingsVisible) closeSettings(); });
 
   function createCard(game) {
     const card = document.createElement("article");
@@ -29,7 +55,20 @@
       card.setAttribute("role", "button");
       card.setAttribute("aria-label", `Ver detalles de ${game.name}`);
       const open = () => GameManager.openDetails(game.id);
-      card.addEventListener("click", open);
+      let holdTimer = null;
+      let held = false;
+      card.addEventListener("pointerdown", () => {
+        held = false;
+        holdTimer = setTimeout(() => { held = true; card.classList.add("is-pressed"); }, 260);
+      });
+      const release = () => { clearTimeout(holdTimer); card.classList.remove("is-pressed"); };
+      card.addEventListener("pointerup", release);
+      card.addEventListener("pointercancel", release);
+      card.addEventListener("pointerleave", release);
+      card.addEventListener("click", event => {
+        if (held) { event.preventDefault(); event.stopImmediatePropagation(); held = false; return; }
+        open();
+      });
       card.addEventListener("keydown", event => {
         if (event.key === "Enter" || event.key === " ") { event.preventDefault(); open(); }
       });
