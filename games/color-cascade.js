@@ -85,6 +85,7 @@
         button.type = "button";
         button.className = "color-tile";
         button.style.background = tile.color;
+        button.style.setProperty("--tile-order", String(index));
         button.dataset.id = tile.id;
         button.dataset.number = String(index + 1);
         button.setAttribute("aria-label", `Ficha ${index + 1}`);
