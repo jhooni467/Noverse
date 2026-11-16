@@ -13,11 +13,13 @@
     let tiles = [];
     let completed = false;
     let dragTile = null;
+    let placeholder = null;
     let dragGhost = null;
     let pointerId = null;
     let startIndex = -1;
     let moves = 0;
     let hue = 260;
+    let destroyed = false;
 
     container.innerHTML = `
       <section class="color-game" aria-label="Color Cascade">
@@ -61,15 +63,13 @@
     }
 
     function makeLevel() {
+      cancelDrag();
       const count = LEVELS[Math.min(level - 1, LEVELS.length - 1)];
       hue = Math.floor(Math.random() * 360);
-      const ordered = Array.from({ length: count }, (_, i) => {
-        const lightness = 88 - i * (60 / (count - 1));
-        return {
-          id: `c${i}`,
-          color: `hsl(${hue} 72% ${lightness.toFixed(1)}%)`
-        };
-      });
+      const ordered = Array.from({ length: count }, (_, i) => ({
+        id: `c${i}`,
+        color: `hsl(${hue} 72% ${(88 - i * (60 / (count - 1))).toFixed(1)}%)`
+      }));
       tiles = shuffle(ordered);
       moves = 0;
       completed = false;
@@ -87,7 +87,6 @@
         button.style.background = tile.color;
         button.style.setProperty("--tile-order", String(index));
         button.dataset.id = tile.id;
-        button.dataset.number = String(index + 1);
         button.setAttribute("aria-label", `Ficha ${index + 1}`);
         button.addEventListener("pointerdown", startDrag);
         board.appendChild(button);
@@ -103,16 +102,16 @@
 
     function syncTilesFromDOM() {
       const byId = new Map(tiles.map(tile => [tile.id, tile]));
-      tiles = Array.from(board.children, node => byId.get(node.dataset.id));
+      tiles = Array.from(board.children, node => byId.get(node.dataset.id)).filter(Boolean);
       Array.from(board.children).forEach((node, index) => {
-        node.dataset.number = String(index + 1);
+        if (node.classList.contains("color-placeholder")) return;
         node.setAttribute("aria-label", `Ficha ${index + 1}`);
       });
     }
 
     function animateReorder(beforeRects) {
       Array.from(board.children).forEach(node => {
-        if (node === dragTile) return;
+        if (node === placeholder || node === dragTile) return;
         const previous = beforeRects.get(node);
         if (!previous) return;
         const next = node.getBoundingClientRect();
@@ -121,34 +120,41 @@
         if (Math.abs(dx) < 1 && Math.abs(dy) < 1) return;
         node.animate(
           [{ transform: `translate(${dx}px, ${dy}px)` }, { transform: "translate(0, 0)" }],
-          { duration: 210, easing: "cubic-bezier(.2,.8,.2,1)" }
+          { duration: 180, easing: "cubic-bezier(.2,.8,.2,1)" }
         );
       });
     }
 
     function startDrag(event) {
-      if (completed || dragTile || (event.pointerType === "mouse" && event.button !== 0)) return;
+      if (destroyed || completed || dragTile || (event.pointerType === "mouse" && event.button !== 0)) return;
       event.preventDefault();
+
       dragTile = event.currentTarget;
       pointerId = event.pointerId;
       startIndex = Array.from(board.children).indexOf(dragTile);
 
       const rect = dragTile.getBoundingClientRect();
-      dragGhost = dragTile.cloneNode(true);
-      dragGhost.classList.add("color-drag-ghost");
-      dragGhost.setAttribute("aria-hidden", "true");
+      placeholder = document.createElement("div");
+      placeholder.className = "color-placeholder";
+      placeholder.dataset.id = dragTile.dataset.id;
+      placeholder.style.width = `${rect.width}px`;
+      placeholder.style.height = `${rect.height}px`;
+      board.insertBefore(placeholder, dragTile);
+      dragTile.remove();
+
+      dragGhost = document.createElement("div");
+      dragGhost.className = "color-drag-ghost";
+      dragGhost.style.background = tiles.find(item => item.id === dragTile.dataset.id).color;
       dragGhost.style.width = `${rect.width}px`;
       dragGhost.style.height = `${rect.height}px`;
       dragGhost.style.left = `${rect.left}px`;
       dragGhost.style.top = `${rect.top}px`;
-      dragGhost.style.transform = "scale(1.06)";
       document.body.appendChild(dragGhost);
 
-      dragTile.classList.add("dragging");
-      try { dragTile.setPointerCapture(pointerId); } catch (_) {}
-      dragTile.addEventListener("pointermove", moveDrag);
-      dragTile.addEventListener("pointerup", endDrag);
-      dragTile.addEventListener("pointercancel", endDrag);
+      window.addEventListener("pointermove", moveDrag, { passive: false });
+      window.addEventListener("pointerup", endDrag);
+      window.addEventListener("pointercancel", cancelDrag);
+      window.addEventListener("blur", cancelDrag);
       feedback.textContent = "Suelta la ficha cuando esté en el lugar correcto.";
     }
 
@@ -157,47 +163,57 @@
       event.preventDefault();
 
       if (dragGhost) {
-        const x = event.clientX - dragGhost.offsetWidth / 2;
-        const y = event.clientY - dragGhost.offsetHeight / 2;
-        dragGhost.style.left = `${x}px`;
-        dragGhost.style.top = `${y}px`;
+        dragGhost.style.left = `${event.clientX - dragGhost.offsetWidth / 2}px`;
+        dragGhost.style.top = `${event.clientY - dragGhost.offsetHeight / 2}px`;
       }
 
-      const target = document.elementFromPoint(event.clientX, event.clientY)?.closest(".color-tile");
-      if (!target || target === dragTile || target.parentElement !== board) return;
+      const candidates = Array.from(board.querySelectorAll(".color-tile"));
+      let target = null;
+      let before = false;
+      for (const node of candidates) {
+        const rect = node.getBoundingClientRect();
+        if (event.clientX >= rect.left && event.clientX <= rect.right &&
+            event.clientY >= rect.top - 8 && event.clientY <= rect.bottom + 8) {
+          target = node;
+          before = event.clientX < rect.left + rect.width / 2;
+          break;
+        }
+      }
+      if (!target || !placeholder) return;
+
+      const nextPosition = before ? target : target.nextSibling;
+      if (nextPosition === placeholder || placeholder.nextSibling === nextPosition) return;
 
       const beforeRects = new Map(
-        Array.from(board.children, node => [node, node.getBoundingClientRect()])
+        candidates.map(node => [node, node.getBoundingClientRect()])
       );
-      const rect = target.getBoundingClientRect();
-      const insertBefore = event.clientX < rect.left + rect.width / 2 ? target : target.nextSibling;
-      if (insertBefore === dragTile || dragTile.nextSibling === insertBefore) return;
-
-      board.insertBefore(dragTile, insertBefore);
+      board.insertBefore(placeholder, nextPosition);
       syncTilesFromDOM();
       animateReorder(beforeRects);
     }
 
-    function endDrag(event) {
-      if (!dragTile || event.pointerId !== pointerId) return;
+    function removeDragListeners() {
+      window.removeEventListener("pointermove", moveDrag);
+      window.removeEventListener("pointerup", endDrag);
+      window.removeEventListener("pointercancel", cancelDrag);
+      window.removeEventListener("blur", cancelDrag);
+    }
+
+    function finishDrag() {
+      if (!dragTile) return;
       const tile = dragTile;
-      const finalIndex = Array.from(board.children).indexOf(tile);
+      const finalIndex = Array.from(board.children).indexOf(placeholder);
+      if (placeholder?.parentNode) placeholder.replaceWith(tile);
       tile.classList.remove("dragging");
-      tile.removeEventListener("pointermove", moveDrag);
-      tile.removeEventListener("pointerup", endDrag);
-      tile.removeEventListener("pointercancel", endDrag);
-
-      if (dragGhost) {
-        const ghost = dragGhost;
-        ghost.animate(
-          [{ opacity: 1, transform: "scale(1.06)" }, { opacity: 0, transform: "scale(.88)" }],
-          { duration: 150, easing: "ease-out" }
-        ).finished.then(() => ghost.remove()).catch(() => ghost.remove());
-      }
-
+      tile.addEventListener("pointerdown", startDrag);
+      dragGhost?.remove();
       dragTile = null;
+      placeholder = null;
       dragGhost = null;
       pointerId = null;
+      removeDragListeners();
+      syncTilesFromDOM();
+
       if (finalIndex !== startIndex) {
         moves++;
         updateMoves();
@@ -210,8 +226,27 @@
       startIndex = -1;
     }
 
+    function endDrag(event) {
+      if (!dragTile || event.pointerId !== pointerId) return;
+      finishDrag();
+    }
+
+    function cancelDrag() {
+      if (!dragTile) return;
+      if (placeholder?.parentNode) placeholder.replaceWith(dragTile);
+      dragTile.classList.remove("dragging");
+      dragGhost?.remove();
+      dragTile = null;
+      placeholder = null;
+      dragGhost = null;
+      pointerId = null;
+      startIndex = -1;
+      removeDragListeners();
+      syncTilesFromDOM();
+    }
+
     function isSolved() {
-      return tiles.every((tile, index) => tile.id === `c${index}`);
+      return tiles.length > 0 && tiles.every((tile, index) => tile.id === `c${index}`);
     }
 
     function finishLevel() {
@@ -238,24 +273,18 @@
       }
     }
 
-    function resetLevel() {
-      makeLevel();
-    }
-
+    function resetLevel() { makeLevel(); }
     reset.addEventListener("click", resetLevel);
     check.addEventListener("click", checkOrder);
     makeLevel();
 
     return {
       unmount() {
-        if (dragTile) {
-          dragTile.removeEventListener("pointermove", moveDrag);
-          dragTile.removeEventListener("pointerup", endDrag);
-          dragTile.removeEventListener("pointercancel", endDrag);
-        }
-        dragGhost?.remove();
+        destroyed = true;
+        cancelDrag();
         reset.removeEventListener("click", resetLevel);
         check.removeEventListener("click", checkOrder);
+        board.replaceChildren();
       }
     };
   }
