@@ -19,6 +19,8 @@
   const topbar = document.querySelector(".topbar");
   const footer = document.querySelector("footer");
   const notice = document.querySelector("#game-notice");
+  const ambientButton = document.querySelector("#game-audio-toggle");
+  const ambient = window.NOVERSE?.AmbientAudio;
 
   function notify(message) {
     if (!notice) return;
@@ -36,6 +38,7 @@
     footer.hidden = !inCatalog;
     detailScreen.hidden = view !== "detail";
     gameScreen.hidden = view !== "game";
+    if (ambientButton) ambientButton.hidden = view !== "game";
     document.body.classList.toggle("game-is-open", view !== "catalog");
     document.body.dataset.noverseView = view;
   }
@@ -93,6 +96,7 @@
     return true;
   }
   async function stopActiveGame() {
+    ambient?.stop();
     launchToken += 1;
     const previous = activeGame;
     activeGame = null;
@@ -105,6 +109,7 @@
   async function launch(id) {
     const definition = modules.get(id);
     if (!definition) { notify("Este juego llegará próximamente ✦"); return false; }
+    ambient?.unlock();
     await stopActiveGame();
     hasPlayedGame = true;
     try {
@@ -117,6 +122,8 @@
     title.textContent = definition.name || "Minijuego";
     root.replaceChildren();
     setView("game");
+    ambient?.play(id);
+    syncAmbientButton();
     try {
       const instance = await definition.mount(root, { close: backToDetails, notify, getRoot: () => root });
       if (token !== launchToken) {
@@ -147,6 +154,15 @@
     selectedGame = null;
     setView("catalog");
   }
+  function syncAmbientButton() {
+    if (!ambientButton || !ambient) return;
+    const enabled = ambient.isEnabled();
+    ambientButton.setAttribute("aria-pressed", String(enabled));
+    ambientButton.setAttribute("aria-label", enabled ? "Silenciar música ambiental" : "Activar música ambiental");
+    ambientButton.title = enabled ? "Música ambiental activada" : "Música ambiental desactivada";
+    ambientButton.textContent = enabled ? "♫" : "♪̸";
+  }
+  ambientButton?.addEventListener("click", () => { ambient?.toggle(); syncAmbientButton(); });
   detailBack?.addEventListener("click", backToCatalog);
   gameBack?.addEventListener("click", backToDetails);
   document.addEventListener("keydown", event => {
