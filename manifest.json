@@ -15,10 +15,10 @@
   "theme_color": "#0b0b14",
   "icons": [
     {
-      "src": "icons/noverse-icon.png",
+      "src": "icons/noverse-mark.svg",
       "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/svg+xml",
+      "purpose": "any"
     }
   ]
 }
