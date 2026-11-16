@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#09252b">
+  <meta name="theme-color" content="#000000">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -11,8 +11,8 @@
   <link rel="apple-touch-icon" href="icons/noverse-192.svg">
   <meta name="description" content="NOVERSE: Explore. Play. Discover.">
   <title>NOVERSE</title>
-  <link rel="manifest" href="manifest.json?v=0.7.1">
-  <link rel="stylesheet" href="css/styles.css?v=0.7.1">
+  <link rel="manifest" href="manifest.json?v=0.8.0">
+  <link rel="stylesheet" href="css/styles.css?v=0.8.0">
 </head>
 <body>
   <header class="topbar">
@@ -48,7 +48,29 @@
       <span>AJUSTES</span><span></span>
     </header>
     <div class="settings-content">
-      <p class="settings-version">Versión 0.7.1</p>
+      <div class="settings-intro">
+        <h1>Tu espacio, tu estilo.</h1>
+        <p>NOVERSE reúne distintos universos en un mismo lugar. Elige cómo quieres ver ese espacio.</p>
+      </div>
+      <p class="settings-group-title">APARIENCIA</p>
+      <div class="theme-options" role="group" aria-label="Estilo visual">
+        <button class="theme-option" type="button" data-theme-choice="glassy" aria-pressed="false">
+          <span class="theme-preview glassy" aria-hidden="true"></span>
+          <span class="theme-option-copy"><strong>Glassy</strong><small>Transparencias, cristal y desenfoque.</small></span>
+          <span class="theme-option-check" aria-hidden="true">✓</span>
+        </button>
+        <button class="theme-option" type="button" data-theme-choice="material" aria-pressed="false">
+          <span class="theme-preview material" aria-hidden="true"></span>
+          <span class="theme-option-copy"><strong>Material</strong><small>Superficies tonales y controles redondeados.</small></span>
+          <span class="theme-option-check" aria-hidden="true">✓</span>
+        </button>
+        <button class="theme-option" type="button" data-theme-choice="default" aria-pressed="false">
+          <span class="theme-preview default" aria-hidden="true"></span>
+          <span class="theme-option-copy"><strong>Predeterminado</strong><small>Negro puro y minimalismo.</small></span>
+          <span class="theme-option-check" aria-hidden="true">✓</span>
+        </button>
+      </div>
+      <p class="settings-version">NOVERSE · Versión 0.8.0</p>
     </div>
   </section>
 
