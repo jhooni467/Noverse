@@ -1365,3 +1365,7 @@ body[data-theme="material"] .category.active { background:#f0f0f0;color:#080808;
 body[data-theme="material"] .theme-option[aria-pressed="true"] { background:#252525;border-color:#eee; }
 @media(min-width:650px) { .theme-options { grid-template-columns:1fr 1fr; } .theme-option:last-child { grid-column:1 / -1; } }
 @media(prefers-reduced-motion:reduce) { .theme-option { transition:none; } }
+
+/* Monochrome brand mark and controls */
+.brand-icon svg { display:block;width:29px;height:29px;fill:none;stroke:#f5f5f7;stroke-width:2.2;stroke-linecap:round; }
+.settings svg { fill:none; }
