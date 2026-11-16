@@ -1,4 +1,4 @@
-const CACHE_NAME = "noverse-v0.7.0";
+const CACHE_NAME = "noverse-v0.7.1";
 const FILES = [
   "./", "./index.html", "./manifest.json", "./css/styles.css",
   "./icons/noverse-192.svg", "./icons/noverse-512.svg",
