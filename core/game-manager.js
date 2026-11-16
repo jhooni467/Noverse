@@ -5,6 +5,7 @@
   let activeGame = null;
   let selectedGame = null;
   let launchToken = 0;
+  let hasPlayedGame = false;
   const detailScreen = document.querySelector("#detail-screen");
   const detailContent = document.querySelector("#detail-content");
   const gameScreen = document.querySelector("#game-screen");
@@ -99,6 +100,7 @@
     const definition = modules.get(id);
     if (!definition) { notify("Este juego llegará próximamente ✦"); return false; }
     await stopActiveGame();
+    hasPlayedGame = true;
     const token = ++launchToken;
     title.textContent = definition.name || "Minijuego";
     root.replaceChildren();
@@ -123,6 +125,13 @@
   }
   async function backToCatalog() {
     await stopActiveGame();
+    if (hasPlayedGame && selectedGame) {
+      const palette = selectedGame.palette;
+      document.body.dataset.recentGame = selectedGame.id;
+      document.body.style.setProperty("--material-recent-background", palette.background);
+      document.body.style.setProperty("--material-recent-primary", palette.primary);
+      hasPlayedGame = false;
+    }
     selectedGame = null;
     setView("catalog");
   }
