@@ -1,4 +1,3 @@
-
 const games = [
   {
     id: "game-01",
@@ -44,10 +43,11 @@ const games = [
 
 const categories = [
   "Todos",
-  "Arcade",
   "Puzzle",
-  "Habilidad",
+  "Arcade",
+  "Lógica",
   "Creatividad",
+  "Habilidad",
   "Relajación"
 ];
 
@@ -64,6 +64,7 @@ function createCard(game) {
 
   const art = document.createElement("div");
   art.className = "game-art";
+  art.setAttribute("aria-hidden", "true");
   art.textContent = game.icon;
 
   const title = document.createElement("h3");
@@ -72,7 +73,29 @@ function createCard(game) {
   const description = document.createElement("p");
   description.textContent = game.description;
 
-  card.append(art, title, description);
+  const status = document.createElement("span");
+  status.className = "game-status";
+
+  const available = window.NOVERSE?.GameManager?.isRegistered(game.id);
+  status.textContent = available ? "JUGAR" : "EN DESARROLLO";
+
+  card.append(art, title, description, status);
+
+  if (available) {
+    card.tabIndex = 0;
+    card.setAttribute("role", "button");
+    card.setAttribute("aria-label", `Jugar ${game.name}`);
+    card.addEventListener("click", () => {
+      window.NOVERSE.GameManager.launch(game.id);
+    });
+    card.addEventListener("keydown", event => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        window.NOVERSE.GameManager.launch(game.id);
+      }
+    });
+  }
+
   return card;
 }
 
@@ -82,23 +105,16 @@ function renderGames() {
     : games.filter(game => game.category === activeCategory);
 
   grid.replaceChildren();
+  visibleGames.forEach(game => grid.appendChild(createCard(game)));
 
-  visibleGames.forEach(game => {
-    grid.appendChild(createCard(game));
-  });
-
-  gameCount.textContent =
-    `${visibleGames.length} juegos`;
+  gameCount.textContent = `${visibleGames.length} juegos`;
 }
 
 function renderFeatured() {
   featured.replaceChildren();
-
   games
     .filter(game => game.featured)
-    .forEach(game => {
-      featured.appendChild(createCard(game));
-    });
+    .forEach(game => featured.appendChild(createCard(game)));
 }
 
 function renderCategories() {
@@ -106,17 +122,12 @@ function renderCategories() {
 
   categories.forEach(category => {
     const button = document.createElement("button");
-
+    button.type = "button";
     button.className = "category";
     button.textContent = category;
-    button.setAttribute(
-      "aria-pressed",
-      String(category === activeCategory)
-    );
+    button.setAttribute("aria-pressed", String(category === activeCategory));
 
-    if (category === activeCategory) {
-      button.classList.add("active");
-    }
+    if (category === activeCategory) button.classList.add("active");
 
     button.addEventListener("click", () => {
       activeCategory = category;
