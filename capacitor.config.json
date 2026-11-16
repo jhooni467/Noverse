@@ -1,0 +1,11 @@
+{
+  "appId": "com.noverse.gamehub",
+  "appName": "NOVERSE",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  },
+  "android": {
+    "allowMixedContent": false
+  }
+}
