@@ -11,8 +11,8 @@
   <link rel="apple-touch-icon" href="icons/noverse-192.svg">
   <meta name="description" content="NOVERSE: Explore. Play. Discover.">
   <title>NOVERSE</title>
-  <link rel="manifest" href="manifest.json?v=1.03">
-  <link rel="stylesheet" href="css/styles.css?v=1.03">
+  <link rel="manifest" href="manifest.json?v=1.04">
+  <link rel="stylesheet" href="css/styles.css?v=1.04">
 </head>
 <body>
   <header class="topbar">
@@ -31,6 +31,8 @@
       <h1>¿Qué quieres<br>descubrir hoy?</h1>
       <p>Pequeños juegos. Grandes universos.</p><div class="welcome-actions"><button id="surprise-play" type="button">Jugar algo <span>✦</span></button><span id="home-played">Tu próxima aventura te espera</span></div>
     </section>
+    <section class="home-mode-switch" aria-label="Tipo de contenido"><button class="home-mode active" type="button" data-home-mode="casual" aria-pressed="true">Casuales</button><button class="home-mode" type="button" data-home-mode="experiences" aria-pressed="false">Experiencias</button></section>
+    <section id="experience-placeholder" class="coming-screen" hidden aria-live="polite"><div class="coming-orbit" aria-hidden="true"><span></span><i></i></div><p class="coming-kicker">NUEVOS UNIVERSOS EN CAMINO</p><h2 class="coming-message">Materializando...</h2><p class="coming-caption">Estamos preparando nuevas formas de explorar NOVERSE.</p></section>
     <section class="featured">
       <div class="section-heading"><h2>Para descubrir</h2><span>SELECCIÓN NOVERSE</span></div>
       <div id="featured-games" class="featured-grid"></div>
@@ -42,6 +44,7 @@
     </section>
   </main>
 
+  <section id="store-screen" class="stats-screen store-screen tab-panel" hidden aria-label="NOVERSE Store"><div class="coming-screen store-coming" aria-live="polite"><div class="coming-orbit" aria-hidden="true"><span></span><i></i></div><p class="coming-kicker">NOVERSE STORE</p><h1>Un universo de apps.</h1><h2 class="coming-message">Construyendo...</h2><p class="coming-caption">Pronto podrás descubrir y descargar nuestras aplicaciones.</p></div></section>
   <section id="stats-screen" class="stats-screen tab-panel" hidden aria-label="Estadísticas">
     <div class="stats-heading">
       <p class="eyebrow">TU PROGRESO · NOVERSE</p>
@@ -54,6 +57,10 @@
     <button class="bottom-nav-item active" type="button" data-tab="home" aria-current="page">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1Z"/></svg>
       <span>Inicio</span>
+    </button>
+    <button class="bottom-nav-item" type="button" data-tab="store" aria-current="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9h18l-1.5-5h-15L3 9Z"/><path d="M5 9v11h14V9M9 20v-6h6v6M3 9a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0"/></svg>
+      <span>Store</span>
     </button>
     <button class="bottom-nav-item" type="button" data-tab="stats" aria-current="false">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V5M4 19h17M8 16v-5m5 5V7m5 9v-8"/></svg>
@@ -88,7 +95,7 @@
           <span class="theme-option-check" aria-hidden="true">✓</span>
         </button>
       </div>
-      <p class="settings-version">NOVERSE · Versión 1.03</p>
+      <p class="settings-version">NOVERSE · Versión 1.04</p>
     </div>
   </section>
 
@@ -128,14 +135,14 @@
   <p id="game-notice" class="game-notice" role="status" hidden></p>
   <footer><span>NOVERSE</span><p>Explore. Play. Discover. ✦</p></footer>
 
-  <script src="core/ambient-audio.js?v=1.03"></script>
-  <script src="core/game-manager.js?v=1.03"></script>
-  <script src="games/registry.js?v=1.03"></script>
-  <script src="games/star-catcher.js?v=1.03"></script>
-  <script src="games/color-cascade.js?v=1.03"></script>
-  <script src="games/cloud-hopper.js?v=1.03"></script>
-  <script src="games/echo-six.js?v=1.03"></script>
-  <script src="js/app.js?v=1.03"></script>
+  <script src="core/ambient-audio.js?v=1.04"></script>
+  <script src="core/game-manager.js?v=1.04"></script>
+  <script src="games/registry.js?v=1.04"></script>
+  <script src="games/star-catcher.js?v=1.04"></script>
+  <script src="games/color-cascade.js?v=1.04"></script>
+  <script src="games/cloud-hopper.js?v=1.04"></script>
+  <script src="games/echo-six.js?v=1.04"></script>
+  <script src="js/app.js?v=1.04"></script>
 
   <script>
     if (window.Capacitor?.isNativePlatform?.()) {
