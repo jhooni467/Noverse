@@ -11,8 +11,9 @@
   <link rel="apple-touch-icon" href="icons/noverse-mark.svg">
   <meta name="description" content="NOVERSE: Explore. Play. Discover.">
   <title>NOVERSE</title>
-  <link rel="manifest" href="manifest.json?v=1.05">
-  <link rel="stylesheet" href="css/styles.css?v=1.05">
+  <link rel="manifest" href="manifest.json?v=1.06">
+  <link rel="stylesheet" href="css/styles.css?v=1.06">
+  <link rel="stylesheet" href="css/store.css?v=1.06">
 </head>
 <body>
   <header class="topbar">
@@ -52,7 +53,7 @@
     </section>
   </main>
 
-  <section id="store-screen" class="stats-screen store-screen tab-panel" hidden aria-label="NOVERSE Store"><div class="coming-screen store-coming" aria-live="polite"><div class="coming-orbit" aria-hidden="true"><span></span><i></i></div><p class="coming-kicker">NOVERSE STORE</p><h1>Un universo de apps.</h1><h2 class="coming-message">Construyendo...</h2><p class="coming-caption">Pronto podrás descubrir y descargar nuestras aplicaciones.</p></div></section>
+  <section id="store-screen" class="store-screen tab-panel" hidden aria-label="NOVERSE Store"><div class="store-shell"><header class="store-header"><div><p class="store-kicker">NOVERSE · DISCOVERY</p><h1>Tu universo <span>de apps.</span></h1><p class="store-subtitle">Descubre nuevas formas de crear, jugar y explorar.</p></div><div class="store-mark" aria-hidden="true">✦</div></header><label class="store-search"><span aria-hidden="true">⌕</span><input id="store-search" type="search" placeholder="Buscar aplicaciones..." autocomplete="off"><kbd>⌘ K</kbd></label><div class="store-featured-wrap"><div class="store-section-heading"><div><span class="store-overline">DESTACADA</span><h2>Un universo por descubrir</h2></div><span class="store-count" id="store-result-count">2 aplicaciones</span></div><div id="store-featured" class="store-featured"></div></div><div class="store-section-heading store-apps-heading"><div><span class="store-overline">BIBLIOTECA NOVERSE</span><h2>Explora aplicaciones</h2></div></div><nav id="store-categories" class="store-categories" aria-label="Categorías de aplicaciones"></nav><div id="store-grid" class="store-grid"></div><p class="store-empty" id="store-empty" hidden>No encontramos aplicaciones con esa búsqueda.</p></div></section><section id="store-detail" class="store-detail" hidden aria-label="Detalles de la aplicación"><header class="store-detail-top"><button id="store-detail-back" class="store-back" type="button" aria-label="Volver a la tienda">←</button><span>NOVERSE STORE</span><button id="store-detail-more" class="store-more" type="button" aria-label="Más opciones">···</button></header><div id="store-detail-content" class="store-detail-content"></div></section>
   <section id="stats-screen" class="stats-screen tab-panel" hidden aria-label="Estadísticas">
     <div class="stats-heading">
       <p class="eyebrow">TU PROGRESO · NOVERSE</p>
@@ -141,7 +142,8 @@
   <script src="games/color-cascade.js?v=1.05"></script>
   <script src="games/cloud-hopper.js?v=1.05"></script>
   <script src="games/echo-six.js?v=1.05"></script>
-  <script src="js/app.js?v=1.05"></script>
+  <script src="js/app.js?v=1.06"></script>
+  <script src="js/store.js?v=1.06"></script>
 
   <script>
     if (window.Capacitor?.isNativePlatform?.()) {
