@@ -44,13 +44,13 @@ await mkdir(`${res}/drawable-nodpi`,{recursive:true});
 await sharp(foregroundSvg).png().toFile(`${res}/drawable-nodpi/ic_launcher_foreground.png`);
 await sharp(monoSvg).png().toFile(`${res}/drawable-nodpi/ic_launcher_monochrome.png`);
 await mkdir(`${res}/values`,{recursive:true});
-await writeFile(`${res}/values/noverse_launcher.xml`,`<resources><color name="ic_launcher_background">#09252b</color></resources>\n`);
+await writeFile(`${res}/values/noverse_launcher.xml`,`<resources><color name="noverse_launcher_background">#09252b</color></resources>\n`);
 const baseAdaptive = `<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
-  <background android:drawable="@color/ic_launcher_background"/>
+  <background android:drawable="@color/noverse_launcher_background"/>
   <foreground android:drawable="@drawable/ic_launcher_foreground"/>
 </adaptive-icon>\n`;
 const themedAdaptive = `<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
-  <background android:drawable="@color/ic_launcher_background"/>
+  <background android:drawable="@color/noverse_launcher_background"/>
   <foreground android:drawable="@drawable/ic_launcher_foreground"/>
   <monochrome android:drawable="@drawable/ic_launcher_monochrome"/>
 </adaptive-icon>\n`;
