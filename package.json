@@ -1,6 +1,6 @@
 {
   "name": "noverse",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "private": true,
   "description": "NOVERSE — Explore. Play. Discover.",
   "scripts": {
@@ -17,6 +17,7 @@
   },
   "devDependencies": {
     "@capacitor/cli": "^7.0.0",
-    "esbuild": "^0.25.0"
+    "esbuild": "^0.25.0",
+    "sharp": "^0.33.5"
   }
 }
