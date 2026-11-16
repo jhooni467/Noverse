@@ -160,8 +160,13 @@
     else if (!detailScreen.hidden) backToCatalog();
   });
   window.NOVERSE = window.NOVERSE || {};
+  async function handleBack() {
+    if (!gameScreen.hidden) { await backToDetails(); return true; }
+    if (!detailScreen.hidden) { await backToCatalog(); return true; }
+    return false;
+  }
   window.NOVERSE.GameManager = Object.freeze({
-    register, launch, openDetails, close: backToDetails, handleBack: backToDetails,
+    register, launch, openDetails, close: backToDetails, handleBack,
     isRegistered: id => modules.has(id),
     getActiveGame: () => activeGame?.id || null,
     getRegisteredGames: () => Array.from(modules.keys())
