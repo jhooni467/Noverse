@@ -15,7 +15,6 @@
   const gameBack = document.querySelector("#game-back");
   const catalog = document.querySelector(".main-content");
   const statsScreen = document.querySelector("#stats-screen");
-  const storeScreen = document.querySelector("#store-screen");
   const bottomNav = document.querySelector("#bottom-nav");
   const topbar = document.querySelector(".topbar");
   const footer = document.querySelector("footer");
@@ -31,12 +30,9 @@
   }
   function setView(view) {
     const inCatalog = view === "catalog";
-    const activeTab = document.body.dataset.activeTab || "home";
-    const statsActive = activeTab === "stats";
-    const storeActive = activeTab === "store";
-    catalog.hidden = !inCatalog || statsActive || storeActive;
+    const statsActive = document.body.dataset.activeTab === "stats";
+    catalog.hidden = !inCatalog || statsActive;
     if (statsScreen) statsScreen.hidden = !inCatalog || !statsActive;
-    if (storeScreen) storeScreen.hidden = !inCatalog || !storeActive;
     if (bottomNav) bottomNav.hidden = !inCatalog;
     topbar.hidden = !inCatalog;
     footer.hidden = !inCatalog;

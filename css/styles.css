@@ -2201,3 +2201,6 @@ body[data-theme="default"] .coming-screen{background:radial-gradient(circle at 5
 @keyframes coming-message-in{from{opacity:0;transform:translateY(7px);filter:blur(4px)}to{opacity:1;transform:translateY(0);filter:blur(0)}}
 @media(max-width:560px){.home-mode-switch{margin-bottom:10px}.coming-screen{min-height:clamp(260px,43vh,410px);padding:22px 16px}.coming-orbit{width:98px;height:98px;margin-bottom:20px}.coming-orbit span{inset:29px}.store-coming{min-height:clamp(300px,50vh,460px)}}
 @media(prefers-reduced-motion:reduce){.home-mode,.coming-orbit,.message-change{animation:none!important;transition:none!important}}
+
+/* Hidden mode sections must override the featured carousel's display rule. */
+.featured[hidden],.catalog[hidden]{display:none!important}

@@ -1,4 +1,4 @@
-/* NOVERSE 1.04 — APP SHELL, THEMES, TABS, STATS + FIRST-RUN INTRO */
+/* NOVERSE 1.02 — APP SHELL, THEMES, TABS, STATS + FIRST-RUN INTRO */
 (() => {
   "use strict";
   const Registry = window.NOVERSE.Registry;
@@ -12,10 +12,6 @@
   const homePlayed = $("#home-played");
   const homeScreen = $("#home-screen");
   const statsScreen = $("#stats-screen");
-  const storeScreen = $("#store-screen");
-  const experiencePlaceholder = $("#experience-placeholder");
-  const homeModeButtons = [...document.querySelectorAll("[data-home-mode]")];
-  const loadingMessages = ["Materializando...", "Construyendo...", "Creando...", "En producción...", "Dando forma a nuevas ideas...", "Explorando nuevos universos...", "Preparando algo especial...", "Cargando nuevas posibilidades...", "Ajustando los últimos detalles...", "Diseñando lo que viene..."];
   const statsContent = $("#stats-content");
   const bottomNav = $("#bottom-nav");
   const settingsScreen = $("#settings-screen");
@@ -26,7 +22,6 @@
   const allowedThemes = ["default", "glassy", "material"];
   let activeCategory = "Todos";
   let activeTab = "home";
-  let activeHomeMode = "casual";
   let settingsReturnTab = "home";
   let settingsVisible = false;
   let tabToken = 0;
@@ -49,14 +44,11 @@
   applyTheme(savedTheme, false);
   themeButtons.forEach(button => button.addEventListener("click", () => applyTheme(button.dataset.themeChoice)));
 
-  function getTabScreen(tab) {
-    return tab === "home" ? homeScreen : tab === "store" ? storeScreen : statsScreen;
-  }
   function animateTab(nextTab) {
-    if (!["home", "store", "stats"].includes(nextTab) || nextTab === activeTab) return;
+    if (!["home", "stats"].includes(nextTab) || nextTab === activeTab) return;
     const token = ++tabToken;
-    const outgoing = getTabScreen(activeTab);
-    const incoming = getTabScreen(nextTab);
+    const outgoing = activeTab === "home" ? homeScreen : statsScreen;
+    const incoming = nextTab === "home" ? homeScreen : statsScreen;
     outgoing.classList.remove("tab-enter");
     outgoing.classList.add("tab-exit");
     window.setTimeout(() => {
@@ -74,39 +66,9 @@
         button.setAttribute("aria-current", active ? "page" : "false");
       });
       if (nextTab === "stats") renderStats();
-      if (nextTab === "store") refreshComingMessage(storeScreen);
     }, 130);
   }
   tabButtons.forEach(button => button.addEventListener("click", () => animateTab(button.dataset.tab)));
-
-  function refreshComingMessage(container) {
-    if (!container) return;
-    const message = container.querySelector(".coming-message");
-    if (!message) return;
-    const current = message.textContent;
-    const choices = loadingMessages.filter(item => item !== current);
-    message.classList.remove("message-change");
-    void message.offsetWidth;
-    message.textContent = choices[Math.floor(Math.random() * choices.length)];
-    message.classList.add("message-change");
-  }
-  homeModeButtons.forEach(button => button.addEventListener("click", () => {
-    activeHomeMode = button.dataset.homeMode;
-    homeModeButtons.forEach(item => {
-      const selected = item === button;
-      item.classList.toggle("active", selected);
-      item.setAttribute("aria-pressed", String(selected));
-    });
-    const experiences = activeHomeMode === "experiences";
-    document.querySelector(".featured").hidden = experiences;
-    document.querySelector(".catalog").hidden = experiences;
-    experiencePlaceholder.hidden = !experiences;
-    if (experiences) refreshComingMessage(experiencePlaceholder);
-  }));
-  window.setInterval(() => {
-    if (activeTab === "home" && activeHomeMode === "experiences") refreshComingMessage(experiencePlaceholder);
-    if (activeTab === "store") refreshComingMessage(storeScreen);
-  }, 3200);
 
   function renderStats() {
     const games = [
@@ -205,7 +167,7 @@
     if (settingsVisible) return;
     settingsReturnTab = activeTab;
     settingsVisible = true;
-    homeScreen.hidden = true; statsScreen.hidden = true; storeScreen.hidden = true; bottomNav.hidden = true;
+    homeScreen.hidden = true; statsScreen.hidden = true; bottomNav.hidden = true;
     $(".topbar").hidden = true; $("footer").hidden = true;
     settingsScreen.hidden = false; settingsScreen.scrollTop = 0;
     history.pushState({noverse:"settings"}, "", "#ajustes");
@@ -214,9 +176,8 @@
     if (!settingsVisible) return;
     settingsVisible = false; settingsScreen.hidden = true;
     $(".topbar").hidden = false; $("footer").hidden = false; bottomNav.hidden = false;
-    const returnTab = settingsReturnTab;
-    activeTab = returnTab === "home" ? "store" : "home";
-    animateTab(returnTab);
+    if (settingsReturnTab === "stats") { activeTab = "home"; animateTab("stats"); }
+    else { activeTab = "stats"; animateTab("home"); }
     if (location.hash === "#ajustes") history.replaceState({}, "", location.pathname + location.search);
   }
   settingsOpen.addEventListener("click", openSettings);
@@ -273,7 +234,7 @@
     getActiveTab: () => activeTab,
     handleBack: async () => {
       if (settingsVisible) { closeSettings(); return true; }
-      if (activeTab !== "home") { animateTab("home"); return true; }
+      if (activeTab === "stats") { animateTab("home"); return true; }
       return false;
     }
   });
