@@ -7,16 +7,16 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="icon" type="image/svg+xml" href="icons/noverse-192.svg">
-  <link rel="apple-touch-icon" href="icons/noverse-192.svg">
+  <link rel="icon" type="image/png" href="icons/noverse-icon.png">
+  <link rel="apple-touch-icon" href="icons/noverse-icon.png">
   <meta name="description" content="NOVERSE: Explore. Play. Discover.">
   <title>NOVERSE</title>
-  <link rel="manifest" href="manifest.json?v=1.04">
-  <link rel="stylesheet" href="css/styles.css?v=1.04">
+  <link rel="manifest" href="manifest.json?v=1.05">
+  <link rel="stylesheet" href="css/styles.css?v=1.05">
 </head>
 <body>
   <header class="topbar">
-    <div class="brand"><span class="brand-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="9"/><ellipse cx="24" cy="24" rx="21" ry="8" transform="rotate(-25 24 24)"/></svg></span><span>NOVERSE</span></div>
+    <div class="brand"><span class="brand-icon" aria-hidden="true"><img src="icons/noverse-mark.svg" alt=""></span><span>NOVERSE</span></div>
     <div class="topbar-actions">
     <button id="install-app" class="install-app" type="button" hidden>Instalar app</button>
     <button id="settings-open" class="settings" type="button" aria-label="Ajustes" title="Ajustes">
@@ -94,7 +94,7 @@
           <span class="theme-option-check" aria-hidden="true">✓</span>
         </button>
       </div>
-      <p class="settings-version">NOVERSE · Versión 1.04</p>
+      <p class="settings-version">NOVERSE · Versión 1.05</p>
     </div>
   </section>
 
@@ -120,7 +120,7 @@
     <div class="onboarding-stars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
     <div class="onboarding-orbit" aria-hidden="true"><span></span><b></b></div>
     <div class="onboarding-content">
-      <div class="onboarding-mark" aria-hidden="true"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="17"/><ellipse cx="50" cy="50" rx="45" ry="17" transform="rotate(-25 50 50)"/></svg></div>
+      <div class="onboarding-mark" aria-hidden="true"><img src="icons/noverse-mark.svg" alt=""></div>
       <p class="onboarding-kicker">BIENVENIDO A TU UNIVERSO</p>
       <h1 data-onboarding-title>NOVERSE</h1>
       <p data-onboarding-copy>Un lugar donde muchos universos se encuentran.</p>
@@ -134,14 +134,14 @@
   <p id="game-notice" class="game-notice" role="status" hidden></p>
   <footer><span>NOVERSE</span><p>Explore. Play. Discover. ✦</p></footer>
 
-  <script src="core/ambient-audio.js?v=1.04"></script>
-  <script src="core/game-manager.js?v=1.04"></script>
-  <script src="games/registry.js?v=1.04"></script>
-  <script src="games/star-catcher.js?v=1.04"></script>
-  <script src="games/color-cascade.js?v=1.04"></script>
-  <script src="games/cloud-hopper.js?v=1.04"></script>
-  <script src="games/echo-six.js?v=1.04"></script>
-  <script src="js/app.js?v=1.04"></script>
+  <script src="core/ambient-audio.js?v=1.05"></script>
+  <script src="core/game-manager.js?v=1.05"></script>
+  <script src="games/registry.js?v=1.05"></script>
+  <script src="games/star-catcher.js?v=1.05"></script>
+  <script src="games/color-cascade.js?v=1.05"></script>
+  <script src="games/cloud-hopper.js?v=1.05"></script>
+  <script src="games/echo-six.js?v=1.05"></script>
+  <script src="js/app.js?v=1.05"></script>
 
   <script>
     if (window.Capacitor?.isNativePlatform?.()) {
