@@ -338,3 +338,45 @@ body.game-is-open { overflow: hidden; }
 .star-start { min-width:190px; padding:14px 24px; border:0; border-radius:14px; background:var(--primary); color:#20320b; font-weight:950; box-shadow:0 8px 22px #c9f36b25; }
 .star-game-tip { margin:0; color:var(--muted); font-size:11px; text-align:center; }
 @media (max-height:520px) and (orientation:landscape) { .star-arena { height:48vh; min-height:190px; } .star-game-intro { margin-bottom:10px; } }
+
+
+/* NOVERSE APP FEEL — evitar selección accidental y resaltado web */
+html, body, body * {
+  -webkit-tap-highlight-color: transparent;
+}
+
+body, body * {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+input,
+textarea,
+select,
+[contenteditable="true"],
+[contenteditable=""],
+[contenteditable="plaintext-only"] {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+button,
+[role="button"],
+a,
+input,
+select,
+textarea {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+button:focus:not(:focus-visible),
+[role="button"]:focus:not(:focus-visible),
+a:focus:not(:focus-visible) {
+  outline: none;
+}
+
+::selection {
+  background: #c9f36b55;
+  color: #f7fbff;
+}
