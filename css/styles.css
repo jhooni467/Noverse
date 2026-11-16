@@ -312,3 +312,29 @@ body.game-is-open { overflow: hidden; }
     transition-duration: .01ms !important;
   }
 }
+
+
+/* STAR CATCHER — estilos del primer minijuego */
+.star-game { width: min(760px, 100%); margin: 0 auto; }
+.star-game-intro { text-align: center; margin: 8px auto 22px; }
+.star-game-kicker { display:inline-block; padding:6px 10px; border-radius:8px; background:#c9f36b20; color:var(--primary); font-size:10px; font-weight:900; letter-spacing:1.5px; }
+.star-game-intro h2 { margin:12px 0 7px; font-size:clamp(25px,5vw,36px); }
+.star-game-intro p { margin:0; color:var(--muted); font-size:14px; }
+.star-game-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin:20px 0 14px; }
+.star-stat { display:grid; gap:5px; padding:12px 8px; border:1px solid #ffffff12; border-radius:15px; background:var(--surface); text-align:center; }
+.star-stat span { color:var(--muted); font-size:9px; font-weight:900; letter-spacing:1px; }
+.star-stat strong { color:var(--primary); font-size:24px; font-variant-numeric:tabular-nums; }
+.star-arena { position:relative; width:100%; height:clamp(290px,48vh,440px); min-height:260px; overflow:hidden; border:1px solid #c9f36b35; border-radius:24px; background:radial-gradient(circle at 20% 25%,#c9f36b14 0 2px,transparent 3px),radial-gradient(circle at 75% 70%,#ffffff18 0 2px,transparent 3px),radial-gradient(ellipse at center,#28616a 0%,#10363e 70%); background-size:73px 81px,101px 93px,auto; box-shadow:inset 0 0 55px #061c22aa; }
+.star-arena-hint { position:absolute; inset:0; display:grid; place-items:center; padding:20px; color:#d5e8dd; text-align:center; font-size:14px; }
+.star-target { position:absolute; z-index:2; display:grid; width:64px; height:64px; place-items:center; border:1px solid #fff8b9; border-radius:22px; background:linear-gradient(145deg,#f5fca0,#c9f36b 70%); color:#38521a; font-size:39px; line-height:1; box-shadow:0 7px 24px #c9f36b66,inset 0 2px 3px #ffffffaa; touch-action:manipulation; transition:left .13s ease,top .13s ease,transform .12s ease; }
+.star-target:active { transform:scale(.86); }
+.star-target.star-pop { animation:star-pop .18s ease; }
+@keyframes star-pop { 50% { transform:scale(1.2) rotate(12deg); } }
+.star-game-result { position:absolute; inset:0; z-index:3; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:24px; background:#09252bdc; text-align:center; backdrop-filter:blur(5px); }
+.star-result-icon { color:var(--primary); font-size:58px; }
+.star-game-result h3 { margin:8px 0; font-size:27px; }
+.star-game-result p { margin:0; color:var(--muted); }
+.star-game-actions { display:grid; justify-items:center; gap:10px; padding:18px 0; }
+.star-start { min-width:190px; padding:14px 24px; border:0; border-radius:14px; background:var(--primary); color:#20320b; font-weight:950; box-shadow:0 8px 22px #c9f36b25; }
+.star-game-tip { margin:0; color:var(--muted); font-size:11px; text-align:center; }
+@media (max-height:520px) and (orientation:landscape) { .star-arena { height:48vh; min-height:190px; } .star-game-intro { margin-bottom:10px; } }
