@@ -28,12 +28,12 @@
       previews: ["Acompaña a Nubi", "Cruza los arcos de cristal"]
     },
     {
-      id: "game-04", name: "Próxima aventura", description: "Explora algo diferente.",
-      shortInfo: "Un espacio para crear, experimentar y descubrir.",
-      category: "Creatividad", icon: "🎨", featured: false, duration: "Libre", difficulty: "Relajado",
-      palette: { primary: "#ffb1cf", secondary: "#c3a5ff", background: "#39233e", surface: "#593653", glow: "#e99bce" },
-      previews: ["Deja volar tu imaginación", "Próximamente"]
-    },
+      id: "game-04", name: "Echo Six",
+      description: "Memoriza secuencias de seis sonidos.",
+      shortInfo: "Un reto de memoria musical. Escucha y observa una secuencia, repítela en el orden correcto y cada ronda añadirá un nuevo sonido. El desafío no tiene fin.",
+      category: "Habilidad", icon: "♫", featured: true, duration: "Infinita", difficulty: "Progresiva",
+      palette: { primary: "#b69aff", secondary: "#59dfc5", background: "#171329", surface: "#282044", glow: "#9d82ff" },
+      previews: ["Recuerda seis sonidos", "Supera tu récord"],
     {
       id: "game-05", name: "Próximo universo", description: "Descubre una experiencia relajante.",
       shortInfo: "Una experiencia tranquila para explorar a tu ritmo.",
