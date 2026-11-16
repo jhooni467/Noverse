@@ -38,7 +38,7 @@ await mkdir(`${res}/drawable-nodpi`,{recursive:true});
 await writeFile(`${res}/drawable-nodpi/ic_launcher_foreground.png`,foreground);
 await writeFile(`${res}/drawable-nodpi/ic_launcher_monochrome.png`,foreground);
 await mkdir(`${res}/values`,{recursive:true});
-await writeFile(`${res}/values/noverse_launcher.xml`,`<resources><color name="noverse_launcher_background">#0b0b14</color></resources>\\n`);
+await writeFile(`${res}/values/noverse_launcher.xml`,`<resources><color name="noverse_launcher_background">#0b0b14</color></resources>\n`);
 const adaptive = `<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
   <background android:drawable="@color/noverse_launcher_background"/>
   <foreground android:drawable="@drawable/ic_launcher_foreground"/>
