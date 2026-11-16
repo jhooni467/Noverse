@@ -19,17 +19,17 @@
 
     container.innerHTML =
       '<section class="echo-xylophone" aria-label="Echo Six, juego de memoria musical">' +
-        '<header class="echo-x-head"><div><span class="echo-kicker">MEMORIA MUSICAL</span><h2>Echo Six</h2></div><div class="echo-round"><small>RONDA</small><strong data-round>01</strong></div></header>' +
+        '<header class="echo-x-head"><div><span class="echo-kicker">¡JUEGA CON TUS OÍDOS!</span><h2>Echo Six</h2></div><div class="echo-round"><small>RONDA</small><strong data-round>01</strong></div></header>' +
         '<div class="echo-record"><span>RÉCORD</span><strong data-best>00</strong></div>' +
         '<div class="echo-keys" aria-label="Xilófono de seis notas">' + keys + '</div>' +
-        '<p class="echo-message" data-message>Escucha la primera secuencia</p>' +
-        '<button class="echo-play" type="button" data-start>COMENZAR</button>' +
-        '<p class="echo-hint">Escucha · Recuerda · Repite</p>' +
+        '<p class="echo-message" data-message>¡Presta atención, jijiji!</p>' +
+        '<button class="echo-play" type="button" data-start>¡A JUGAR!</button>' +
+        '<p class="echo-hint">TAP TAP · ¡A REPETIR!</p>' +
       '</section>' +
       '<div class="echo-finish" data-end hidden><div class="echo-finish-card">' +
-        '<span class="echo-kicker">FIN DE LA PARTIDA</span><h3>¡Buen intento!</h3><p data-result></p>' +
+        '<span class="echo-kicker">¡UPS, SE NOS FUE!</span><h3>¡OTRA VEZ! 🖍️</h3><p data-result></p>' +
         '<div class="echo-finish-record"><small>RÉCORD</small><strong data-end-best>00</strong></div>' +
-        '<button type="button" data-retry>JUGAR DE NUEVO</button>' +
+        '<button type="button" data-retry>¡OTRA RONDA!</button>' +
       '</div></div>';
 
     const $ = selector => container.querySelector(selector);
@@ -99,7 +99,7 @@
     function preview() {
       locked = true;
       clearTimers();
-      message.textContent = "Escucha y memoriza";
+      message.textContent = "¡Ojos y orejas atentos!";
       let time = 500;
       sequence.forEach(note => {
         later(() => hit(note), time);
@@ -108,7 +108,7 @@
       later(() => {
         locked = false;
         input = 0;
-        message.textContent = "Tu turno";
+        message.textContent = "¡Ahora tú!";
       }, time + 80);
     }
     function start() {
@@ -127,7 +127,7 @@
       round++;
       sequence.push(Math.floor(Math.random() * 6));
       updateHud();
-      message.textContent = "¡Muy bien!";
+      message.textContent = "¡YUJUUU! ⭐";
       later(preview, 560);
     }
     function finish() {
