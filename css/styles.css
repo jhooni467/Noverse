@@ -1369,3 +1369,143 @@ body[data-theme="material"] .theme-option[aria-pressed="true"] { background:#252
 /* Monochrome brand mark and controls */
 .brand-icon svg { display:block;width:29px;height:29px;fill:none;stroke:#f5f5f7;stroke-width:2.2;stroke-linecap:round; }
 .settings svg { fill:none; }
+
+
+/* NOVERSE v0.8.1 — Material grayscale motion + deeper Glassy */
+body[data-theme="material"]::before,
+body[data-theme="material"]::after {
+  filter:blur(105px);
+  opacity:.23;
+  animation:material-drift 24s ease-in-out infinite alternate;
+}
+body[data-theme="material"]::before {
+  width:min(95vw,720px);height:min(95vw,720px);
+  top:-18%;left:-35%;
+  background:radial-gradient(circle at 45% 45%,#d7d7d7 0%,#8d8d8d66 24%,#55555522 48%,transparent 72%);
+}
+body[data-theme="material"]::after {
+  width:min(85vw,640px);height:min(85vw,640px);
+  right:-32%;bottom:-18%;
+  background:radial-gradient(circle at 50% 50%,#bcbcbc 0%,#77777755 27%,#44444422 50%,transparent 72%);
+  animation-delay:-12s;
+}
+@keyframes material-drift {
+  0% { transform:translate3d(-2%,0,0) scale(.94); }
+  50% { transform:translate3d(5%,4%,0) scale(1.06); }
+  100% { transform:translate3d(-1%,7%,0) scale(1); }
+}
+body[data-theme="material"] .welcome {
+  background:linear-gradient(145deg,#252525c9,#111111a8 58%,#30303099);
+  border:1px solid #ffffff20;
+  box-shadow:0 18px 60px #0008,inset 0 1px #ffffff16;
+}
+body[data-theme="material"] .settings-screen {
+  background:linear-gradient(145deg,#141414f2,#050505f5);
+}
+body[data-theme="material"] .theme-option {
+  background:linear-gradient(120deg,#242424,#151515);
+  border-color:#ffffff1c;
+}
+body[data-theme="material"] .theme-option[aria-pressed="true"] {
+  background:linear-gradient(120deg,#343434,#202020);
+  border-color:#ffffff9c;
+}
+body[data-theme="material"] .category,
+body[data-theme="material"] .settings,
+body[data-theme="material"] .settings-screen .nav-back {
+  background:#242424c9;
+  border-color:#ffffff20;
+}
+
+/* Glassy — crystal surfaces with visible depth, highlights and real backdrop blur */
+body[data-theme="glassy"] {
+  background:
+    radial-gradient(ellipse at 15% 18%,#ffffff12,transparent 42%),
+    radial-gradient(ellipse at 88% 78%,#aeb8c512,transparent 40%),
+    #030303 !important;
+}
+body[data-theme="glassy"]::before,
+body[data-theme="glassy"]::after {
+  opacity:.24;
+  filter:blur(100px);
+  animation:glassy-float 28s ease-in-out infinite alternate;
+}
+body[data-theme="glassy"]::before {
+  background:radial-gradient(circle,#ffffff 0%,#ffffff55 20%,#b9c3d322 48%,transparent 72%);
+}
+body[data-theme="glassy"]::after {
+  background:radial-gradient(circle,#dce3ed 0%,#ffffff44 23%,#aab4c322 50%,transparent 72%);
+  animation-delay:-14s;
+}
+@keyframes glassy-float {
+  from { transform:translate3d(-3%,-2%,0) scale(.92); }
+  to { transform:translate3d(5%,6%,0) scale(1.08); }
+}
+body[data-theme="glassy"] .topbar {
+  padding-left:18px;padding-right:18px;
+  border:1px solid #ffffff20;
+  border-top-color:#ffffff38;
+  border-radius:0 0 25px 25px;
+  background:linear-gradient(115deg,#ffffff1b,#ffffff05 48%,#ffffff12);
+  box-shadow:0 16px 50px #0008,inset 0 1px #ffffff2c;
+  backdrop-filter:blur(38px) saturate(165%);
+  -webkit-backdrop-filter:blur(38px) saturate(165%);
+}
+body[data-theme="glassy"] .welcome {
+  position:relative;
+  overflow:hidden;
+  background:
+    linear-gradient(135deg,#ffffff24 0%,#ffffff0b 35%,#ffffff03 68%,#ffffff14 100%);
+  border:1px solid #ffffff35;
+  border-top-color:#ffffff65;
+  box-shadow:0 28px 85px #000b,inset 0 1px #ffffff55,inset 0 -1px #ffffff12;
+  backdrop-filter:blur(42px) saturate(175%);
+  -webkit-backdrop-filter:blur(42px) saturate(175%);
+}
+body[data-theme="glassy"] .welcome::before {
+  content:"";
+  position:absolute;inset:0;
+  pointer-events:none;
+  border-radius:inherit;
+  background:linear-gradient(115deg,#ffffff20,transparent 24%,transparent 70%,#ffffff0b);
+  opacity:1;
+}
+body[data-theme="glassy"] .settings,
+body[data-theme="glassy"] .category,
+body[data-theme="glassy"] .theme-option,
+body[data-theme="glassy"] .settings-screen .nav-back {
+  background:linear-gradient(135deg,#ffffff20,#ffffff08 55%,#ffffff12);
+  border:1px solid #ffffff30;
+  border-top-color:#ffffff55;
+  box-shadow:inset 0 1px #ffffff2c,0 12px 35px #0007;
+  backdrop-filter:blur(36px) saturate(180%);
+  -webkit-backdrop-filter:blur(36px) saturate(180%);
+}
+body[data-theme="glassy"] .settings-screen {
+  background:linear-gradient(145deg,#090909d9,#000000e8);
+  backdrop-filter:blur(28px);
+  -webkit-backdrop-filter:blur(28px);
+}
+body[data-theme="glassy"] .theme-option[aria-pressed="true"] {
+  background:linear-gradient(135deg,#ffffff30,#ffffff12);
+  border-color:#ffffff88;
+  box-shadow:inset 0 1px #ffffff55,0 0 28px #ffffff12,0 14px 40px #0008;
+}
+body[data-theme="glassy"] .category.active {
+  background:linear-gradient(135deg,#ffffff,#d8d8dc);
+  color:#050505;
+  border-color:#fff;
+  box-shadow:0 5px 24px #ffffff25,inset 0 1px #fff;
+}
+body[data-theme="glassy"] .eyebrow {
+  background:#ffffff12;
+  border-color:#ffffff22;
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+}
+@media(prefers-reduced-motion:reduce) {
+  body[data-theme="material"]::before,
+  body[data-theme="material"]::after,
+  body[data-theme="glassy"]::before,
+  body[data-theme="glassy"]::after { animation:none; }
+}
