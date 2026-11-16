@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="192" height="192" viewBox="0 0 512 512">
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#17434a"/><stop offset="1" stop-color="#09252b"/></linearGradient><linearGradient id="planet" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#e4ff9a"/><stop offset="1" stop-color="#a8d94f"/></linearGradient></defs>
+<rect width="512" height="512" rx="116" fill="url(#bg)"/>
+<circle cx="256" cy="256" r="112" fill="url(#planet)"/>
+<ellipse cx="256" cy="256" rx="214" ry="68" fill="none" stroke="#ff9f5a" stroke-width="30" transform="rotate(-24 256 256)"/>
+<ellipse cx="256" cy="256" rx="214" ry="68" fill="none" stroke="#f7fbff" stroke-width="9" opacity=".8" transform="rotate(-24 256 256)"/>
+<path d="M80 314c65-43 118-60 176-60 67 0 126 23 176 54" fill="none" stroke="#09252b" stroke-width="13" opacity=".55" stroke-linecap="round"/>
+<circle cx="160" cy="125" r="9" fill="#f7fbff"/><circle cx="384" cy="370" r="7" fill="#c9f36b"/><path d="m372 112 8 18 18 8-18 8-8 18-8-18-18-8 18-8z" fill="#f7fbff" opacity=".9"/>
+</svg>
