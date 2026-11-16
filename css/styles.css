@@ -2285,3 +2285,23 @@ body[data-theme="material"] .bottom-nav-item.active{background:#303038}
 @media(prefers-reduced-motion:reduce){
   .bottom-nav-item,.bottom-nav-item svg,.bottom-nav-item span{transition:none!important}
 }
+
+
+/* NOVERSE 1.08 — transiciones sin filtros que degradan el texto en WebView */
+@keyframes noverse-tab-in{from{opacity:0;transform:translate3d(14px,5px,0)}to{opacity:1;transform:translate3d(0,0,0)}}
+@keyframes noverse-tab-out{to{opacity:0;transform:translate3d(-8px,0,0)}}
+.tab-enter{animation:noverse-tab-in .32s cubic-bezier(.2,.8,.2,1) both}
+.tab-exit{animation:noverse-tab-out .12s ease both;pointer-events:none}
+
+/* Selector compacto al inicio de Inicio */
+.home-mode-switch{display:grid;grid-template-columns:1fr 1fr;gap:4px;width:min(100%,290px);margin:8px 0 17px;padding:4px;border:1px solid #ffffff1b;border-radius:15px;background:#ffffff08;box-shadow:inset 0 1px #ffffff0a}
+.home-mode{display:flex;min-height:36px;align-items:center;justify-content:center;gap:7px;padding:0 9px;border:0;border-radius:11px;background:transparent;color:#aaa7b5;font:inherit;font-size:11px;font-weight:800;letter-spacing:0;white-space:nowrap;transition:background .22s ease,color .22s ease,transform .22s ease,box-shadow .22s ease}
+.home-mode-icon{display:block;flex:0 0 16px;width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;opacity:.9}
+.home-mode.active{background:linear-gradient(110deg,#d9c9ff,#9e8aff);color:#211a3c;box-shadow:0 3px 12px #a38bff25;transform:none}
+.home-mode:active{transform:scale(.97)}
+body[data-theme="glassy"] .home-mode-switch{background:#ffffff10;border-color:#ffffff30;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+body[data-theme="glassy"] .home-mode.active{background:#ffffff35;color:#fff}
+body[data-theme="material"] .home-mode-switch{background:#1d1d22;border-radius:17px}
+body[data-theme="material"] .home-mode.active{background:#37313f;color:#e9dcff;box-shadow:none}
+@media(max-width:380px){.home-mode-switch{width:min(100%,270px)}.home-mode{font-size:10px;gap:5px;padding-inline:6px}}
+@media(prefers-reduced-motion:reduce){.home-mode,.tab-enter,.tab-exit{animation:none!important;transition:none!important}}

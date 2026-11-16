@@ -11,9 +11,9 @@
   <link rel="apple-touch-icon" href="icons/noverse-mark.svg">
   <meta name="description" content="NOVERSE: Explore. Play. Discover.">
   <title>NOVERSE</title>
-  <link rel="manifest" href="manifest.json?v=1.07">
-  <link rel="stylesheet" href="css/styles.css?v=1.07">
-  <link rel="stylesheet" href="css/store.css?v=1.07">
+  <link rel="manifest" href="manifest.json?v=1.08">
+  <link rel="stylesheet" href="css/styles.css?v=1.08">
+  <link rel="stylesheet" href="css/store.css?v=1.08">
 </head>
 <body>
   <header class="topbar">
@@ -32,6 +32,16 @@
       <h1>¿Qué quieres<br>descubrir hoy?</h1>
       <p>Pequeños juegos. Grandes universos.</p><div class="welcome-actions"><button id="surprise-play" type="button">Jugar algo <span>✦</span></button><span id="home-played">Tu próxima aventura te espera</span></div>
     </section>
+    <section class="home-mode-switch" role="group" aria-label="Tipo de contenido">
+      <button class="home-mode active" type="button" data-home-mode="casual" aria-pressed="true">
+        <svg class="home-mode-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 8.5h10a4 4 0 0 1 3.8 5.2l-.7 2.2a2.5 2.5 0 0 1-4.1 1.1l-1.6-1.4H9.6L8 17a2.5 2.5 0 0 1-4.1-1.1l-.7-2.2A4 4 0 0 1 7 8.5Z"/><path d="M8 11v4m-2-2h4m6-1h.01M18 14h.01"/></svg>
+        <span>Casuales</span>
+      </button>
+      <button class="home-mode" type="button" data-home-mode="experiences" aria-pressed="false">
+        <svg class="home-mode-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="m14.8 9.2-2 4.1-4.1 2 2-4.1 4.1-2Z"/></svg>
+        <span>Experiencias</span>
+      </button>
+    </section>
     <section class="featured">
       <div class="section-heading"><h2>Para descubrir</h2><span>SELECCIÓN NOVERSE</span></div>
       <div id="featured-games" class="featured-grid"></div>
@@ -41,10 +51,7 @@
       <nav id="categories" class="categories" aria-label="Categorías de juegos"></nav>
       <div id="games-grid" class="games-grid"></div>
     </section>
-    <section class="home-mode-switch" role="group" aria-label="Tipo de contenido">
-      <button class="home-mode active" type="button" data-home-mode="casual" aria-pressed="true">Casuales</button>
-      <button class="home-mode" type="button" data-home-mode="experiences" aria-pressed="false">Experiencias</button>
-    </section>
+
     <section id="experience-placeholder" class="coming-screen" hidden aria-live="polite">
       <div class="coming-orbit" aria-hidden="true"><span></span><i></i></div>
       <p class="coming-kicker">NUEVOS UNIVERSOS EN CAMINO</p>
@@ -154,8 +161,8 @@
   <script src="games/color-cascade.js?v=1.05"></script>
   <script src="games/cloud-hopper.js?v=1.05"></script>
   <script src="games/echo-six.js?v=1.05"></script>
-  <script src="js/app.js?v=1.07"></script>
-  <script src="js/store.js?v=1.07"></script>
+  <script src="js/app.js?v=1.08"></script>
+  <script src="js/store.js?v=1.08"></script>
 
   <script>
     if (window.Capacitor?.isNativePlatform?.()) {
