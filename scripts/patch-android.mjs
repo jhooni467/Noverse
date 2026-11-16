@@ -1,4 +1,6 @@
-import { mkdir, writeFile, readFile } from "node:fs/promises";
+import { mkdir, writeFile, readFile, readdir } from "node:fs/promises";
+import { existsSync } from "node:fs";
+import path from "node:path";
 import sharp from "sharp";
 
 const javaFile = "android/app/src/main/java/com/noverse/gamehub/MainActivity.java";
@@ -65,3 +67,33 @@ if (/android:roundIcon="[^"]+"/.test(androidManifest)) {
 }
 await writeFile(manifestPath,androidManifest);
 console.log("NOVERSE: shared white mark applied to Android adaptive and legacy launcher icons.");
+
+
+// Sustituye también los splash genéricos de Capacitor por la marca NOVERSE.
+async function findSplashFiles(dir) {
+  const found = [];
+  if (!existsSync(dir)) return found;
+  for (const entry of await readdir(dir, { withFileTypes: true })) {
+    if (!entry.isDirectory() || !entry.name.startsWith("drawable")) continue;
+    const file = path.join(dir, entry.name, "splash.png");
+    if (existsSync(file)) found.push(file);
+  }
+  return found;
+}
+let splashCount = 0;
+for (const file of await findSplashFiles(res)) {
+  const folder = path.basename(path.dirname(file));
+  let width = folder.includes("land") ? 800 : 480;
+  let height = folder.includes("land") ? 480 : 800;
+  try {
+    const meta = await sharp(file).metadata();
+    if (meta.width && meta.height) { width = meta.width; height = meta.height; }
+  } catch (_) {}
+  const symbolSize = Math.round(Math.min(width, height) * 0.34);
+  const symbol = await sharp(mark).resize(symbolSize, symbolSize).png().toBuffer();
+  const splash = await sharp({ create: { width, height, channels: 4, background: "#000000" } })
+    .composite([{ input: symbol, gravity: "center" }]).png().toBuffer();
+  await writeFile(file, splash);
+  splashCount++;
+}
+console.log(`NOVERSE: ${splashCount} pantalla(s) de inicio con la marca aplicadas.`);
