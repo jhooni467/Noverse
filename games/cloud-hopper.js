@@ -105,10 +105,13 @@
       }
     }
     function finish(){
+      if(!playing)return;
       playing=false;ended=true;cancelAnimationFrame(raf);
-      if(score>best){best=score;bestNode.textContent=best;try{localStorage.setItem("noverse-cloud-hopper-best",String(best));}catch(_){}}
+      const isRecord=score>best;
+      if(isRecord){best=score;bestNode.textContent=best;try{localStorage.setItem("noverse-cloud-hopper-best",String(best));}catch(_){}}
+      window.NOVERSE.GameManager?.recordCompleted?.();
       title.textContent=score>0?"¡Buen vuelo!":"¡Inténtalo otra vez!";
-      copy.textContent="Conseguiste "+score+(score===1?" punto.":" puntos.")+(score>=best?" ¡Nuevo récord!":"");
+      copy.textContent="Conseguiste "+score+(score===1?" punto.":" puntos.")+(isRecord?" ¡Nuevo récord!":"");
       startButton.textContent="Volver a jugar";overlay.hidden=false;draw();
     }
     function update(dt){
