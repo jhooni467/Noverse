@@ -78,6 +78,7 @@
     const target = event.target.closest(liquidTargets);
     if (!target || target.disabled) return;
     const rect = target.getBoundingClientRect();
+    target.classList.add("liquid-pressable");
     target.style.setProperty("--liquid-x", ((event.clientX - rect.left) / Math.max(1, rect.width) * 100) + "%");
     target.style.setProperty("--liquid-y", ((event.clientY - rect.top) / Math.max(1, rect.height) * 100) + "%");
     target.classList.add("is-liquid-pressed");
