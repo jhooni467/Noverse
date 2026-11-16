@@ -2331,7 +2331,7 @@ body[data-theme="glassy"] .bottom-nav{backdrop-filter:blur(12px) saturate(150%);
 /* La presión crea una lente/burbuja localizada, no un simple encogimiento. */
 .liquid-pressable{position:relative;isolation:isolate}
 .liquid-pressable:after{content:"";position:absolute;z-index:8;inset:1px;pointer-events:none;border-radius:inherit;opacity:0;transform:scale(.82);background:radial-gradient(circle at var(--liquid-x,50%) var(--liquid-y,50%),#ffffff65 0%,#ffffff24 20%,#ffffff08 43%,transparent 70%);box-shadow:inset 0 1px 1px #ffffff70,inset 0 -1px 1px #ffffff20;transition:opacity .16s ease,transform .32s cubic-bezier(.18,.8,.2,1)}
-.liquid-pressable.is-liquid-pressed:after{opacity:1;transform:scale(1.04)}
+.liquid-pressable.is-liquid-pressed:after{opacity:1;transform:scale(1.04);background:radial-gradient(circle at var(--liquid-x,50%) var(--liquid-y,50%),#ffffff70 0%,#ffffff2b 22%,#ffffff0a 46%,transparent 72%)}
 body[data-theme="glassy"] .liquid-pressable.is-liquid-pressed{border-color:#ffffff78;box-shadow:inset 0 1px 1px #ffffff75,0 8px 24px #0005}
 body[data-theme="glassy"] .bottom-nav-item.is-liquid-pressed:after,
 body[data-theme="glassy"] .home-mode.is-liquid-pressed:after{border-radius:inherit;background:radial-gradient(circle at var(--liquid-x,50%) var(--liquid-y,50%),#ffffff80 0%,#ffffff2b 24%,transparent 68%)}
