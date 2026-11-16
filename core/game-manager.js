@@ -101,6 +101,12 @@
     if (!definition) { notify("Este juego llegará próximamente ✦"); return false; }
     await stopActiveGame();
     hasPlayedGame = true;
+    try {
+      const count = Math.max(0, Number(localStorage.getItem("noverse-games-played")) || 0);
+      localStorage.setItem("noverse-games-played", String(count + 1));
+      localStorage.setItem("noverse-last-game", id);
+    } catch (_) {}
+    document.dispatchEvent(new CustomEvent("noverse:stats-updated"));
     const token = ++launchToken;
     title.textContent = definition.name || "Minijuego";
     root.replaceChildren();
