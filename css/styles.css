@@ -2241,7 +2241,7 @@ body[data-theme="material"] .coming-screen{background:radial-gradient(circle at 
 /* NOVERSE v1.05 — iconografía y fondo de universo */
 body{
   background-color:var(--background);
-  background-image:url("../images/noverse-app-background.png"),
+  background-image:url("../images/noverse-app-background.svg"),
     radial-gradient(ellipse at 85% 8%,#287c7628 0,transparent 32rem),
     radial-gradient(ellipse at 0% 42%,#8ba94312 0,transparent 30rem);
   background-position:center center,center,center;
