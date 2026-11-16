@@ -1,4 +1,4 @@
-/* NOVERSE — GAME REGISTRY · v0.5.0 */
+/* NOVERSE — GAME REGISTRY · v0.6.0 */
 (() => {
   "use strict";
   const catalog = [
@@ -12,11 +12,12 @@
       previews: ["Caza estrellas", "Supera tu récord"]
     },
     {
-      id: "game-02", name: "Próximo puzzle",
-      description: "Pon a prueba tu lógica.", shortInfo: "Un nuevo reto de ingenio llegará pronto.",
-      category: "Puzzle", icon: "🧩", featured: true, duration: "Por definir", difficulty: "Por definir",
-      palette: { primary: "#7de4d0", secondary: "#8bbcff", background: "#102d42", surface: "#1c4960", glow: "#55d6c2" },
-      previews: ["Un mundo de piezas", "Próximamente"]
+      id: "game-02", name: "Color Cascade",
+      description: "Ordena colores y crea degradados perfectos.",
+      shortInfo: "Pon a prueba tu percepción visual. Arrastra las fichas y acomoda los tonos del más claro al más oscuro para completar cada paleta.",
+      category: "Puzzle", icon: "◈", featured: true, duration: "Libre", difficulty: "Progresiva",
+      palette: { primary: "#c4adff", secondary: "#ff9fc8", background: "#202044", surface: "#302d5c", glow: "#a58bff" },
+      previews: ["Ordena los degradados", "Completa cada paleta"]
     },
     {
       id: "game-03", name: "Próximo desafío", description: "Demuestra tu habilidad.",
