@@ -49,6 +49,14 @@
     detailScreen.style.setProperty("--game-background", palette.background);
     detailScreen.style.setProperty("--game-surface", palette.surface);
     detailScreen.style.setProperty("--game-glow", palette.glow);
+    gameScreen.style.setProperty("--game-primary", palette.primary);
+    gameScreen.style.setProperty("--game-secondary", palette.secondary);
+    gameScreen.style.setProperty("--game-background", palette.background);
+    gameScreen.style.setProperty("--game-surface", palette.surface);
+    gameScreen.style.setProperty("--game-glow", palette.glow);
+    if (!document.fullscreenElement && document.documentElement.requestFullscreen) {
+      document.documentElement.requestFullscreen().catch(() => {});
+    }
     detailContent.innerHTML = `
       <section class="detail-hero">
         <div class="detail-orb detail-orb-one"></div><div class="detail-orb detail-orb-two"></div>
