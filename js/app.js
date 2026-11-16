@@ -23,6 +23,7 @@
   let settingsReturnTab = "home";
   let settingsVisible = false;
   let tabToken = 0;
+  document.body.dataset.activeTab = "home";
 
   function readNumber(key) {
     try { return Math.max(0, Number(localStorage.getItem(key)) || 0); } catch (_) { return 0; }
