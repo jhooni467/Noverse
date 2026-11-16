@@ -1,4 +1,4 @@
-const VERSION = "1.04";
+const VERSION = "1.05";
 const CACHE_NAME = `noverse-v${VERSION}`;
 const FILES = [
   "./?v=" + VERSION,
@@ -7,6 +7,9 @@ const FILES = [
   "./css/styles.css?v=" + VERSION,
   "./icons/noverse-192.svg",
   "./icons/noverse-512.svg",
+  "./icons/noverse-mark.svg",
+  "./icons/noverse-icon.png",
+  "./images/noverse-app-background.png",
   "./core/game-manager.js?v=" + VERSION,
   "./games/registry.js?v=" + VERSION,
   "./games/star-catcher.js?v=" + VERSION,
