@@ -63,7 +63,7 @@
     gameScreen.style.setProperty("--game-background", palette.background);
     gameScreen.style.setProperty("--game-surface", palette.surface);
     gameScreen.style.setProperty("--game-glow", palette.glow);
-    if (!document.fullscreenElement && document.documentElement.requestFullscreen) {
+    if (!window.Capacitor?.isNativePlatform?.() && !document.fullscreenElement && document.documentElement.requestFullscreen) {
       document.documentElement.requestFullscreen().catch(() => {});
     }
     detailContent.innerHTML = `
