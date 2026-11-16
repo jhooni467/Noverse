@@ -9,10 +9,10 @@
   const catalog = [
     {
       id: "game-01",
-      name: "Próximo descubrimiento",
-      description: "Una nueva experiencia te espera.",
+      name: "Star Catcher",
+      description: "Atrapa estrellas antes de que termine el tiempo.",
       category: "Arcade",
-      icon: "✨",
+      icon: "⭐",
       featured: true
     },
     {
