@@ -1,6 +1,7 @@
-const CACHE_NAME = "noverse-v0.6.3";
+const CACHE_NAME = "noverse-v0.6.4";
 const FILES = [
   "./", "./index.html", "./manifest.json", "./css/styles.css",
+  "./icons/noverse-192.svg", "./icons/noverse-512.svg",
   "./core/game-manager.js", "./games/registry.js", "./games/star-catcher.js", "./games/color-cascade.js", "./js/app.js"
 ];
 self.addEventListener("install", event => {
