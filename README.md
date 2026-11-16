@@ -2,68 +2,19 @@
 
 ### Explore. Play. Discover.
 
-NOVERSE is a collection of independent casual games.
+NOVERSE reúne minijuegos casuales en una sola experiencia. Cada juego tiene su propio estilo y una forma distinta de divertirse.
 
-## Features
+## Juegos disponibles
 
-- Offline-first experience
-- Portrait and landscape support
-- Adaptive mobile and tablet interface
-- Independent game modules
-- Central Game Manager and Game Registry
-- Colorful game-universe visual identity
-- No advertisements
-- No in-app purchases
-- Local records for supported games
+- **Star Catcher** — atrapa las estrellas antes de que termine el tiempo.
+- **Color Cascade** — ordena los tonos para completar degradados.
 
-## Technology
+## La experiencia
 
-- HTML5
-- CSS3
-- JavaScript
-- Progressive Web App
+- Interfaz diseñada para teléfonos y tabletas.
+- Se puede usar sin conexión después de cargar la aplicación.
+- Sin anuncios ni compras dentro de la app.
+- Los récords compatibles se guardan localmente en el dispositivo.
 
-## Project status
-
-**Version 0.4.0 — First playable game**
-
-### Star Catcher
-
-The first playable NOVERSE game is available:
-- 30-second arcade round
-- Tap the moving star to earn points
-- Live score and countdown
-- Personal best saved locally on the device
-- Replay after each round
-- Responsive touch-friendly play area
-
-### Core architecture
-
-- `core/game-manager.js` — launches and closes games
-- `games/registry.js` — catalog, categories, and module registration
-- `games/star-catcher.js` — first independent game module
-- `js/app.js` — catalog interface
-- `css/styles.css` — shared interface and game styles
-
-## Registering a game module
-
-A module can register itself with an existing catalog ID:
-
-```js
-window.NOVERSE.Registry.registerModule("game-02", {
-  mount(container, tools) {
-    // Build the game inside container.
-    return {
-      unmount() {
-        // Release timers, listeners, and resources.
-      }
-    };
-  }
-});
-```
-
-Every game owns its own logic and cleans up its resources when closed.
-
-## Vision
-
-Every game is a new discovery.
+**NOVERSE**  
+Explore. Play. Discover. ✦
