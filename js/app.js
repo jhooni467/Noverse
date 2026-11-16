@@ -1,4 +1,4 @@
-/* NOVERSE 1.00 — APP SHELL, THEMES, TABS, STATS + FIRST-RUN INTRO */
+/* NOVERSE 1.02 — APP SHELL, THEMES, TABS, STATS + FIRST-RUN INTRO */
 (() => {
   "use strict";
   const Registry = window.NOVERSE.Registry;
@@ -219,5 +219,13 @@
   document.addEventListener("noverse:catalog-updated", () => { renderFeatured(); renderGames(); });
   document.addEventListener("noverse:stats-updated", renderStats);
   window.NOVERSE = window.NOVERSE || {};
-  window.NOVERSE.App = Object.freeze({ refreshStats: renderStats, getActiveTab: () => activeTab });
+  window.NOVERSE.App = Object.freeze({
+    refreshStats: renderStats,
+    getActiveTab: () => activeTab,
+    handleBack: async () => {
+      if (settingsVisible) { closeSettings(); return true; }
+      if (activeTab === "stats") { animateTab("home"); return true; }
+      return false;
+    }
+  });
 })();
