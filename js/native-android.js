@@ -17,7 +17,7 @@ if (native) {
   const configureSystemUI = async () => {
     try {
       await StatusBar.setOverlaysWebView({ overlay: false });
-      await StatusBar.setStyle({ style: Style.Light });
+      await StatusBar.setStyle({ style: Style.Dark });
       await StatusBar.setBackgroundColor({ color: "#000000" });
     } catch (error) { console.warn("NOVERSE: status bar", error); }
     try { await SplashScreen.hide(); } catch (_) {}

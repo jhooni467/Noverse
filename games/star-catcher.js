@@ -86,6 +86,7 @@
       target.hidden = true;
       result.hidden = false;
       hint.hidden = true;
+      window.NOVERSE.GameManager?.recordCompleted?.();
 
       const isRecord = score > best;
       if (isRecord) {

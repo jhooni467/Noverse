@@ -6,6 +6,7 @@
   let selectedGame = null;
   let launchToken = 0;
   let hasPlayedGame = false;
+  let launching = false;
   const detailScreen = document.querySelector("#detail-screen");
   const detailContent = document.querySelector("#detail-content");
   const gameScreen = document.querySelector("#game-screen");
@@ -112,6 +113,11 @@
   async function launch(id) {
     const definition = modules.get(id);
     if (!definition) { notify("Este juego llegará próximamente ✦"); return false; }
+    if (launching) return false;
+    launching = true;
+    try { return await launchGame(id, definition); } finally { launching = false; }
+  }
+  async function launchGame(id, definition) {
     ambient?.unlock();
     await stopActiveGame();
     hasPlayedGame = true;
@@ -157,6 +163,14 @@
     selectedGame = null;
     setView("catalog");
   }
+  // Los juegos llaman a esto cuando una partida termina.
+  function recordCompleted() {
+    try {
+      const count = Math.max(0, Number(localStorage.getItem("noverse-games-completed")) || 0);
+      localStorage.setItem("noverse-games-completed", String(count + 1));
+    } catch (_) {}
+    document.dispatchEvent(new CustomEvent("noverse:stats-updated"));
+  }
   function syncAmbientButton() {
     if (!ambientButton || !ambient) return;
     const enabled = ambient.isEnabled();
@@ -185,7 +199,7 @@
     return false;
   }
   window.NOVERSE.GameManager = Object.freeze({
-    register, launch, openDetails, close: backToDetails, handleBack,
+    register, launch, openDetails, close: backToDetails, handleBack, recordCompleted,
     isRegistered: id => modules.has(id),
     getActiveGame: () => activeGame?.id || null,
     getRegisteredGames: () => Array.from(modules.keys())

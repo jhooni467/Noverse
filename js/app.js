@@ -102,6 +102,7 @@
       {id:"game-04",name:"Echo Six",icon:"♫",metric:"Ronda récord",value:readNumber("noverse-echo-six-best")}
     ];
     const total = readNumber("noverse-games-played");
+    const finished = readNumber("noverse-games-completed");
     const completed = readNumber("noverse-color-cascade-completed");
     const last = readText("noverse-last-game");
     const lastGame = games.find(game => game.id === last);
@@ -110,6 +111,7 @@
     summary.className = "stats-summary";
     summary.innerHTML = `
       <article class="stats-total"><span>PARTIDAS INICIADAS</span><strong>${total}</strong><small>Tu recorrido por NOVERSE</small></article>
+      <article class="stats-total"><span>PARTIDAS COMPLETADAS</span><strong>${finished}</strong><small>En todos los universos</small></article>
       <article class="stats-total"><span>PALETAS COMPLETADAS</span><strong>${completed}</strong><small>Color Cascade</small></article>
     `;
     const heading = document.createElement("div");
