@@ -11,7 +11,8 @@ NOVERSE is a collection of independent casual games.
 - Adaptive mobile and tablet interface
 - Independent game modules
 - Central Game Manager
-- Colorful cartoon-inspired design
+- Central Game Registry
+- Colorful game-universe visual identity
 - No advertisements
 - No in-app purchases
 - Local progress and records (planned)
@@ -25,38 +26,44 @@ NOVERSE is a collection of independent casual games.
 
 ## Project status
 
-**Version 0.2.0 — Core foundation**
+**Version 0.3.0 — Game Registry**
 
-The first core module is in place:
-- Game registration
-- Game launch and close lifecycle
-- Dedicated game screen
-- Return-to-catalog navigation
-- Basic error handling for game startup
-- Offline cache for core files
+The catalog is now managed by a dedicated registry:
+- One central catalog for game metadata
+- Unique ID for every game
+- Categories and featured-game information
+- Availability status linked to Game Manager
+- Independent modules can register themselves
+- Catalog refreshes when a module becomes available
 
-## Registering a game
+## Registering a game module
 
-Each minigame can register itself through the global manager:
+A future game module can register itself with its catalog ID:
 
 ```js
-window.NOVERSE.GameManager.register("my-game", {
-  name: "My Game",
+window.NOVERSE.Registry.registerModule("game-01", {
   mount(container, tools) {
     const heading = document.createElement("h2");
-    heading.textContent = "Hello, NOVERSE!";
+    heading.textContent = "My first NOVERSE game";
     container.appendChild(heading);
 
     return {
       unmount() {
-        // Release timers, listeners, or other resources here.
+        // Release timers, listeners, and resources here.
       }
     };
   }
 });
 ```
 
-A catalog entry becomes playable when its ID matches a registered game ID.
+The ID must already exist in `games/registry.js`. The module's name is taken from the central catalog.
+
+## Project structure
+
+- `core/game-manager.js` — launches and closes games
+- `games/registry.js` — catalog, categories, and module registration
+- `js/app.js` — catalog interface
+- `games/` — independent game modules (being built)
 
 ## Vision
 
