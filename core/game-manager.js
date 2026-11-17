@@ -129,6 +129,7 @@
     document.dispatchEvent(new CustomEvent("noverse:stats-updated"));
     const token = ++launchToken;
     title.textContent = definition.name || "Minijuego";
+    gameScreen.dataset.gameId = id;
     root.replaceChildren();
     setView("game");
     ambient?.play(id);
@@ -177,7 +178,9 @@
     ambientButton.setAttribute("aria-pressed", String(enabled));
     ambientButton.setAttribute("aria-label", enabled ? "Silenciar música ambiental" : "Activar música ambiental");
     ambientButton.title = enabled ? "Música ambiental activada" : "Música ambiental desactivada";
-    ambientButton.textContent = enabled ? "♫" : "♪̸";
+    ambientButton.innerHTML = enabled
+      ? '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4h4l5 4V6l-5 4H4Z"/><path d="M16 9a5 5 0 0 1 0 6m2-9a9 9 0 0 1 0 12"/></svg>'
+      : '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4h4l5 4V6l-5 4H4Z"/><path d="m17 9 5 6m0-6-5 6"/></svg>';
   }
   ambientButton?.addEventListener("click", () => { ambient?.toggle(); syncAmbientButton(); });
   detailBack?.addEventListener("click", backToCatalog);
