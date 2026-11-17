@@ -13,7 +13,7 @@
   function getContext() {
     const Audio=window.AudioContext||window.webkitAudioContext;
     if(!Audio)return null;
-    if(!context){context=new Audio();master=context.createGain();master.gain.value=enabled?0.032:0;master.connect(context.destination);}
+    if(!context){context=new Audio();master=context.createGain();master.gain.value=enabled?0.13:0;master.connect(context.destination);}
     return context;
   }
   function unlock(){const ctx=getContext();if(ctx&&ctx.state==="suspended")ctx.resume().catch(()=>{});}
@@ -53,13 +53,29 @@
     };
     tick();timer=setInterval(tick,preset.interval);
   }
+  function playEffect(kind="tap"){
+    if(!enabled)return;
+    const sounds={
+      tap:[520,.09,.22,"sine"],soft:[660,.13,.16,"sine"],pop:[880,.12,.28,"triangle"],
+      hit:[740,.16,.32,"triangle"],drop:[330,.2,.34,"sine"],success:[523.25,.32,.3,"sine"],
+      fail:[180,.28,.28,"triangle"]
+    };
+    const sound=sounds[kind]||sounds.tap;
+    if(!context)getContext();
+    if(context&&context.state==="suspended")context.resume().catch(()=>{});
+    playTone(sound[0],sound[1],sound[2],sound[3]);
+    if(kind==="success"){
+      window.setTimeout(()=>playTone(659.25,.28,.24,"sine"),110);
+      window.setTimeout(()=>playTone(783.99,.38,.22,"sine"),220);
+    }
+  }
   function setEnabled(value){
     enabled=Boolean(value);try{localStorage.setItem("noverse-ambient-enabled",String(enabled));}catch(_){}
-    if(master&&context){const now=context.currentTime;master.gain.cancelScheduledValues(now);master.gain.setTargetAtTime(enabled?0.032:0,now,0.08);}
+    if(master&&context){const now=context.currentTime;master.gain.cancelScheduledValues(now);master.gain.setTargetAtTime(enabled?0.13:0,now,0.08);}
     if(!enabled)stopNodes();else if(activeId)play(activeId);
     return enabled;
   }
   function toggle(){return setEnabled(!enabled);}
   window.NOVERSE=window.NOVERSE||{};
-  window.NOVERSE.AmbientAudio=Object.freeze({unlock,play,stop,toggle,isEnabled:()=>enabled,setEnabled});
+  window.NOVERSE.AmbientAudio=Object.freeze({unlock,play,stop,toggle,isEnabled:()=>enabled,setEnabled,playEffect});
 })();
