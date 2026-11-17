@@ -5,7 +5,8 @@
     "game-01": { base:164.81, notes:[392,493.88,587.33,493.88,440,587.33], wave:"sine", interval:2300 },
     "game-02": { base:130.81, notes:[261.63,329.63,392,329.63,293.66,349.23], wave:"triangle", interval:3100 },
     "game-03": { base:146.83, notes:[349.23,440,523.25,659.25,523.25,440], wave:"sine", interval:2050 },
-    "game-04": { base:110, notes:[261.63,329.63,392,329.63,293.66,349.23], wave:"sine", interval:3600 }
+    "game-04": { base:110, notes:[261.63,329.63,392,329.63,293.66,349.23], wave:"sine", interval:3600 },
+    "game-05": { base:196, notes:[392,493.88,587.33,659.25,587.33,493.88], wave:"triangle", interval:2450 }
   };
   let context=null, master=null, timer=null, activeId=null, step=0, droneNodes=[];
   let enabled=true;
