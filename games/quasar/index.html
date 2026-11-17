@@ -1589,7 +1589,7 @@ class AudioManager {
     const ctx = this._ensureContext();
     if (!ctx) return;
     await ctx.resume();
-    const buffer = await this.loadMusic('assets/music/next-round.mp3');
+    const buffer = await this.loadMusic('assets/music/Next_Round_Quasar.mp3');
     if (generation !== this._musicGeneration) return;
     if (this._musicSource) {
       try { this._musicSource.stop(); } catch (_) {}
