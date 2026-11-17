@@ -63,7 +63,7 @@ let androidManifest = await readFile(manifestPath,"utf8");
 if (!androidManifest.includes("android.permission.REQUEST_INSTALL_PACKAGES")) {
   const marker=androidManifest.indexOf("<application");
   const nl=String.fromCharCode(10);
-  const declaration="<uses-permission android:name=\\"android.permission.REQUEST_INSTALL_PACKAGES\\" />"+nl;
+  const declaration='<uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />'+nl;
   androidManifest=androidManifest.slice(0,marker)+declaration+androidManifest.slice(marker);
 }
 if (!androidManifest.includes("android.permission.POST_NOTIFICATIONS")) {
