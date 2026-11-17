@@ -14,6 +14,7 @@ import com.getcapacitor.BridgeActivity;
 public class MainActivity extends BridgeActivity {
   @Override
   public void onCreate(android.os.Bundle savedInstanceState) {
+    registerPlugin(UpdatesPlugin.class);
     super.onCreate(savedInstanceState);
     getWindow().setNavigationBarColor(Color.rgb(11, 11, 20));
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -54,8 +55,17 @@ await mkdir(`${res}/mipmap-anydpi-v33`,{recursive:true});
 await writeFile(`${res}/mipmap-anydpi-v33/ic_launcher.xml`,themed);
 await writeFile(`${res}/mipmap-anydpi-v33/ic_launcher_round.xml`,themed);
 
+const pluginSource = await readFile("native/UpdatesPlugin.java","utf8");
+await writeFile("android/app/src/main/java/com/noverse/gamehub/UpdatesPlugin.java",pluginSource);
+
 const manifestPath = "android/app/src/main/AndroidManifest.xml";
 let androidManifest = await readFile(manifestPath,"utf8");
+if (!androidManifest.includes("android.permission.POST_NOTIFICATIONS")) {
+  const marker=androidManifest.indexOf("<application");
+  const nl=String.fromCharCode(10);
+  const declarations="<uses-permission android:name=\"android.permission.POST_NOTIFICATIONS\" />"+nl+"<queries><package android:name=\"com.noverse.gamehub\" /><package android:name=\"com.noverse.astralworld\" /></queries>"+nl;
+  androidManifest=androidManifest.slice(0,marker)+declarations+androidManifest.slice(marker);
+}
 if (/android:icon="[^"]+"/.test(androidManifest)) {
   androidManifest = androidManifest.replace(/android:icon="[^"]+"/,'android:icon="@mipmap/ic_launcher"');
 } else {
