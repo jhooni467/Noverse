@@ -2550,3 +2550,23 @@ body[data-theme="glassy"] .home-mode.is-liquid-pressed:after{border-radius:inher
 .hopper-sky-game .hopper-button{min-height:52px;padding:0 28px;border:0;border-radius:16px;background:linear-gradient(110deg,#b5fff0,#79dce2);color:#16365b;font-weight:950;box-shadow:0 10px 28px #75dfe455,inset 0 1px #fff}
 .hopper-sky-game .hopper-hint{color:#d6eaff;font-weight:850;letter-spacing:1.2px}
 @media(orientation:landscape) and (max-height:520px){.hopper-sky-game .hopper-heading{display:none}.hopper-sky-game .hopper-stage{min-height:0}.hopper-sky-game .hopper-scorebar div{padding:4px 9px}.hopper-sky-game .hopper-scorebar strong{font-size:19px}}
+
+
+/* PASTELUNA 1.12 — vivid candy bakery art direction */
+.pasteluna-v12{color:#fffaf4;gap:clamp(7px,1.25vh,13px)}
+.pasteluna-v12 .pasteluna-heading span{color:#fff4a9;text-shadow:0 2px 12px #e875a6aa;letter-spacing:2.5px}
+.pasteluna-v12 .pasteluna-heading p{color:#fff7e8;font-weight:650;text-shadow:0 1px 8px #a64c72aa}
+.pasteluna-v12 .pasteluna-hud div{border:1px solid #ffffff66;background:linear-gradient(145deg,#ffffff4a,#ffffff18);box-shadow:inset 0 1px #ffffff77,0 5px 18px #9d477b33;backdrop-filter:blur(5px)}
+.pasteluna-v12 .pasteluna-hud small{color:#fff7d7}
+.pasteluna-v12 .pasteluna-hud strong{color:#fff5a7;text-shadow:0 2px 10px #c85a72aa}
+.pasteluna-v12 .pasteluna-hud>span{color:#fff9eb;text-shadow:0 1px 8px #a94b79}
+.pasteluna-stage-v12{border:2px solid #fff7dfaa;border-radius:clamp(18px,3.2vw,30px);background:linear-gradient(155deg,#ffb4d2,#ffd58d 55%,#91e8cf);box-shadow:inset 0 0 45px #fff8,0 14px 36px #9e4a7744}
+.pasteluna-v12 .pasteluna-canvas{touch-action:manipulation}
+.pasteluna-overlay-v12{background:linear-gradient(145deg,#ff82b9dc,#ffb36bd9 55%,#62d8b9d9);backdrop-filter:blur(1.5px);-webkit-backdrop-filter:blur(1.5px)}
+.pasteluna-overlay-v12 .pasteluna-cake-mark{font-size:clamp(55px,10vh,86px);filter:drop-shadow(0 9px 12px #9e386955);animation:nubi-float 2.8s ease-in-out infinite}
+.pasteluna-overlay-v12 .pasteluna-overline{color:#fffbe9;text-shadow:0 2px 9px #9b3b69aa}
+.pasteluna-overlay-v12 h2{color:#fffdf6;text-shadow:0 4px 16px #a63c70aa}
+.pasteluna-overlay-v12 p{color:#fffdf6;font-weight:650;text-shadow:0 1px 8px #8f3769aa}
+.pasteluna-overlay-v12 button{background:linear-gradient(110deg,#fff28c,#ffcf68 48%,#ff8fc0);color:#78365e;border:1px solid #fff8d9;box-shadow:0 8px 24px #a73d7955,inset 0 2px #fff}
+.pasteluna-v12 .pasteluna-footnote{color:#fff8e9;text-shadow:0 1px 8px #9b3f6c;font-weight:950;letter-spacing:1.1px}
+@media(orientation:landscape) and (max-height:520px){.pasteluna-v12 .pasteluna-heading{display:block}.pasteluna-v12 .pasteluna-heading span{font-size:8px}.pasteluna-v12 .pasteluna-heading p{font-size:10px}.pasteluna-v12 .pasteluna-stage{min-height:0}}

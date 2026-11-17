@@ -1,4 +1,4 @@
-const VERSION = "1.11";
+const VERSION = "1.12";
 const CACHE_NAME = `noverse-v${VERSION}`;
 const FILES = [
   "./?v=" + VERSION,
