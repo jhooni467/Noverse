@@ -19,7 +19,8 @@
     let startIndex = -1;
     let moves = 0;
     let hue = 260;
-    let destroyed = false;\n    let advanceTimer = null;
+    let destroyed = false;
+    let advanceTimer = null;
 
     container.innerHTML = `
       <section class="color-game" aria-label="Color Cascade">
@@ -33,11 +34,7 @@
         </div>
         <div class="color-board" data-board aria-label="Fichas de colores"></div>
         <div class="color-direction"><span>MÁS CLARO</span><span>MÁS OSCURO</span></div>
-        <p class="color-feedback" data-feedback aria-live="polite">Mantén una ficha y deslízala hasta su nueva posición.</p>
-        <div class="color-actions">
-          <button class="color-button" type="button" data-reset>Mezclar de nuevo</button>
-          <button class="color-button primary" type="button" data-check>Comprobar</button>
-        </div>
+        <p class="color-feedback" data-feedback aria-live="polite">Desliza los tonos hasta que fluyan de claro a oscuro.</p>
         <div data-win hidden></div>
       </section>`;
 
@@ -47,8 +44,6 @@
     const movesNode = container.querySelector("[data-moves]");
     const feedback = container.querySelector("[data-feedback]");
     const win = container.querySelector("[data-win]");
-    const reset = container.querySelector("[data-reset]");
-    const check = container.querySelector("[data-check]");
 
     function shuffle(array) {
       const copy = array.slice();
@@ -277,8 +272,6 @@
       unmount() {
         destroyed = true;
         cancelDrag();
-        reset.removeEventListener("click", resetLevel);
-        check.removeEventListener("click", checkOrder);
         board.replaceChildren();
       }
     };
