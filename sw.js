@@ -1,5 +1,9 @@
-const VERSION = "1.12";
+const VERSION = "1.15";
 const CACHE_NAME = `noverse-v${VERSION}`;
+const OPTIONAL_FILES = [
+  "./games/quasar/assets/music/Next_Round_Quasar.mp3"
+];
+
 const FILES = [
   "./?v=" + VERSION,
   "./index.html?v=" + VERSION,
@@ -18,6 +22,12 @@ const FILES = [
   "./games/cloud-hopper.js?v=" + VERSION,
   "./games/echo-six.js?v=" + VERSION,
   "./games/pasteluna.js?v=" + VERSION,
+  "./games/quasar.js?v=" + VERSION,
+  "./games/quasar/index.html",
+  "./images/experiences/quasar-logo.svg",
+  "./images/experiences/quasar-1.webp",
+  "./images/experiences/quasar-2.webp",
+  "./images/experiences/quasar-4.webp",
   "./js/app.js?v=" + VERSION,
   "./js/store.js?v=" + VERSION,
   "./css/store.css?v=" + VERSION
@@ -26,7 +36,16 @@ const FILES = [
 self.addEventListener("install", event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(FILES))
+      .then(async cache => {
+        await cache.addAll(FILES);
+        // Audio opcional: si el MP3 aún no está publicado, no debe bloquear
+        // la instalación ni la actualización del service worker.
+        await Promise.all(OPTIONAL_FILES.map(async file => {
+          try { await cache.add(file); } catch (error) {
+            console.warn("NOVERSE: recurso opcional aún no disponible:", file);
+          }
+        }));
+      })
       .then(() => self.skipWaiting())
   );
 });
@@ -49,7 +68,30 @@ self.addEventListener("fetch", event => {
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
 
-  // Las navegaciones siempre consultan primero la versión publicada.
+  // La navegación del juego embebido es un documento local independiente.
+  // Se cachea con su propia URL y nunca se sustituye por la portada de NOVERSE.
+  if (request.mode === "navigate" && url.pathname.endsWith("/games/quasar/index.html")) {
+    event.respondWith((async () => {
+      const cached = await caches.match(request);
+      try {
+        const response = await fetch(request, { cache: "no-store" });
+        if (response && response.ok) {
+          const copy = response.clone();
+          const cache = await caches.open(CACHE_NAME);
+          await cache.put(request, copy);
+        }
+        return response;
+      } catch (error) {
+        return cached || new Response("QUASAR no está disponible sin conexión.", {
+          status: 503,
+          headers: { "Content-Type": "text/plain; charset=utf-8" }
+        });
+      }
+    })());
+    return;
+  }
+
+  // Las navegaciones de NOVERSE siempre consultan primero la versión publicada.
   if (request.mode === "navigate") {
     event.respondWith((async () => {
       try {

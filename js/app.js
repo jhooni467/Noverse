@@ -111,7 +111,7 @@
     });
     featured.hidden = experiences; $(".catalog").hidden = experiences;
     experiencePlaceholder.hidden = !experiences;
-    if (experiences) refreshComingMessage(experiencePlaceholder);
+    if (experiences) renderExperiences();
   }));
   window.setInterval(() => {
     if (activeTab === "home" && experiencePlaceholder && !experiencePlaceholder.hidden) refreshComingMessage(experiencePlaceholder);
@@ -167,7 +167,12 @@
     card.style.setProperty("--game-secondary", game.palette.secondary);
     card.style.setProperty("--game-glow", game.palette.glow);
     const art = document.createElement("div");
-    art.className = "game-art"; art.setAttribute("aria-hidden", "true"); art.textContent = game.icon;
+    art.className = "game-art"; art.setAttribute("aria-hidden", "true");
+    if (game.logo) {
+      const logo = document.createElement("img");
+      logo.src = game.logo; logo.alt = ""; logo.loading = "lazy";
+      art.appendChild(logo);
+    } else art.textContent = game.icon;
     const title = document.createElement("h3"); title.textContent = game.name;
     const description = document.createElement("p"); description.textContent = game.description;
     const status = document.createElement("span"); status.className = "game-status";
@@ -192,11 +197,26 @@
     return card;
   }
   function renderGames() {
-    const all = Registry.getAll();
+    const all = Registry.getAll().filter(game => game.category !== "Experiencias");
     const visible = activeCategory === "Todos" ? all : all.filter(game => game.category === activeCategory);
     grid.replaceChildren(); visible.forEach(game => grid.appendChild(createCard(game)));
     gameCount.textContent = `${visible.length} juegos`;
   }
+  function renderExperiences() {
+    const games = Registry.getAll().filter(game => game.category === "Experiencias" && game.available);
+    experiencePlaceholder.innerHTML = `
+      <div class="experience-heading">
+        <p class="eyebrow">NO SON SOLO JUEGOS · SON UNIVERSOS</p>
+        <h2>Experiencias</h2>
+        <p>Recorre mundos completos y descubre nuevas formas de jugar.</p>
+      </div>
+      <div class="experience-grid" id="experience-grid"></div>
+    `;
+    const list = experiencePlaceholder.querySelector("#experience-grid");
+    games.forEach(game => list.appendChild(createCard(game)));
+    if (!games.length) experiencePlaceholder.querySelector(".experience-heading p:last-child").textContent = "Pronto llegarán nuevas experiencias.";
+  }
+
   function renderFeatured() {
     featured.replaceChildren();
     Registry.getAll().filter(game => game.featured && game.available).forEach(game => featured.appendChild(createCard(game)));
