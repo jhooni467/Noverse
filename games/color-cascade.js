@@ -271,6 +271,7 @@
     return {
       unmount() {
         destroyed = true;
+        if (advanceTimer) clearTimeout(advanceTimer);
         cancelDrag();
         board.replaceChildren();
       }
