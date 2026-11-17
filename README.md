@@ -7,9 +7,9 @@ NOVERSE reúne minijuegos casuales en una sola experiencia. Cada juego tiene su 
 ## Juegos disponibles
 
 - **Star Catcher** — atrapa estrellas antes de que termine el tiempo.
-- **Color Cascade** — ordena los tonos del más claro al más oscuro en cinco niveles.
+- **Color Cascade** — ordena tonos en un reto infinito de degradados.
 - **Cloud Hopper** — guía a Nubi entre arcos de cristal.
-- **Echo Six** — memoriza secuencias musicales de seis notas.
+- **Echo Six** — memoriza secuencias musicales de seis notas.\n- **Pasteluna** — apila capas de pastel y supera tu récord en una torre infinita.
 
 ## NOVERSE Store
 
@@ -17,7 +17,7 @@ La Store reúne aplicaciones y juegos del ecosistema NOVERSE, con catálogo, cat
 
 ## La experiencia
 
-- Interfaz diseñada para teléfonos y tabletas, con estilos Predeterminado, Glassy y Material.
+- Juegos a pantalla completa, con identidad visual, animaciones, música y efectos propios.\n- Interfaz diseñada para teléfonos y tabletas, con estilos Predeterminado, Glassy y Material.
 - Se puede usar sin conexión después de cargar la aplicación.
 - Sin anuncios ni compras dentro de la app.
 - Los récords, partidas iniciadas y completadas se guardan localmente en el dispositivo.
@@ -28,7 +28,7 @@ La Store reúne aplicaciones y juegos del ecosistema NOVERSE, con catálogo, cat
 npm install
 npm run verify
 npm run build:web
-node scripts/set-version.mjs 1.08
+node scripts/set-version.mjs 1.10
 ```
 
 Android se compila con GitHub Actions. Consulta `ANDROID_BUILD.md` para más información.
