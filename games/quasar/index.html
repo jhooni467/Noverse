@@ -567,7 +567,16 @@ body {
 .music-volume-control{display:flex;flex-direction:column;gap:12px;padding:16px 18px;border-radius:22px;background:rgba(11,8,32,.38);border:1px solid rgba(255,255,255,.16);text-align:left}
 .music-volume-heading{display:flex;justify-content:space-between;align-items:center;font-size:var(--fs-sm);font-weight:750;color:#f7eaff}
 .music-volume-value{color:#ffd18b;font-variant-numeric:tabular-nums}
-.music-volume-slider{width:100%;height:24px;margin:0;accent-color:#ffc66e;cursor:pointer;touch-action:pan-x}
+.music-volume-slider{--volume-progress:85%;-webkit-appearance:none;appearance:none;display:block;width:100%;height:44px;margin:0;padding:0;background:transparent;cursor:grab;touch-action:pan-y;pointer-events:auto;outline:none}
+.music-volume-slider:active{cursor:grabbing}
+.music-volume-slider::-webkit-slider-runnable-track{height:9px;border-radius:99px;background:linear-gradient(90deg,#ffd18b 0 var(--volume-progress),rgba(255,255,255,.2) var(--volume-progress) 100%);box-shadow:inset 0 1px 2px rgba(0,0,0,.24)}
+.music-volume-slider::-webkit-slider-thumb{-webkit-appearance:none;width:25px;height:25px;margin-top:-8px;border:3px solid #fff2d6;border-radius:50%;background:#ffad66;box-shadow:0 2px 12px rgba(255,173,102,.55)}
+.music-volume-slider::-moz-range-track{height:9px;border-radius:99px;background:rgba(255,255,255,.2)}
+.music-volume-slider::-moz-range-progress{height:9px;border-radius:99px;background:#ffd18b}
+.music-volume-slider::-moz-range-thumb{width:19px;height:19px;border:3px solid #fff2d6;border-radius:50%;background:#ffad66;box-shadow:0 2px 12px rgba(255,173,102,.55)}
+.hud-pause-btn{border:1px solid rgba(255,224,255,.48);background:radial-gradient(circle at 32% 24%,rgba(155,105,199,.96),rgba(50,19,91,.96) 72%);box-shadow:0 5px 16px rgba(10,2,30,.38),inset 0 1px rgba(255,255,255,.24)}
+.hud-pause-btn svg{width:52%;height:52%;filter:drop-shadow(0 1px 2px rgba(0,0,0,.22))}
+.music-volume-control{pointer-events:auto;position:relative;z-index:2}
 
 .title-screen-new{justify-content:space-between;padding:calc(110px * var(--u)) var(--pad) calc(42px * var(--u))}.title-heading .logo{font-size:calc(136px * var(--u))}.title-heading .subtitle{color:#ffd7a0;font-weight:800}.title-orbit{width:calc(88px * var(--u));height:calc(88px * var(--u));margin:0 auto calc(16px * var(--u));border:2px solid rgba(255,218,170,.5);border-radius:50%;display:grid;place-items:center;color:#ffd08a;font-size:30px;box-shadow:0 0 28px rgba(255,127,176,.24)}.menu-actions{width:100%;max-width:calc(570px * var(--u));display:flex;flex-direction:column;gap:calc(18px * var(--u));pointer-events:auto}.menu-action{width:100%;min-height:calc(108px * var(--u));display:flex;align-items:center;gap:calc(22px * var(--u));padding:calc(18px * var(--u)) calc(25px * var(--u));border-radius:calc(28px * var(--u));color:#fff5ff;text-align:left;font:inherit;cursor:pointer}.menu-play{background:linear-gradient(110deg,#ffe4a4,#ffad66 58%,#ff83a9);color:#42174f;border:1px solid rgba(255,239,207,.7);box-shadow:0 8px 0 #a84d79,0 18px 38px rgba(255,116,166,.25)}.menu-avatar{background:linear-gradient(110deg,rgba(83,42,126,.92),rgba(39,19,78,.95));border:1px solid rgba(232,213,255,.3)}.menu-action-icon{width:calc(66px * var(--u));height:calc(66px * var(--u));display:grid;place-items:center;border-radius:20px;background:rgba(255,255,255,.18);flex:none}.menu-icon{width:58%;height:58%}.menu-action-copy{display:flex;flex-direction:column;gap:5px}.menu-action-copy strong{font-size:calc(34px * var(--u));font-weight:900}.menu-action-copy small{font-size:calc(20px * var(--u));opacity:.78}.menu-chevron{margin-left:auto;font-size:42px}.menu-footer{gap:14px}.hud-pause-btn svg{width:48%;height:48%}.avatar-screen{position:absolute;inset:0;padding:var(--pad);display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse,rgba(108,55,155,.35),rgba(11,8,32,.35) 70%);pointer-events:auto}.avatar-back{position:absolute;top:calc(38px * var(--u));left:var(--pad);padding:10px 16px;border:1px solid rgba(255,255,255,.2);border-radius:999px;color:#f8eaff;background:rgba(36,10,70,.8);font:700 var(--fs-sm) system-ui}.avatar-card{width:100%;max-width:calc(560px * var(--u));padding:calc(34px * var(--u));border-radius:calc(36px * var(--u));text-align:center;background:linear-gradient(180deg,rgba(75,34,116,.96),rgba(31,13,64,.97));border:1px solid rgba(255,255,255,.22);box-shadow:0 22px 60px rgba(4,1,22,.45)}.avatar-preview{height:calc(230px * var(--u));position:relative;display:grid;place-items:center}.avatar-orbit{position:absolute;width:calc(190px * var(--u));height:calc(90px * var(--u));border:1px solid rgba(255,209,138,.55);border-radius:50%;transform:rotate(-25deg)}.avatar-orbit-b{transform:rotate(55deg);border-color:rgba(217,190,255,.5)}.avatar-person{width:calc(75px * var(--u));height:calc(135px * var(--u));border-radius:45% 45% 25% 25%;background:linear-gradient(#ffe7bc 0 48%,#ff9ab4 49%);border:3px solid rgba(255,255,255,.65);filter:drop-shadow(0 0 18px rgba(255,191,143,.35))}.avatar-spark{position:absolute;right:22%;top:20%;color:#ffe4a4;font-size:30px;animation:avatarGlow 2s infinite alternate}@keyframes avatarGlow{to{transform:translateY(-8px);opacity:.55}}.avatar-title{margin:10px 0 0;font-size:calc(52px * var(--u));font-weight:900;color:#fff2d6}.avatar-coming{margin:18px 0 0;font-size:calc(36px * var(--u));font-weight:900;letter-spacing:.08em;background:linear-gradient(90deg,#ffe6a8,#ff9dbd);-webkit-background-clip:text;background-clip:text;color:transparent}.avatar-description{max-width:calc(440px * var(--u));margin:14px auto 0;color:#eadcff;opacity:.82;font-size:var(--fs-sm);line-height:1.45}@media(max-height:700px){.title-screen-new{padding-top:calc(40px * var(--u));padding-bottom:calc(20px * var(--u))}.title-orbit{width:calc(60px * var(--u));height:calc(60px * var(--u))}.title-heading .logo{font-size:calc(100px * var(--u))}.menu-action{min-height:calc(82px * var(--u))}.avatar-preview{height:calc(160px * var(--u))}}</style>
   </head>
@@ -1651,19 +1660,35 @@ class AudioManager {
     const ctx = this.ctx, source = this._musicSource, gain = this._musicGain;
     if (!ctx || !source || !gain) return;
     const now = ctx.currentTime;
-    const end = now + 1.15;
+    const end = now + 0.38;
     try {
-      // La velocidad baja progresivamente de 1.0 a 0.72; conserva la posición
-      // musical aproximada para que Continuar no reinicie la canción.
-      this._musicOffset += Math.max(0, now - this._musicStartedAt) + (1.15 * (1 + 0.72) / 2);
+      // La pausa normal solo desvanece el audio; no altera el tono de la canción.
+      this._musicOffset += Math.max(0, now - this._musicStartedAt) + 0.38;
       if (this._musicBuffer?.duration) this._musicOffset %= this._musicBuffer.duration;
       source.playbackRate.cancelScheduledValues(now);
-      source.playbackRate.setValueAtTime(source.playbackRate.value, now);
-      source.playbackRate.linearRampToValueAtTime(0.72, end);
+      source.playbackRate.setValueAtTime(1, now);
       gain.gain.cancelScheduledValues(now);
       gain.gain.setValueAtTime(gain.gain.value, now);
       gain.gain.linearRampToValueAtTime(0, end);
       source.stop(end + 0.03);
+    } catch (_) {}
+  }
+
+  /** Efecto de derrota: la música pierde velocidad y tono antes de apagarse. */
+  loseMusic() {
+    ++this._musicGeneration;
+    const ctx = this.ctx, source = this._musicSource, gain = this._musicGain;
+    if (!ctx || !source || !gain) return;
+    const now = ctx.currentTime;
+    const end = now + 1.45;
+    try {
+      source.playbackRate.cancelScheduledValues(now);
+      source.playbackRate.setValueAtTime(source.playbackRate.value, now);
+      source.playbackRate.linearRampToValueAtTime(0.56, end);
+      gain.gain.cancelScheduledValues(now);
+      gain.gain.setValueAtTime(gain.gain.value, now);
+      gain.gain.linearRampToValueAtTime(0, end);
+      source.stop(end + 0.04);
     } catch (_) {}
   }
 
@@ -1876,7 +1901,7 @@ class HudScreen {
         h('div', { class: 'hud-pill hud-dist', 'aria-label': 'Distancia' }, this.distEl, h('span', { class: 'hud-unit' }, 'm'))
       ),
       this.hint,
-      h('button', { class: 'hud-pause-btn', type: 'button', 'aria-label': 'Pausar partida', title: 'Pausar', onclick: () => this.game.bus.emit('game:pause-request') }, h('svg', { viewBox: '0 0 24 24', 'aria-hidden': 'true' }, h('path', { d: 'M8 5v14M16 5v14', fill: 'none', stroke: 'currentColor', 'stroke-width': '3', 'stroke-linecap': 'round' })))
+      h('button', { class: 'hud-pause-btn', type: 'button', 'aria-label': 'Pausar partida', title: 'Pausar', onclick: () => this.game.bus.emit('game:pause-request') }, h('svg', { viewBox: '0 0 24 24', 'aria-hidden': 'true' }, h('rect', { x: '6.2', y: '4.5', width: '4.1', height: '15', rx: '1.8', fill: 'currentColor' }), h('rect', { x: '13.7', y: '4.5', width: '4.1', height: '15', rx: '1.8', fill: 'currentColor' })))
     );
     container.append(this.root);
   }
@@ -1975,9 +2000,10 @@ class PauseScreen {
         h('div', { class: 'over-score' }, h('span', { class: 'over-score-value' }, String(summary.score)), h('span', { class: 'over-score-label' }, 'Puntos')),
         h('label', { class: 'music-volume-control' },
           h('span', { class: 'music-volume-heading' }, 'Música', h('strong', { class: 'music-volume-value' }, `${Math.round(musicVolume * 100)}%`)),
-          h('input', { class: 'music-volume-slider', type: 'range', min: '0', max: '100', value: String(Math.round(musicVolume * 100)), 'aria-label': 'Volumen de la música', oninput: (event) => {
+          h('input', { class: 'music-volume-slider', type: 'range', min: '0', max: '100', step: '1', value: String(Math.round(musicVolume * 100)), 'aria-label': 'Volumen de la música', oninput: (event) => {
             const value = Number(event.target.value) / 100;
             event.target.parentElement.querySelector('.music-volume-value').textContent = `${event.target.value}%`;
+            event.target.style.setProperty('--volume-progress', `${event.target.value}%`);
             onVolumeChange?.(value);
           } })
         ),
@@ -5648,7 +5674,7 @@ class GameScene extends Scene {
   _showGameOver() {
     if (this._overShown) return;
     this._overShown = true;
-    this.game.audio.stopMusic();
+    this.game.audio.loseMusic();
     this.hud = null;
     const { score, distance, coins } = this.run;
     this.game.ui.show('gameover', {
