@@ -134,6 +134,7 @@
       playing = false;
       locked = true;
       clearTimers();
+      window.NOVERSE.AmbientAudio?.playEffect("fail");
       const completed = round - 1;
       if (completed > best) {
         best = completed;
@@ -155,6 +156,7 @@
         return;
       }
       input++;
+      window.NOVERSE.AmbientAudio?.playEffect("soft");
       if (input === sequence.length) advance();
       else message.textContent = "Sigue…";
     }
