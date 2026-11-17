@@ -1,5 +1,9 @@
 const VERSION = "1.14";
 const CACHE_NAME = `noverse-v${VERSION}`;
+const OPTIONAL_FILES = [
+  "./games/quasar/assets/music/next-round.mp3"
+];
+
 const FILES = [
   "./?v=" + VERSION,
   "./index.html?v=" + VERSION,
@@ -32,7 +36,16 @@ const FILES = [
 self.addEventListener("install", event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(FILES))
+      .then(async cache => {
+        await cache.addAll(FILES);
+        // Audio opcional: si el MP3 aún no está publicado, no debe bloquear
+        // la instalación ni la actualización del service worker.
+        await Promise.all(OPTIONAL_FILES.map(async file => {
+          try { await cache.add(file); } catch (error) {
+            console.warn("NOVERSE: recurso opcional aún no disponible:", file);
+          }
+        }));
+      })
       .then(() => self.skipWaiting())
   );
 });
