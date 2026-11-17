@@ -48,7 +48,6 @@
         feedback.textContent="¡Ese era! La siguiente ronda será más difícil.";
         if(score>best){best=score;bestNode.textContent="RÉCORD "+best;try{localStorage.setItem("noverse-color-cascade-best",String(best))}catch(_){}}
         try{localStorage.setItem("noverse-color-cascade-completed",String(level-1));localStorage.setItem("noverse-color-cascade-best-level",String(level-1))}catch(_){}
-        window.NOVERSE.GameManager?.recordCompleted?.();
         window.setTimeout(()=>{if(!destroyed)makeLevel()},420);
       }else{
         tile.classList.add("is-wrong");lives--;
