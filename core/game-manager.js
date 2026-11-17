@@ -76,7 +76,7 @@
     detailContent.innerHTML = `
       <section class="detail-hero">
         <div class="detail-orb detail-orb-one"></div><div class="detail-orb detail-orb-two"></div>
-        <div class="detail-game-icon">${game.icon}</div>
+        <div class="detail-game-icon">${game.logo ? `<img src="${game.logo}" alt="${game.name}">` : game.icon}</div>
         <span class="detail-category">${game.category}</span>
         <h1>${game.name}</h1>
         <p>${game.shortInfo}</p>
@@ -88,8 +88,7 @@
       <section class="detail-gallery">
         <div class="detail-section-heading"><h2>Conoce el juego</h2><span>VISTA PREVIA</span></div>
         <div class="preview-gallery">
-          <div class="preview-shot preview-shot-one"><span>${game.icon}</span><strong>${game.previews[0]}</strong></div>
-          <div class="preview-shot preview-shot-two"><span>✦</span><strong>${game.previews[1]}</strong></div>
+          ${game.screenshots?.length ? game.screenshots.map((src, index) => `<figure class="experience-shot"><img src="${src}" alt="${game.name} · Captura ${index + 1}"></figure>`).join("") : `<div class="preview-shot preview-shot-one"><span>${game.icon}</span><strong>${game.previews[0]}</strong></div><div class="preview-shot preview-shot-two"><span>✦</span><strong>${game.previews[1]}</strong></div>`}
         </div>
       </section>
       <button class="detail-play" type="button" data-play>▶ <span>PLAY</span></button>
