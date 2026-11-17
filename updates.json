@@ -5,14 +5,14 @@
       "id": "noverse",
       "name": "NOVERSE",
       "packageName": "com.noverse.gamehub",
-      "latestVersion": "1.16",
+      "latestVersion": "1.17",
       "minimumVersion": "1.15",
       "summary": "Nueva versión con centro de actualizaciones y notificaciones.",
       "highlights": [
         "Centro de actualizaciones integrado en Store.",
         "Avisos del sistema Android para nuevas versiones."
       ],
-      "downloadUrl": "https://github.com/jhooni467/Noverse/releases/download/v1.16/NOVERSE-v1.16.apk"
+      "downloadUrl": "https://github.com/jhooni467/Noverse/releases/download/v1.17/NOVERSE-v1.17.apk"
     },
     {
       "id": "astralworld",
