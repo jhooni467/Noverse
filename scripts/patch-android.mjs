@@ -66,6 +66,11 @@ if (/android:roundIcon="[^"]+"/.test(androidManifest)) {
 } else {
   androidManifest = androidManifest.replace('android:icon="@mipmap/ic_launcher"','android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher_round"');
 }
+if (/android:label="[^"]+"/.test(androidManifest)) {
+  androidManifest = androidManifest.replace(/android:label="[^"]+"/,'android:label="NOVERSE"');
+} else {
+  androidManifest = androidManifest.replace("<application",'<application android:label="NOVERSE"');
+}
 await writeFile(manifestPath,androidManifest);
 console.log("NOVERSE: shared white mark applied to Android adaptive and legacy launcher icons.");
 
