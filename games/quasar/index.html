@@ -541,6 +541,13 @@ body {
   }
 }
 
+
+<style>
+.music-volume-control{display:flex;flex-direction:column;gap:12px;padding:16px 18px;border-radius:22px;background:rgba(11,8,32,.38);border:1px solid rgba(255,255,255,.16);text-align:left}
+.music-volume-heading{display:flex;justify-content:space-between;align-items:center;font-size:var(--fs-sm);font-weight:750;color:#f7eaff}
+.music-volume-value{color:#ffd18b;font-variant-numeric:tabular-nums}
+.music-volume-slider{width:100%;height:24px;margin:0;accent-color:#ffc66e;cursor:pointer;touch-action:pan-x}
+</style>
 </style>
   </head>
   <body>
@@ -1476,6 +1483,12 @@ class AudioManager {
     this.buses = null;
     this._volumes = { master: 1, music: 1, sfx: 1 };
     this._buffers = new Map();
+    this._musicBuffer = null;
+    this._musicLoad = null;
+    this._musicSource = null;
+    this._musicGain = null;
+    this._musicVolume = 0.85;
+    this._musicGeneration = 0;
   }
 
   _ensureContext() {
@@ -1540,6 +1553,104 @@ class AudioManager {
 
   register(id, buffer) {
     this._buffers.set(id, buffer);
+  }
+
+  /** Carga la pista una sola vez; la pantalla de título nunca la solicita. */
+  async loadMusic(url) {
+    if (this._musicBuffer) return this._musicBuffer;
+    if (!this._musicLoad) {
+      this._musicLoad = (async () => {
+        const response = await fetch(new URL(url, document.baseURI), { cache: 'force-cache' });
+        if (!response.ok) throw new Error('No se pudo cargar la música de QUASAR');
+        const bytes = await response.arrayBuffer();
+        this._musicBuffer = await this.decode(bytes);
+        return this._musicBuffer;
+      })().catch((error) => {
+        this._musicLoad = null;
+        console.warn('[audio] Música no disponible:', error);
+        throw error;
+      });
+    }
+    return this._musicLoad;
+  }
+
+  setMusicVolume(value) {
+    this._musicVolume = Math.min(1, Math.max(0, Number(value) || 0));
+    this.setVolume('music', this._musicVolume);
+    return this._musicVolume;
+  }
+
+  getMusicVolume() { return this._musicVolume; }
+
+  async _startMusic({ fadeSeconds = 1.25 } = {}) {
+    const ctx = this._ensureContext();
+    if (!ctx) return;
+    await ctx.resume();
+    const buffer = await this.loadMusic('assets/music/next-round.mp3');
+    if (this._musicSource) {
+      try { this._musicSource.stop(); } catch (_) {}
+      this._musicSource = null;
+    }
+    const generation = ++this._musicGeneration;
+    const source = ctx.createBufferSource();
+    const gain = ctx.createGain();
+    source.buffer = buffer;
+    source.loop = true;
+    source.playbackRate.setValueAtTime(1, ctx.currentTime);
+    gain.gain.setValueAtTime(0, ctx.currentTime);
+    source.connect(gain);
+    gain.connect(this.buses.music);
+    this._musicSource = source;
+    this._musicGain = gain;
+    source.onended = () => {
+      if (this._musicSource === source && generation === this._musicGeneration) {
+        this._musicSource = null;
+        this._musicGain = null;
+      }
+    };
+    source.start(0);
+    gain.gain.linearRampToValueAtTime(1, ctx.currentTime + fadeSeconds);
+  }
+
+  async startMusic() {
+    this.setMusicVolume(this._musicVolume);
+    try { await this._startMusic({ fadeSeconds: 1.8 }); }
+    catch (_) { /* La partida debe seguir funcionando aunque falle el audio. */ }
+  }
+
+  pauseMusic() {
+    const ctx = this.ctx, source = this._musicSource, gain = this._musicGain;
+    if (!ctx || !source || !gain) return;
+    const now = ctx.currentTime;
+    const end = now + 1.15;
+    try {
+      source.playbackRate.cancelScheduledValues(now);
+      source.playbackRate.setValueAtTime(source.playbackRate.value, now);
+      source.playbackRate.linearRampToValueAtTime(0.72, end);
+      gain.gain.cancelScheduledValues(now);
+      gain.gain.setValueAtTime(gain.gain.value, now);
+      gain.gain.linearRampToValueAtTime(0, end);
+      source.stop(end + 0.03);
+    } catch (_) {}
+  }
+
+  async resumeMusic() {
+    try { await this._startMusic({ fadeSeconds: 1.05 }); }
+    catch (_) { /* No bloquear la reanudación de la partida. */ }
+  }
+
+  stopMusic() {
+    const ctx = this.ctx, source = this._musicSource, gain = this._musicGain;
+    if (!ctx || !source || !gain) return;
+    const now = ctx.currentTime;
+    try {
+      gain.gain.cancelScheduledValues(now);
+      gain.gain.setValueAtTime(gain.gain.value, now);
+      gain.gain.linearRampToValueAtTime(0, now + 0.25);
+      source.stop(now + 0.28);
+    } catch (_) {}
+    this._musicSource = null;
+    this._musicGain = null;
   }
 
   /** Reproduce un efecto ya registrado. Devuelve la fuente, o null si no se pudo. */
@@ -1882,7 +1993,7 @@ class PauseScreen {
   }
 
   mount(container) {
-    const { summary, onResume, onHome } = this.params;
+    const { summary, onResume, onHome, onVolumeChange, musicVolume = 0.85 } = this.params;
     this.root = h(
       'div',
       { class: 'over-screen' },
@@ -1891,6 +2002,14 @@ class PauseScreen {
         { class: 'over-card', role: 'dialog', 'aria-label': 'Partida en pausa' },
         h('h2', { class: 'over-title' }, 'Pausa'),
         h('div', { class: 'over-score' }, h('span', { class: 'over-score-value' }, String(summary.score)), h('span', { class: 'over-score-label' }, 'Puntos')),
+        h('label', { class: 'music-volume-control' },
+          h('span', { class: 'music-volume-heading' }, 'Música', h('strong', { class: 'music-volume-value' }, `${Math.round(musicVolume * 100)}%`)),
+          h('input', { class: 'music-volume-slider', type: 'range', min: '0', max: '100', value: String(Math.round(musicVolume * 100)), 'aria-label': 'Volumen de la música', oninput: (event) => {
+            const value = Number(event.target.value) / 100;
+            event.target.parentElement.querySelector('.music-volume-value').textContent = `${event.target.value}%`;
+            onVolumeChange?.(value);
+          } })
+        ),
         h('button', { class: 'btn btn-primary', type: 'button', onclick: onResume }, 'Continuar'),
         h('button', { class: 'btn btn-secondary', type: 'button', onclick: onHome }, 'Salir al inicio')
       )
