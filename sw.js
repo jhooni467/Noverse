@@ -1,4 +1,4 @@
-const VERSION = "1.09";
+const VERSION = "1.10";
 const CACHE_NAME = `noverse-v${VERSION}`;
 const FILES = [
   "./?v=" + VERSION,
@@ -17,6 +17,7 @@ const FILES = [
   "./games/color-cascade.js?v=" + VERSION,
   "./games/cloud-hopper.js?v=" + VERSION,
   "./games/echo-six.js?v=" + VERSION,
+  "./games/pasteluna.js?v=" + VERSION,
   "./js/app.js?v=" + VERSION,
   "./js/store.js?v=" + VERSION,
   "./css/store.css?v=" + VERSION

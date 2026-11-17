@@ -13,7 +13,7 @@
     container.innerHTML = `
       <section class="star-game" aria-label="Star Catcher">
         <div class="star-game-intro">
-          <span class="star-game-kicker">ARCADE · JUEGO 01</span>
+          <span class="star-game-kicker">CAZA ESTELAR</span>
           <h2>¡Atrapa las estrellas!</h2>
           <p>Toca la estrella cada vez que aparezca en un lugar nuevo.</p>
         </div>
@@ -87,6 +87,7 @@
       result.hidden = false;
       hint.hidden = true;
       window.NOVERSE.GameManager?.recordCompleted?.();
+      window.NOVERSE.AmbientAudio?.playEffect("success");
 
       const isRecord = score > best;
       if (isRecord) {
@@ -132,6 +133,7 @@
       target.classList.remove("star-pop");
       void target.offsetWidth;
       target.classList.add("star-pop");
+      window.NOVERSE.AmbientAudio?.playEffect("pop");
       moveTarget();
     }
 

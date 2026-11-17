@@ -8,7 +8,7 @@
     container.innerHTML = `
       <section class="hopper-game" aria-label="Cloud Hopper">
         <div class="hopper-heading">
-          <span class="hopper-kicker">ARCADE · JUEGO 03</span>
+          <span class="hopper-kicker">VUELO ENTRE CRISTALES</span>
           <h2>¡A volar, Nubi!</h2>
           <p>Toca la pantalla para impulsarte y atraviesa los arcos de cristal.</p>
         </div>
@@ -56,7 +56,7 @@
       reset();playing=true;overlay.hidden=true;last=0;
       cancelAnimationFrame(raf);raf=requestAnimationFrame(loop);flap();
     }
-    function flap(){if(!playing)return;bird.vy=-5.1;}
+    function flap(){if(!playing)return;bird.vy=-5.1;window.NOVERSE.AmbientAudio?.playEffect("tap");}
     function addObstacle(){
       const gap=Math.max(126,h*.34);
       const margin=55;
@@ -112,6 +112,7 @@
       window.NOVERSE.GameManager?.recordCompleted?.();
       title.textContent=score>0?"¡Buen vuelo!":"¡Inténtalo otra vez!";
       copy.textContent="Conseguiste "+score+(score===1?" punto.":" puntos.")+(isRecord?" ¡Nuevo récord!":"");
+      window.NOVERSE.AmbientAudio?.playEffect("fail");
       startButton.textContent="Volver a jugar";overlay.hidden=false;draw();
     }
     function update(dt){
@@ -121,7 +122,7 @@
       if(spawn>1450){spawn=0;addObstacle();}
       obstacles.forEach(o=>{
         o.x-=speed*step;
-        if(!o.passed&&o.x+48<bird.x){o.passed=true;score++;scoreNode.textContent=score;speed=Math.min(4.5,2.6+score*.045);}
+        if(!o.passed&&o.x+48<bird.x){o.passed=true;score++;scoreNode.textContent=score;speed=Math.min(4.5,2.6+score*.045);window.NOVERSE.AmbientAudio?.playEffect("success");}
         const gapTop=o.center-o.gap/2,gapBottom=o.center+o.gap/2;
         if(bird.x+bird.r>o.x&&bird.x-bird.r<o.x+48&&(bird.y-bird.r<gapTop||bird.y+bird.r>gapBottom))finish();
       });

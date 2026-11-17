@@ -52,6 +52,9 @@ for (const file of precache) if (!existsSync(file)) fail(`sw.js precachea ${file
 
 const manifest = JSON.parse(await read("manifest.json"));
 if (!(manifest.icons || []).length) fail("manifest.json: falta al menos un icono.");
+if (!(manifest.icons || []).some(icon => icon.sizes === "192x192")) fail("manifest.json: falta el icono 192x192.");
+if (!(manifest.icons || []).some(icon => icon.sizes === "512x512")) fail("manifest.json: falta el icono 512x512.");
+if (!existsSync("games/pasteluna.js")) fail("Falta el juego Pasteluna.");
 for (const icon of manifest.icons || []) if (!existsSync(icon.src)) fail(`manifest.json: falta ${icon.src}.`);
 
 const cap = JSON.parse(await read("capacitor.config.json"));

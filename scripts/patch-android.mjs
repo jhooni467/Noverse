@@ -44,8 +44,9 @@ await writeFile(`${res}/values/noverse_launcher.xml`,`<resources><color name="no
 const adaptive = `<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
   <background android:drawable="@color/noverse_launcher_background"/>
   <foreground android:drawable="@drawable/ic_launcher_foreground"/>
-</adaptive-icon>\\n`;
-const themed = adaptive.replace("</adaptive-icon>",'  <monochrome android:drawable="@drawable/ic_launcher_monochrome"/>\\n</adaptive-icon>');
+</adaptive-icon>
+`;
+const themed = adaptive.replace("</adaptive-icon>",'  <monochrome android:drawable="@drawable/ic_launcher_monochrome"/>\n</adaptive-icon>');
 await mkdir(`${res}/mipmap-anydpi-v26`,{recursive:true});
 await writeFile(`${res}/mipmap-anydpi-v26/ic_launcher.xml`,adaptive);
 await writeFile(`${res}/mipmap-anydpi-v26/ic_launcher_round.xml`,adaptive);
@@ -58,12 +59,17 @@ let androidManifest = await readFile(manifestPath,"utf8");
 if (/android:icon="[^"]+"/.test(androidManifest)) {
   androidManifest = androidManifest.replace(/android:icon="[^"]+"/,'android:icon="@mipmap/ic_launcher"');
 } else {
-  androidManifest = androidManifest.replace("<application",'<application android:icon="@mipmap/ic_launcher"');
+  androidManifest = androidManifest.replace("<application",'<application android:label="NOVERSE" android:icon="@mipmap/ic_launcher"');
 }
 if (/android:roundIcon="[^"]+"/.test(androidManifest)) {
   androidManifest = androidManifest.replace(/android:roundIcon="[^"]+"/,'android:roundIcon="@mipmap/ic_launcher_round"');
 } else {
   androidManifest = androidManifest.replace('android:icon="@mipmap/ic_launcher"','android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher_round"');
+}
+if (/android:label="[^"]+"/.test(androidManifest)) {
+  androidManifest = androidManifest.replace(/android:label="[^"]+"/,'android:label="NOVERSE"');
+} else {
+  androidManifest = androidManifest.replace("<application",'<application android:label="NOVERSE"');
 }
 await writeFile(manifestPath,androidManifest);
 console.log("NOVERSE: shared white mark applied to Android adaptive and legacy launcher icons.");

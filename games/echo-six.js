@@ -19,7 +19,7 @@
 
     container.innerHTML =
       '<section class="echo-xylophone" aria-label="Echo Six, juego de memoria musical">' +
-        '<header class="echo-x-head"><div><span class="echo-kicker">¡JUEGA CON TUS OÍDOS!</span><h2>Echo Six</h2></div><div class="echo-round"><small>RONDA</small><strong data-round>01</strong></div></header>' +
+        '<header class="echo-x-head"><div><span class="echo-kicker">SECUENCIA MUSICAL</span><h2>Echo Six</h2></div><div class="echo-round"><small>RONDA</small><strong data-round>01</strong></div></header>' +
         '<div class="echo-record"><span>RÉCORD</span><strong data-best>00</strong></div>' +
         '<div class="echo-keys" aria-label="Xilófono de seis notas">' + keys + '</div>' +
         '<p class="echo-message" data-message>¡Presta atención, jijiji!</p>' +
@@ -61,6 +61,7 @@
       return audio;
     }
     function playNote(index) {
+      if (!window.NOVERSE.AmbientAudio?.isEnabled?.()) return;
       const ctx = getAudio();
       if (!ctx) return;
       const now = ctx.currentTime;
@@ -134,6 +135,7 @@
       playing = false;
       locked = true;
       clearTimers();
+      window.NOVERSE.AmbientAudio?.playEffect("fail");
       const completed = round - 1;
       if (completed > best) {
         best = completed;
@@ -155,6 +157,7 @@
         return;
       }
       input++;
+      window.NOVERSE.AmbientAudio?.playEffect("soft");
       if (input === sequence.length) advance();
       else message.textContent = "Sigue…";
     }

@@ -2336,3 +2336,147 @@ body[data-theme="glassy"] .liquid-pressable.is-liquid-pressed{border-color:#ffff
 body[data-theme="glassy"] .bottom-nav-item.is-liquid-pressed:after,
 body[data-theme="glassy"] .home-mode.is-liquid-pressed:after{border-radius:inherit;background:radial-gradient(circle at var(--liquid-x,50%) var(--liquid-y,50%),#ffffff80 0%,#ffffff2b 24%,transparent 68%)}
 @media(prefers-reduced-motion:reduce){.liquid-pressable:after{transition:none}}
+
+
+/* GAME WORLDS 1.10 — cada minijuego ocupa toda la pantalla y tiene su propio lenguaje visual */
+.game-screen{
+  position:fixed;inset:0;z-index:40;width:100%;height:100dvh;min-height:100dvh;
+  display:flex;flex-direction:column;overflow:hidden;
+  padding:calc(7px + env(safe-area-inset-top)) 0 calc(7px + env(safe-area-inset-bottom));
+  background:var(--game-background,#111);
+}
+.game-topbar{
+  flex:0 0 48px;width:100%;min-height:48px;padding:0 13px;
+  grid-template-columns:42px minmax(0,1fr) 42px;gap:12px;
+}
+.game-topbar h1{font-size:clamp(16px,2.2vw,21px);font-weight:800;letter-spacing:-.35px}
+.game-back,.game-audio-toggle{
+  width:40px;height:40px;display:grid;place-items:center;padding:0;
+  border:1px solid #ffffff30;border-radius:14px;background:#ffffff13;color:#fff;
+  box-shadow:inset 0 1px #ffffff25,0 5px 18px #0003;
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  transition:transform .22s cubic-bezier(.2,.8,.2,1),background .22s,border-color .22s;
+}
+.game-back:active,.game-audio-toggle:active{transform:scale(.9)}
+.game-back svg,.game-audio-toggle svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.game-audio-toggle[aria-pressed="false"]{opacity:.62;background:#0003}
+.game-root{
+  flex:1 1 auto;width:100%;min-height:0;height:calc(100dvh - 55px);
+  padding:0 12px 8px;display:flex;overflow:hidden;
+}
+.game-root>section{min-height:0}
+.game-screen .game-topbar{color:#fff}
+.game-screen[data-game-id="game-01"]{background:radial-gradient(ellipse at 50% 0%,#513b82,#211638 62%,#100c20)}
+.game-screen[data-game-id="game-02"]{background:radial-gradient(ellipse at 50% -10%,#236a62,#103a3d 60%,#08272e)}
+.game-screen[data-game-id="game-03"]{background:linear-gradient(155deg,#0c234a,#294d7a 58%,#17274f)}
+.game-screen[data-game-id="game-04"]{background:radial-gradient(ellipse at 50% 0%,#fff2c9,#f4d9b2 65%,#e9c7aa);color:#33253c}
+.game-screen[data-game-id="game-05"]{background:radial-gradient(ellipse at 50% -15%,#9d577d,#49264e 60%,#24152f)}
+.game-screen[data-game-id="game-04"] .game-topbar{color:#37243d}
+.game-screen[data-game-id="game-04"] .game-back,.game-screen[data-game-id="game-04"] .game-audio-toggle{background:#ffffff55;border-color:#8c5b6744;color:#4b3447;box-shadow:inset 0 1px #fff9,0 5px 18px #7d4b4b22}
+.game-screen[data-game-id="game-01"] .game-back,.game-screen[data-game-id="game-01"] .game-audio-toggle{border-color:#d9c4ff40;background:#ffffff14;color:#f9e6a5}
+.game-screen[data-game-id="game-02"] .game-back,.game-screen[data-game-id="game-02"] .game-audio-toggle{border-color:#86f0d255;background:#ffffff12;color:#9cf5de}
+.game-screen[data-game-id="game-03"] .game-back,.game-screen[data-game-id="game-03"] .game-audio-toggle{border-color:#9be9f055;background:#ffffff13;color:#aaf7ef}
+.game-screen[data-game-id="game-05"] .game-back,.game-screen[data-game-id="game-05"] .game-audio-toggle{border-color:#ffd0df55;background:#ffffff15;color:#ffe2bd}
+
+/* Star Catcher — arcade cósmico inmersivo */
+.star-game{width:100%;max-width:1100px;height:100%;min-height:0;display:flex;flex-direction:column;gap:clamp(8px,1.4vh,16px);padding:4px 2px 8px}
+.star-game-intro{flex:0 0 auto;margin:0 auto 2px}
+.star-game-kicker{background:#f7d77a20;color:#ffe5a1}
+.star-game-intro h2{margin:7px 0 4px;font-size:clamp(23px,4vh,37px)}
+.star-game-intro p{font-size:clamp(11px,1.7vh,14px)}
+.star-game-stats{flex:0 0 auto;width:min(760px,100%);margin:0 auto;gap:9px}
+.star-stat{padding:7px 8px;border-radius:14px;background:#ffffff10;border-color:#e8d6ff25}
+.star-stat span{font-size:9px}.star-stat strong{font-size:clamp(20px,3vh,27px);color:#ffe18a}
+.star-arena{flex:1 1 auto;width:100%;height:auto;min-height:0;border-radius:26px;border-color:#c7a9ff55;background-color:#241940;box-shadow:inset 0 0 90px #080615aa,0 16px 44px #08061555}
+.star-game-actions{flex:0 0 auto;display:flex;align-items:center;justify-content:center;gap:12px;padding:3px 0 0}
+.star-start{min-height:48px;min-width:min(260px,80%);border-radius:16px;background:linear-gradient(110deg,#ffe89a,#f3c84d);color:#38264a}
+.star-game-tip{font-size:10px;color:#d7c9ee}
+
+/* Color Cascade — laboratorio cromático sin botones redundantes */
+ .color-game{position:relative;width:100%;max-width:1050px;height:100%;min-height:0;justify-content:center;gap:clamp(12px,2.5vh,24px);padding:clamp(8px,2vh,22px) 0}
+.color-intro{margin:0 auto;text-align:center}
+.color-kicker{background:#9cf5de20;color:#9cf5de}
+.color-intro h2{font-size:clamp(25px,4vh,40px);margin:7px 0}
+.color-intro p{font-size:clamp(12px,1.8vh,15px)}
+.color-levelbar{width:100%;justify-content:center;margin:0;gap:7px}
+.color-levelbar span{font-size:clamp(10px,1.5vh,13px);padding:8px 12px;border-radius:99px;background:#ffffff0c}
+.color-board{flex:1 1 auto;width:100%;min-height:150px;max-height:44vh;gap:clamp(5px,1.2vw,13px);padding:clamp(8px,2vw,20px);border-radius:22px;background:linear-gradient(145deg,#16494b,#10383d);box-shadow:inset 0 0 60px #061f2555}
+.color-tile{height:min(100%,30vh);max-height:260px;min-height:105px;border-radius:clamp(9px,1.5vw,18px)}
+.color-direction{margin:0;font-size:10px}
+.color-feedback{min-height:20px;margin:0;font-size:clamp(11px,1.7vh,14px)}
+.color-win{position:absolute;left:50%;bottom:20px;transform:translateX(-50%);z-index:5;width:min(92%,430px);padding:17px;background:#174e4d;box-shadow:0 15px 50px #031b1ccc}
+.color-win small{color:#b5e9dc}
+
+/* Cloud Hopper — vuelo vertical sin marco de tarjeta */
+.hopper-game{width:100%;max-width:none;height:100%;min-height:0;padding:2px 0 0;display:flex;flex-direction:column;gap:8px}
+.hopper-heading{flex:0 0 auto;margin:0;text-align:left;padding:0 5px}
+.hopper-kicker{background:#aaf7ef1c;color:#b5fff4;font-size:9px}
+.hopper-heading h2{font-size:clamp(20px,3.4vh,30px);margin:5px 0}
+.hopper-heading p{font-size:clamp(11px,1.6vh,13px);max-width:620px}
+.hopper-scorebar{flex:0 0 auto;width:100%;max-width:none;margin:0;gap:8px}
+.hopper-scorebar div{padding:6px 10px;border-radius:12px;background:#ffffff12}
+.hopper-scorebar strong{font-size:20px}
+.hopper-stage{flex:1 1 auto;width:100%;height:auto;min-height:0;border-radius:22px;border:1px solid #aaf7ef35;background:linear-gradient(#152e58,#263d70);box-shadow:inset 0 0 55px #06112d55,0 16px 40px #07142c66}
+.hopper-hint{flex:0 0 auto;margin:0;padding:3px 0 2px;font-size:9px}
+.hopper-overlay{background:linear-gradient(145deg,#122950aa,#162b55aa);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
+
+/* Echo Six — xilófono táctil tipo juguete musical, horizontal y cómodo */
+ .echo-xylophone{position:relative;width:100%;max-width:760px;height:100%;min-height:0;margin:0 auto;padding:clamp(10px,2vh,20px);display:flex;flex-direction:column;justify-content:center;gap:clamp(10px,2vh,18px);border:1px solid #ffffffaa;border-radius:28px;background:linear-gradient(160deg,#fff4da,#ffe8c5 55%,#f5d9c4);color:#3e2940;box-shadow:0 18px 50px #6b3b4b33,inset 0 2px #fff}
+.echo-x-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.echo-kicker{font-size:9px;letter-spacing:1.5px;color:#9a6874;font-weight:900}
+.echo-x-head h2{font-size:clamp(26px,4vh,38px);margin:4px 0 0;color:#39253d}
+.echo-round{display:grid;gap:2px;text-align:right}
+.echo-round small{font-size:9px;letter-spacing:1px;color:#98717c;font-weight:900}
+.echo-round strong{font-size:clamp(24px,4vh,36px);color:#7e4d70}
+.echo-record{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border:1px dashed #9c778455;border-radius:13px;color:#926c7a;font-size:10px;font-weight:900}
+.echo-record strong{font-size:18px;color:#55384d}
+.echo-keys{flex:1 1 auto;min-height:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(3,minmax(64px,1fr));gap:clamp(7px,1.4vh,12px)}
+.echo-key{position:relative;min-height:0;display:flex;align-items:center;justify-content:space-between;padding:0 15px;border:2px solid color-mix(in srgb,var(--key-color) 72%,#fff);border-radius:17px;background:linear-gradient(135deg,color-mix(in srgb,var(--key-color) 84%,#fff),var(--key-color));color:#493548;box-shadow:0 5px 0 color-mix(in srgb,var(--key-color) 48%,#8a6670),0 10px 18px #6c485022,inset 0 2px #ffffffaa;transition:transform .16s ease,filter .16s ease,box-shadow .16s ease}
+.echo-key:nth-child(2n){transform:translateX(3px)}
+.echo-key-note{font-size:clamp(17px,2.4vh,23px);font-weight:950;letter-spacing:1px}
+.echo-key-mark{width:12px;height:12px;border:2px solid #fff;border-radius:50%;background:#ffffff88;box-shadow:0 1px 4px #50304a55}
+.echo-key.is-lit{transform:scale(.97) translateY(3px)!important;filter:brightness(1.15);box-shadow:0 1px 0 #8a6670,inset 0 0 20px #ffffff88}
+.echo-key.is-wrong{filter:saturate(.4) brightness(.8)}
+.echo-message{min-height:20px;margin:0;text-align:center;color:#80586e;font-size:13px;font-weight:800}
+.echo-play,.echo-finish-card button{min-height:48px;padding:0 25px;border:0;border-radius:15px;background:linear-gradient(110deg,#8b5b83,#b77c91);color:#fff;font-weight:900;box-shadow:0 8px 20px #9b607233}
+.echo-hint{margin:0;text-align:center;color:#a37e8b;font-size:9px;letter-spacing:1.4px}
+.echo-finish{position:absolute;inset:0;display:grid;place-items:center;padding:16px;border-radius:28px;background:#fff0e6d9;backdrop-filter:blur(7px)}
+.echo-finish[hidden]{display:none}
+.echo-finish-card{width:min(100%,380px);padding:24px;border-radius:22px;background:#fff7e8;color:#473246;text-align:center;box-shadow:0 18px 48px #67435344}
+.echo-finish-card h3{margin:8px 0;font-size:25px}
+.echo-finish-card p{color:#886b7c}
+.echo-finish-record{display:flex;justify-content:space-between;padding:10px 12px;margin:12px 0;border-radius:12px;background:#f5e5d8}
+
+/* Pasteluna — torre de repostería, estética de cuento */
+.pasteluna-game{width:100%;max-width:1050px;height:100%;min-height:0;margin:0 auto;display:flex;flex-direction:column;gap:8px;padding:2px 0 5px;color:#fff4e9}
+.pasteluna-heading{flex:0 0 auto;text-align:center}
+.pasteluna-heading span{font-size:9px;letter-spacing:2px;font-weight:950;color:#ffd4e2}
+.pasteluna-heading p{margin:4px 0 0;color:#f1c7d8;font-size:clamp(11px,1.7vh,14px)}
+.pasteluna-hud{flex:0 0 auto;display:flex;align-items:center;gap:9px}
+.pasteluna-hud div{display:grid;gap:2px;min-width:80px;padding:7px 12px;border:1px solid #ffd8e533;border-radius:13px;background:#ffffff12}
+.pasteluna-hud small{font-size:8px;letter-spacing:1px;color:#ffd4e2;font-weight:900}
+.pasteluna-hud strong{font-size:21px;color:#ffe5a8;font-variant-numeric:tabular-nums}
+.pasteluna-hud>span{margin-left:auto;font-size:9px;letter-spacing:1px;color:#f2c5d8;font-weight:900}
+.pasteluna-stage{position:relative;flex:1 1 auto;min-height:0;overflow:hidden;border:1px solid #ffd6e855;border-radius:25px;background:#482a50;box-shadow:inset 0 0 65px #180d2a88,0 15px 40px #14091d66}
+.pasteluna-canvas{display:block;width:100%;height:100%;touch-action:manipulation}
+.pasteluna-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:22px;text-align:center;background:linear-gradient(145deg,#301a3bdc,#633657c9);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
+.pasteluna-overlay[hidden]{display:none}
+.pasteluna-cake-mark{font-size:clamp(48px,9vh,76px);filter:drop-shadow(0 10px 15px #160a2c66);animation:nubi-float 3s ease-in-out infinite}
+.pasteluna-overline{margin-top:8px;color:#ffd5e3;font-size:9px;font-weight:950;letter-spacing:2px}
+.pasteluna-overlay h2{margin:8px 0;font-size:clamp(31px,6vh,48px);letter-spacing:-1.5px}
+.pasteluna-overlay p{max-width:360px;margin:0 0 20px;color:#f4dce8;font-size:13px;line-height:1.55}
+.pasteluna-overlay button{min-height:50px;padding:0 25px;border:0;border-radius:16px;background:linear-gradient(110deg,#ffe2a8,#ffb6d1);color:#4a2746;font-weight:950;box-shadow:0 9px 24px #ffb6d133}
+.pasteluna-footnote{flex:0 0 auto;margin:0;text-align:center;color:#e8b9d0;font-size:9px;letter-spacing:.7px}
+@media(max-width:420px){.echo-xylophone{padding:10px;gap:10px}.echo-keys{gap:7px}.echo-key{padding:0 11px}.pasteluna-hud div{min-width:66px}.pasteluna-hud>span{font-size:8px}}
+@media(orientation:landscape) and (max-height:520px){
+ .game-topbar{flex-basis:42px;min-height:42px}.game-back,.game-audio-toggle{width:34px;height:34px}
+ .game-root{height:calc(100dvh - 48px);padding-bottom:3px}
+ .star-game{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);grid-template-rows:auto auto;gap:7px}
+ .star-game-intro{grid-column:1;align-self:end}.star-game-stats{grid-column:1}.star-arena{grid-column:2;grid-row:1/4}
+ .star-game-actions{grid-column:1}.hopper-heading{display:none}.hopper-stage{min-height:0}
+ .color-game{display:grid;grid-template-columns:1fr 2fr;grid-template-rows:auto auto 1fr auto;gap:6px}
+ .color-intro{grid-column:1}.color-levelbar{grid-column:1;flex-wrap:wrap}.color-board{grid-column:2;grid-row:1/4;max-height:none}.color-direction,.color-feedback{grid-column:1}
+ .echo-xylophone{max-width:100%;padding:8px 14px;gap:7px}.echo-keys{grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(2,minmax(48px,1fr))}
+ .pasteluna-heading{display:none}.pasteluna-stage{border-radius:18px}
+}
+@media(prefers-reduced-motion:reduce){.star-arena,.pasteluna-cake-mark{animation:none!important}}

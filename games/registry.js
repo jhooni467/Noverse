@@ -36,7 +36,15 @@
       previews: ["Recuerda seis sonidos", "Supera tu récord"]
     },
     {
-      id: "game-05", name: "Próximo universo", description: "Descubre una experiencia relajante.",
+      id: "game-05", name: "Pasteluna",
+      description: "Apila dulces y construye la torre más alta.",
+      shortInfo: "Una pastelería de ensueño donde cada pastel cuenta. Suelta capas, conserva el equilibrio y construye una torre interminable sin dejar que se derrumbe.",
+      category: "Habilidad", icon: "🍰", featured: true, duration: "Infinita", difficulty: "De precisión",
+      palette: { primary: "#ffb5d2", secondary: "#f8d58a", background: "#251329", surface: "#47213f", glow: "#ff8fc1" },
+      previews: ["Apila capas de pastel", "Supera tu propio récord"]
+    },
+    {
+      id: "game-06", name: "Próximo universo", description: "Descubre una experiencia relajante.",
       shortInfo: "Una experiencia tranquila para explorar a tu ritmo.",
       category: "Relajación", icon: "🌙", featured: false, duration: "Libre", difficulty: "Relajado",
       palette: { primary: "#a9c9ff", secondary: "#9be5df", background: "#172b4b", surface: "#263f65", glow: "#7ba8ff" },

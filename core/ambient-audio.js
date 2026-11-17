@@ -5,7 +5,8 @@
     "game-01": { base:164.81, notes:[392,493.88,587.33,493.88,440,587.33], wave:"sine", interval:2300 },
     "game-02": { base:130.81, notes:[261.63,329.63,392,329.63,293.66,349.23], wave:"triangle", interval:3100 },
     "game-03": { base:146.83, notes:[349.23,440,523.25,659.25,523.25,440], wave:"sine", interval:2050 },
-    "game-04": { base:110, notes:[261.63,329.63,392,329.63,293.66,349.23], wave:"sine", interval:3600 }
+    "game-04": { base:110, notes:[261.63,329.63,392,329.63,293.66,349.23], wave:"sine", interval:3600 },
+    "game-05": { base:196, notes:[392,493.88,587.33,659.25,587.33,493.88], wave:"triangle", interval:2450 }
   };
   let context=null, master=null, timer=null, activeId=null, step=0, droneNodes=[];
   let enabled=true;
@@ -13,7 +14,7 @@
   function getContext() {
     const Audio=window.AudioContext||window.webkitAudioContext;
     if(!Audio)return null;
-    if(!context){context=new Audio();master=context.createGain();master.gain.value=enabled?0.032:0;master.connect(context.destination);}
+    if(!context){context=new Audio();master=context.createGain();master.gain.value=enabled?0.13:0;master.connect(context.destination);}
     return context;
   }
   function unlock(){const ctx=getContext();if(ctx&&ctx.state==="suspended")ctx.resume().catch(()=>{});}
@@ -53,13 +54,29 @@
     };
     tick();timer=setInterval(tick,preset.interval);
   }
+  function playEffect(kind="tap"){
+    if(!enabled)return;
+    const sounds={
+      tap:[520,.09,.22,"sine"],soft:[660,.13,.16,"sine"],pop:[880,.12,.28,"triangle"],
+      hit:[740,.16,.32,"triangle"],drop:[330,.2,.34,"sine"],success:[523.25,.32,.3,"sine"],
+      fail:[180,.28,.28,"triangle"]
+    };
+    const sound=sounds[kind]||sounds.tap;
+    if(!context)getContext();
+    if(context&&context.state==="suspended")context.resume().catch(()=>{});
+    playTone(sound[0],sound[1],sound[2],sound[3]);
+    if(kind==="success"){
+      window.setTimeout(()=>playTone(659.25,.28,.24,"sine"),110);
+      window.setTimeout(()=>playTone(783.99,.38,.22,"sine"),220);
+    }
+  }
   function setEnabled(value){
     enabled=Boolean(value);try{localStorage.setItem("noverse-ambient-enabled",String(enabled));}catch(_){}
-    if(master&&context){const now=context.currentTime;master.gain.cancelScheduledValues(now);master.gain.setTargetAtTime(enabled?0.032:0,now,0.08);}
+    if(master&&context){const now=context.currentTime;master.gain.cancelScheduledValues(now);master.gain.setTargetAtTime(enabled?0.13:0,now,0.08);}
     if(!enabled)stopNodes();else if(activeId)play(activeId);
     return enabled;
   }
   function toggle(){return setEnabled(!enabled);}
   window.NOVERSE=window.NOVERSE||{};
-  window.NOVERSE.AmbientAudio=Object.freeze({unlock,play,stop,toggle,isEnabled:()=>enabled,setEnabled});
+  window.NOVERSE.AmbientAudio=Object.freeze({unlock,play,stop,toggle,isEnabled:()=>enabled,setEnabled,playEffect});
 })();
