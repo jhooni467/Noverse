@@ -13,7 +13,7 @@
     container.innerHTML = `
       <section class="star-game" aria-label="Star Catcher">
         <div class="star-game-intro">
-          <span class="star-game-kicker">ARCADE · JUEGO 01</span>
+          <span class="star-game-kicker">CAZA ESTELAR</span>
           <h2>¡Atrapa las estrellas!</h2>
           <p>Toca la estrella cada vez que aparezca en un lugar nuevo.</p>
         </div>
