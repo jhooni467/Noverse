@@ -1583,15 +1583,16 @@ class AudioManager {
   getMusicVolume() { return this._musicVolume; }
 
   async _startMusic({ fadeSeconds = 1.25 } = {}) {
+    const generation = ++this._musicGeneration;
     const ctx = this._ensureContext();
     if (!ctx) return;
     await ctx.resume();
     const buffer = await this.loadMusic('assets/music/next-round.mp3');
+    if (generation !== this._musicGeneration) return;
     if (this._musicSource) {
       try { this._musicSource.stop(); } catch (_) {}
       this._musicSource = null;
     }
-    const generation = ++this._musicGeneration;
     const source = ctx.createBufferSource();
     const gain = ctx.createGain();
     source.buffer = buffer;
@@ -1619,6 +1620,7 @@ class AudioManager {
   }
 
   pauseMusic() {
+    ++this._musicGeneration;
     const ctx = this.ctx, source = this._musicSource, gain = this._musicGain;
     if (!ctx || !source || !gain) return;
     const now = ctx.currentTime;
@@ -1640,6 +1642,7 @@ class AudioManager {
   }
 
   stopMusic() {
+    ++this._musicGeneration;
     const ctx = this.ctx, source = this._musicSource, gain = this._musicGain;
     if (!ctx || !source || !gain) return;
     const now = ctx.currentTime;
