@@ -5579,7 +5579,11 @@ class GameScene extends Scene {
       if (name === 'over') this._showGameOver();
     };
     this.run.track.update(0, this._ahead());
-    g.audio.setMusicVolume(g.save.data.settings.volumes.music ?? 0.85);
+    const savedMusicVolume = g.save.data.settings.volumes.music;
+    const initialMusicVolume = savedMusicVolume === 0.8 ? 0.85 : (savedMusicVolume ?? 0.85);
+    g.audio.setMusicVolume(initialMusicVolume);
+    g.save.data.settings.volumes.music = initialMusicVolume;
+    g.save.commit();
     g.audio.startMusic();
 
     this._offSwipe = g.bus.on('gesture:swipe', (dir) => this._onSwipe(dir));
