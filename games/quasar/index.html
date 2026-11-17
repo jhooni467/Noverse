@@ -542,12 +542,12 @@ body {
 }
 
 
-<style>
+
 .music-volume-control{display:flex;flex-direction:column;gap:12px;padding:16px 18px;border-radius:22px;background:rgba(11,8,32,.38);border:1px solid rgba(255,255,255,.16);text-align:left}
 .music-volume-heading{display:flex;justify-content:space-between;align-items:center;font-size:var(--fs-sm);font-weight:750;color:#f7eaff}
 .music-volume-value{color:#ffd18b;font-variant-numeric:tabular-nums}
 .music-volume-slider{width:100%;height:24px;margin:0;accent-color:#ffc66e;cursor:pointer;touch-action:pan-x}
-</style>
+
 </style>
   </head>
   <body>
@@ -5576,6 +5576,8 @@ class GameScene extends Scene {
       if (name === 'over') this._showGameOver();
     };
     this.run.track.update(0, this._ahead());
+    g.audio.setMusicVolume(g.save.data.settings.volumes.music ?? 0.85);
+    g.audio.startMusic();
 
     this._offSwipe = g.bus.on('gesture:swipe', (dir) => this._onSwipe(dir));
     this._offHidden = g.bus.on('app:hidden', () => this.pause());
@@ -5593,6 +5595,7 @@ class GameScene extends Scene {
     this._offHidden();
     this._offKey();
     this._offQuality();
+    this.game.audio.stopMusic();
     this.game.gestures.setEnabled(false);
     this.game.ui.hide();
   }
@@ -5642,9 +5645,16 @@ class GameScene extends Scene {
     if (this.paused || this.run.state !== 'running') return;
     this.paused = true;
     this.hud = null;
+    this.game.audio.pauseMusic();
     this.game.ui.show('pause', {
       summary: this.run,
       onResume: () => this.resume(),
+      onVolumeChange: (value) => {
+        this.game.audio.setMusicVolume(value);
+        this.game.save.data.settings.volumes.music = value;
+        this.game.save.commit();
+      },
+      musicVolume: this.game.audio.getMusicVolume(),
       onHome: () => this.game.scenes.switchTo('title'),
     });
   }
@@ -5652,12 +5662,14 @@ class GameScene extends Scene {
   resume() {
     if (!this.paused) return;
     this.paused = false;
+    this.game.audio.resumeMusic();
     this._showHud();
   }
 
   _showGameOver() {
     if (this._overShown) return;
     this._overShown = true;
+    this.game.audio.stopMusic();
     this.hud = null;
     const { score, distance, coins } = this.run;
     this.game.ui.show('gameover', {
