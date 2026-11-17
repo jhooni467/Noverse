@@ -569,7 +569,7 @@ body {
 .music-volume-value{color:#ffd18b;font-variant-numeric:tabular-nums}
 .music-volume-slider{width:100%;height:24px;margin:0;accent-color:#ffc66e;cursor:pointer;touch-action:pan-x}
 
-</style>
+.title-screen-new{justify-content:space-between;padding:calc(110px * var(--u)) var(--pad) calc(42px * var(--u))}.title-heading .logo{font-size:calc(136px * var(--u))}.title-heading .subtitle{color:#ffd7a0;font-weight:800}.title-orbit{width:calc(88px * var(--u));height:calc(88px * var(--u));margin:0 auto calc(16px * var(--u));border:2px solid rgba(255,218,170,.5);border-radius:50%;display:grid;place-items:center;color:#ffd08a;font-size:30px;box-shadow:0 0 28px rgba(255,127,176,.24)}.menu-actions{width:100%;max-width:calc(570px * var(--u));display:flex;flex-direction:column;gap:calc(18px * var(--u));pointer-events:auto}.menu-action{width:100%;min-height:calc(108px * var(--u));display:flex;align-items:center;gap:calc(22px * var(--u));padding:calc(18px * var(--u)) calc(25px * var(--u));border-radius:calc(28px * var(--u));color:#fff5ff;text-align:left;font:inherit;cursor:pointer}.menu-play{background:linear-gradient(110deg,#ffe4a4,#ffad66 58%,#ff83a9);color:#42174f;border:1px solid rgba(255,239,207,.7);box-shadow:0 8px 0 #a84d79,0 18px 38px rgba(255,116,166,.25)}.menu-avatar{background:linear-gradient(110deg,rgba(83,42,126,.92),rgba(39,19,78,.95));border:1px solid rgba(232,213,255,.3)}.menu-action-icon{width:calc(66px * var(--u));height:calc(66px * var(--u));display:grid;place-items:center;border-radius:20px;background:rgba(255,255,255,.18);flex:none}.menu-icon{width:58%;height:58%}.menu-action-copy{display:flex;flex-direction:column;gap:5px}.menu-action-copy strong{font-size:calc(34px * var(--u));font-weight:900}.menu-action-copy small{font-size:calc(20px * var(--u));opacity:.78}.menu-chevron{margin-left:auto;font-size:42px}.menu-footer{gap:14px}.hud-pause-btn svg{width:48%;height:48%}.avatar-screen{position:absolute;inset:0;padding:var(--pad);display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse,rgba(108,55,155,.35),rgba(11,8,32,.35) 70%);pointer-events:auto}.avatar-back{position:absolute;top:calc(38px * var(--u));left:var(--pad);padding:10px 16px;border:1px solid rgba(255,255,255,.2);border-radius:999px;color:#f8eaff;background:rgba(36,10,70,.8);font:700 var(--fs-sm) system-ui}.avatar-card{width:100%;max-width:calc(560px * var(--u));padding:calc(34px * var(--u));border-radius:calc(36px * var(--u));text-align:center;background:linear-gradient(180deg,rgba(75,34,116,.96),rgba(31,13,64,.97));border:1px solid rgba(255,255,255,.22);box-shadow:0 22px 60px rgba(4,1,22,.45)}.avatar-preview{height:calc(230px * var(--u));position:relative;display:grid;place-items:center}.avatar-orbit{position:absolute;width:calc(190px * var(--u));height:calc(90px * var(--u));border:1px solid rgba(255,209,138,.55);border-radius:50%;transform:rotate(-25deg)}.avatar-orbit-b{transform:rotate(55deg);border-color:rgba(217,190,255,.5)}.avatar-person{width:calc(75px * var(--u));height:calc(135px * var(--u));border-radius:45% 45% 25% 25%;background:linear-gradient(#ffe7bc 0 48%,#ff9ab4 49%);border:3px solid rgba(255,255,255,.65);filter:drop-shadow(0 0 18px rgba(255,191,143,.35))}.avatar-spark{position:absolute;right:22%;top:20%;color:#ffe4a4;font-size:30px;animation:avatarGlow 2s infinite alternate}@keyframes avatarGlow{to{transform:translateY(-8px);opacity:.55}}.avatar-title{margin:10px 0 0;font-size:calc(52px * var(--u));font-weight:900;color:#fff2d6}.avatar-coming{margin:18px 0 0;font-size:calc(36px * var(--u));font-weight:900;letter-spacing:.08em;background:linear-gradient(90deg,#ffe6a8,#ff9dbd);-webkit-background-clip:text;background-clip:text;color:transparent}.avatar-description{max-width:calc(440px * var(--u));margin:14px auto 0;color:#eadcff;opacity:.82;font-size:var(--fs-sm);line-height:1.45}@media(max-height:700px){.title-screen-new{padding-top:calc(40px * var(--u));padding-bottom:calc(20px * var(--u))}.title-orbit{width:calc(60px * var(--u));height:calc(60px * var(--u))}.title-heading .logo{font-size:calc(100px * var(--u))}.menu-action{min-height:calc(82px * var(--u))}.avatar-preview{height:calc(160px * var(--u))}}</style>
   </head>
   <body>
     <div id="app">
@@ -1824,81 +1824,17 @@ return { SegmentedControl };
 })();
 __m["src/ui/screens/TitleScreen.js"] = (function () {
 'use strict';
-const { h } = __m["src/ui/components/dom.js"];
-const { SegmentedControl } = __m["src/ui/components/SegmentedControl.js"];
-const { QUALITY_ORDER, QUALITY_PROFILES } = __m["src/config/quality.config.js"];
-
-/**
- * Pantalla de título: identidad del proyecto, botón de jugar y los ajustes
- * técnicos disponibles (calidad gráfica y diagnóstico).
- */
-class TitleScreen {
-  constructor(game, ui) {
-    this.game = game;
-    this.ui = ui;
-  }
-
-  mount(container) {
-    const { config } = this.game;
-    const debugOn = this.ui.debug.enabled;
-
-    const quality = SegmentedControl({
-      label: 'Calidad gráfica',
-      value: this.game.qualityId,
-      options: QUALITY_ORDER.map((id) => ({ value: id, label: QUALITY_PROFILES[id].label })),
-      onChange: (id) => this.game.setQuality(id),
-    });
-
-    this.debugBtn = h(
-      'button',
-      {
-        class: 'seg-btn solo',
-        type: 'button',
-        'aria-pressed': String(debugOn),
-        onclick: () => {
-          const next = !this.ui.debug.enabled;
-          this.ui.debug.setEnabled(next);
-          this.debugBtn.setAttribute('aria-pressed', String(next));
-          this.game.save.data.settings.debug = next;
-          this.game.save.commit();
-        },
-      },
-      'Diagnóstico'
-    );
-
-    this.root = h(
-      'div',
-      { class: 'title-screen' },
-      h(
-        'header',
-        { class: 'title-block' },
-        h('p', { class: 'eyebrow' }, config.tagline),
-        h('h1', { class: 'logo' }, config.name),
-        h('p', { class: 'subtitle' }, config.stage),
-        h('p', { class: 'note' }, 'Desliza para moverte, saltar y deslizarte')
-      ),
-      h(
-        'footer',
-        { class: 'bottom-bar' },
-        h('button', { class: 'btn btn-primary btn-play', type: 'button', onclick: () => this.game.scenes.switchTo('game') }, 'Jugar'),
-        h(
-          'div',
-          { class: 'controls' },
-          h('div', { class: 'control-row' }, h('span', { class: 'control-label' }, 'Calidad'), quality),
-          this.debugBtn
-        ),
-        h('div', { class: 'chips' }, h('span', { class: 'chip' }, `v${config.version}`), h('span', { class: 'chip' }, 'Web · Canvas 2D'))
-      )
-    );
-    container.append(this.root);
-  }
-
-  unmount() {
-    if (this.root) this.root.remove();
-  }
-}
-
-return { TitleScreen };
+const {h}=__m["src/ui/components/dom.js"];
+const {SegmentedControl}=__m["src/ui/components/SegmentedControl.js"];
+const {QUALITY_ORDER,QUALITY_PROFILES}=__m["src/config/quality.config.js"];
+const ico=(d)=>h('svg',{viewBox:'0 0 24 24',class:'menu-icon','aria-hidden':'true'},h('path',{d,fill:'none',stroke:'currentColor','stroke-width':'2','stroke-linecap':'round','stroke-linejoin':'round'}));
+class TitleScreen{constructor(game,ui){this.game=game;this.ui=ui;}mount(container){const c=this.game.config;const q=SegmentedControl({label:'Calidad gráfica',value:this.game.qualityId,options:QUALITY_ORDER.map(id=>({value:id,label:QUALITY_PROFILES[id].label})),onChange:id=>this.game.setQuality(id)});const d=this.ui.debug.enabled;this.debugBtn=h('button',{class:'seg-btn solo',type:'button','aria-pressed':String(d),onclick:()=>{const n=!this.ui.debug.enabled;this.ui.debug.setEnabled(n);this.debugBtn.setAttribute('aria-pressed',String(n));this.game.save.data.settings.debug=n;this.game.save.commit();}},'Diagnóstico');this.root=h('div',{class:'title-screen title-screen-new'},h('header',{class:'title-block title-heading'},h('div',{class:'title-orbit','aria-hidden':'true'},'✦'),h('p',{class:'eyebrow'},'UNA AVENTURA ENTRE ESTRELLAS'),h('h1',{class:'logo'},c.name),h('p',{class:'subtitle'},'Corre más allá del horizonte'),h('p',{class:'note'},'Desliza para moverte, saltar y esquivar obstáculos')),h('section',{class:'menu-actions'},h('button',{class:'menu-action menu-play',type:'button',onclick:()=>this.game.scenes.switchTo('game')},h('span',{class:'menu-action-icon'},ico('M8 5v14l11-7z')),h('span',{class:'menu-action-copy'},h('strong',{},'Jugar'),h('small',{},'Comenzar aventura'))),h('button',{class:'menu-action menu-avatar',type:'button',onclick:()=>this.ui.show('avatar')},h('span',{class:'menu-action-icon'},ico('M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM5 21a7 7 0 0 1 14 0')),h('span',{class:'menu-action-copy'},h('strong',{},'Avatar'),h('small',{},'Personaliza tu personaje')),h('span',{class:'menu-chevron'},'›'))),h('footer',{class:'bottom-bar menu-footer'},h('div',{class:'controls'},h('div',{class:'control-row'},h('span',{class:'control-label'},'Calidad'),q),this.debugBtn),h('div',{class:'chips'},h('span',{class:'chip'},'v'+c.version),h('span',{class:'chip'},'QUASAR · Etapa 01'))));container.append(this.root);}unmount(){if(this.root)this.root.remove();}}
+return {TitleScreen};
+})();
+__m["src/ui/screens/AvatarScreen.js"] = (function () {
+'use strict';const {h}=__m["src/ui/components/dom.js"];
+class AvatarScreen{constructor(game,ui){this.ui=ui;}mount(container){this.root=h('div',{class:'avatar-screen'},h('button',{class:'avatar-back',type:'button',onclick:()=>this.ui.show('title')},'‹  Volver'),h('div',{class:'avatar-card'},h('div',{class:'avatar-preview','aria-hidden':'true'},h('span',{class:'avatar-orbit'}),h('span',{class:'avatar-orbit avatar-orbit-b'}),h('span',{class:'avatar-person'}),h('span',{class:'avatar-spark'},'✦')),h('p',{class:'eyebrow'},'PERSONALIZACIÓN'),h('h2',{class:'avatar-title'},'Tu viajero'),h('p',{class:'avatar-coming'},'Muy Pronto...'),h('p',{class:'avatar-description'},'Estamos preparando nuevos personajes, estilos y accesorios para tu aventura.')));container.append(this.root);}unmount(){if(this.root)this.root.remove();}}
+return {AvatarScreen};
 })();
 __m["src/ui/screens/HudScreen.js"] = (function () {
 'use strict';
@@ -1940,7 +1876,7 @@ class HudScreen {
         h('div', { class: 'hud-pill hud-dist', 'aria-label': 'Distancia' }, this.distEl, h('span', { class: 'hud-unit' }, 'm'))
       ),
       this.hint,
-      h('button', { class: 'hud-pause-btn', type: 'button', 'aria-label': 'Pausar partida', title: 'Pausar', onclick: () => this.game.bus.emit('game:pause-request') }, 'Ⅱ')
+      h('button', { class: 'hud-pause-btn', type: 'button', 'aria-label': 'Pausar partida', title: 'Pausar', onclick: () => this.game.bus.emit('game:pause-request') }, h('svg', { viewBox: '0 0 24 24', 'aria-hidden': 'true' }, h('path', { d: 'M8 5v14M16 5v14', fill: 'none', stroke: 'currentColor', 'stroke-width': '3', 'stroke-linecap': 'round' })))
     );
     container.append(this.root);
   }
@@ -2067,6 +2003,7 @@ const { TitleScreen } = __m["src/ui/screens/TitleScreen.js"];
 const { HudScreen } = __m["src/ui/screens/HudScreen.js"];
 const { GameOverScreen } = __m["src/ui/screens/GameOverScreen.js"];
 const { PauseScreen } = __m["src/ui/screens/PauseScreen.js"];
+const { AvatarScreen } = __m["src/ui/screens/AvatarScreen.js"];
 
 /**
  * Capa de interfaz en DOM encima del canvas, alineada con el área segura.
@@ -2088,6 +2025,7 @@ class UIManager {
     this.register('hud', HudScreen);
     this.register('gameover', GameOverScreen);
     this.register('pause', PauseScreen);
+    this.register('avatar', AvatarScreen);
   }
 
   /** Pantalla de UI visible ahora (o null). */
