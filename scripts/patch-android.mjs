@@ -46,8 +46,7 @@ const adaptive = `<adaptive-icon xmlns:android="http://schemas.android.com/apk/r
   <foreground android:drawable="@drawable/ic_launcher_foreground"/>
 </adaptive-icon>
 `;
-const themed = adaptive.replace("</adaptive-icon>",'  <monochrome android:drawable="@drawable/ic_launcher_monochrome"/>
-</adaptive-icon>');
+const themed = adaptive.replace("</adaptive-icon>",'  <monochrome android:drawable="@drawable/ic_launcher_monochrome"/>\n</adaptive-icon>');
 await mkdir(`${res}/mipmap-anydpi-v26`,{recursive:true});
 await writeFile(`${res}/mipmap-anydpi-v26/ic_launcher.xml`,adaptive);
 await writeFile(`${res}/mipmap-anydpi-v26/ic_launcher_round.xml`,adaptive);
