@@ -2480,3 +2480,73 @@ body[data-theme="glassy"] .home-mode.is-liquid-pressed:after{border-radius:inher
  .pasteluna-heading{display:none}.pasteluna-stage{border-radius:18px}
 }
 @media(prefers-reduced-motion:reduce){.star-arena,.pasteluna-cake-mark{animation:none!important}}
+
+
+/* NOVERSE 1.11 — gameplay layouts, touch targets and game-specific art direction */
+.game-root{width:100%;max-width:none;height:100%;min-height:0;padding:0 clamp(10px,2vw,24px) 8px;overflow:hidden}
+.game-root>section{width:100%;max-width:none;height:100%;min-height:0}
+.detail-screen{padding-bottom:calc(132px + env(safe-area-inset-bottom))}
+.detail-content{padding-bottom:calc(38px + env(safe-area-inset-bottom))}
+.detail-play{position:relative;z-index:2;width:100%;min-height:66px;margin:0 0 28px;padding:14px 20px;flex:0 0 auto;touch-action:manipulation;scroll-margin-bottom:calc(110px + env(safe-area-inset-bottom))}
+.detail-gallery{margin-bottom:clamp(22px,4vh,38px)}
+@media(max-height:720px){.detail-screen{padding-bottom:calc(150px + env(safe-area-inset-bottom))}.detail-hero{min-height:0;padding:24px 20px}.detail-game-icon{width:66px;height:66px;font-size:36px;margin-bottom:12px}.detail-gallery{margin:18px 0}.preview-shot{min-height:118px}.detail-play{min-height:60px;margin-bottom:26px}}
+@media(orientation:landscape) and (max-height:520px){.detail-screen{padding-bottom:calc(100px + env(safe-area-inset-bottom))}.detail-hero{padding:16px 20px}.detail-game-icon{width:52px;height:52px;font-size:29px}.detail-hero h1{font-size:27px;margin:6px 0}.detail-hero p{font-size:12px}.detail-meta{margin-top:12px}.detail-gallery{margin:12px 0}.preview-shot{min-height:88px}.detail-play{min-height:50px;margin-bottom:22px}}
+
+/* Color Cascade — nine equal square swatches, never a horizontal strip */
+.color-odd-game{display:grid;grid-template-rows:auto auto auto minmax(0,1fr) auto;align-content:stretch;justify-content:stretch;gap:clamp(10px,2vh,19px);padding:clamp(8px,2vh,20px) 0;color:#effffb}
+.color-odd-game .color-intro{width:100%;margin:0 auto;text-align:center}
+.color-odd-game .color-intro h2{font-size:clamp(27px,5vh,46px);letter-spacing:-1.7px}
+.color-odd-game .color-intro p{line-height:1.5;color:#b5d9d3}
+.color-odd-game .color-levelbar{display:flex;flex-wrap:wrap;justify-content:center;gap:7px}
+.color-odd-game .color-levelbar span{border:1px solid #9cf5de24;background:#ffffff0c;color:#c5f6e9}
+.color-lives{display:flex;justify-content:center;gap:9px}
+.color-lives i{display:block;width:10px;height:10px;border-radius:50%;background:#8ef0d4;box-shadow:0 0 14px #8ef0d477;transition:opacity .2s,transform .2s}
+.color-lives i.is-lost{opacity:.16;transform:scale(.72);box-shadow:none}
+.color-board-3x3{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(3,minmax(0,1fr));gap:clamp(7px,1.5vw,14px);width:min(100%,min(58vh,560px));height:auto;max-height:min(58vh,560px);aspect-ratio:1;min-height:0;max-width:min(100%,560px);margin:auto;flex:none;padding:clamp(9px,2vw,19px);border:1px solid #8cebd044;border-radius:25px;background:linear-gradient(145deg,#16494b,#10383d 72%);box-shadow:inset 0 0 55px #061f2555,0 20px 55px #04191e55}
+.color-board-3x3 .color-tile{display:block;width:100%;height:100%;min-width:0;min-height:0;max-height:none;aspect-ratio:1;border:1px solid #ffffff45;border-radius:clamp(10px,2vw,19px);box-shadow:inset 0 2px 3px #ffffff35,0 5px 12px #031c2055;touch-action:manipulation;transition:transform .18s cubic-bezier(.2,.8,.2,1),filter .18s,outline .18s}
+.color-board-3x3 .color-tile:active{transform:scale(.94)}
+.color-board-3x3 .color-tile.is-correct{outline:4px solid #d6fff1;outline-offset:2px;transform:scale(.94);filter:brightness(1.12)}
+.color-board-3x3 .color-tile.is-wrong{animation:color-wrong .32s ease;outline:3px solid #ff8e9a;outline-offset:1px}
+@keyframes color-wrong{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.color-odd-game .color-feedback{min-height:22px;text-align:center;color:#b9e9dd;font-weight:700}
+.color-result{position:absolute;z-index:10;inset:0;display:grid;place-items:center;padding:18px;background:#061b20c9;backdrop-filter:blur(9px);-webkit-backdrop-filter:blur(9px)}
+.color-result[hidden]{display:none}
+.color-result-card{width:min(100%,390px);padding:28px;border:1px solid #9cf5de55;border-radius:26px;background:linear-gradient(145deg,#1d5955,#10383d);text-align:center;box-shadow:0 24px 70px #031619aa}
+.color-result-card>span{color:#9cf5de;font-size:9px;font-weight:900;letter-spacing:1.8px}
+.color-result-card h3{font-size:30px;margin:12px 0 7px}
+.color-result-card p{color:#c0e1d8;line-height:1.5}
+.color-result-card button{min-height:48px;padding:0 23px;border:0;border-radius:15px;background:#8ef0d4;color:#103b3b;font-weight:900}
+
+/* Pasteluna — patisserie cabinet, dimensional cake layers and clear instructions */
+.pasteluna-game{max-width:none;gap:clamp(7px,1.4vh,14px);padding:3px 0 5px}
+.pasteluna-heading span{color:#ffe1b9;letter-spacing:2.2px}
+.pasteluna-heading p{color:#f6cbdc}
+.pasteluna-hud div{min-width:88px;padding:8px 13px;border-color:#ffe2bd44;background:linear-gradient(145deg,#ffffff20,#ffffff08);box-shadow:inset 0 1px #ffffff25}
+.pasteluna-hud strong{color:#ffe4a9;font-size:clamp(22px,3vh,29px)}
+.pasteluna-stage{flex:1 1 0;width:100%;min-height:0;border:1px solid #ffd9c077;border-radius:clamp(17px,3vw,30px);background:linear-gradient(160deg,#58314e,#2b1a38);box-shadow:inset 0 0 80px #1c0d2b99,0 18px 48px #160a2355}
+.pasteluna-canvas{touch-action:manipulation}
+.pasteluna-overlay{background:linear-gradient(145deg,#2a1738e8,#60334fe8);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px)}
+.pasteluna-overlay p{max-width:420px;font-size:clamp(13px,1.8vh,16px);line-height:1.6}
+.pasteluna-overlay button{min-height:54px;padding:0 30px;background:linear-gradient(110deg,#ffe8ad,#ffb7d2);box-shadow:0 10px 28px #ffb6d144,inset 0 1px #fff}
+.pasteluna-footnote{color:#f5c8d9;letter-spacing:1px;font-weight:800}
+.pasteluna-hud>span{color:#ffe0ba}
+@media(max-width:420px){.pasteluna-hud div{min-width:74px}.pasteluna-hud>span{font-size:8px;letter-spacing:.4px}}
+@media(orientation:landscape) and (max-height:520px){.pasteluna-heading{display:block}.pasteluna-heading span{font-size:8px}.pasteluna-heading p{font-size:10px}.pasteluna-stage{min-height:0}.pasteluna-hud div{padding:5px 9px}.pasteluna-footnote{font-size:8px}}
+
+/* Cloud Hopper — full-bleed sky, animated clouds and bird */
+.hopper-sky-game{max-width:none;gap:clamp(7px,1.2vh,12px);padding:2px 0 4px}
+.hopper-sky-game .hopper-heading{padding:0 clamp(4px,1vw,14px)}
+.hopper-sky-game .hopper-kicker{background:#baf9f022;color:#c9fff5}
+.hopper-sky-game .hopper-heading h2{font-size:clamp(23px,4vh,36px);letter-spacing:-1px}
+.hopper-sky-game .hopper-heading p{color:#d6eaff}
+.hopper-sky-game .hopper-scorebar{gap:10px}
+.hopper-sky-game .hopper-scorebar div{min-width:105px;padding:8px 13px;border:1px solid #b5f4f044;border-radius:15px;background:#ffffff13;box-shadow:inset 0 1px #ffffff24}
+.hopper-sky-game .hopper-scorebar strong{font-size:clamp(23px,3vh,30px);color:#c8fff2}
+.hopper-level{margin-left:auto;color:#c9dfff;font-size:10px;font-weight:900;letter-spacing:1px}
+.hopper-sky-game .hopper-stage{border:1px solid #b9f4ff66;border-radius:clamp(17px,3vw,30px);background:#1b3d70;box-shadow:inset 0 0 80px #07172e66,0 18px 50px #07142e77}
+.hopper-sky-game .hopper-canvas{touch-action:manipulation}
+.hopper-sky-game .hopper-overlay{background:linear-gradient(145deg,#122950a8,#162b55a8);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px)}
+.hopper-start-kicker{color:#b9fff1;font-size:9px;font-weight:900;letter-spacing:1.5px}
+.hopper-sky-game .hopper-button{min-height:52px;padding:0 28px;border:0;border-radius:16px;background:linear-gradient(110deg,#b5fff0,#79dce2);color:#16365b;font-weight:950;box-shadow:0 10px 28px #75dfe455,inset 0 1px #fff}
+.hopper-sky-game .hopper-hint{color:#d6eaff;font-weight:850;letter-spacing:1.2px}
+@media(orientation:landscape) and (max-height:520px){.hopper-sky-game .hopper-heading{display:none}.hopper-sky-game .hopper-stage{min-height:0}.hopper-sky-game .hopper-scorebar div{padding:4px 9px}.hopper-sky-game .hopper-scorebar strong{font-size:19px}}
