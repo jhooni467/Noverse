@@ -315,7 +315,8 @@ body {
 
 .hud-pause-btn {
   position: absolute;
-  top: calc(34px * var(--u));
+  /* Debajo del contador de distancia: nunca comparte su espacio. */
+  top: calc(118px * var(--u));
   right: var(--pad);
   z-index: 5;
   width: max(44px, calc(72px * var(--u)));
@@ -3199,7 +3200,7 @@ const CAMERA = Object.freeze({
   horizon: 0.33,
   feet: 0.8,
   /** Píxeles por unidad a la altura del personaje, como fracción del ancho seguro. */
-  laneScale: 0.25,
+  laneScale: 0.31,
   /** Cuánto sigue la cámara al personaje lateralmente (0 = fija, 1 = pegada) y su suavizado. */
   followX: 0.45,
   followSmooth: 7,
@@ -5316,7 +5317,7 @@ class RunnerRenderer {
     for (let i = first; i <= last; i++) {
       const z0 = i * STRIPE + 0.4;
       const z1 = z0 + 1.7;
-      for (const lx of [-0.5, 0.5]) {
+      for (const lx of [-0.56, 0.56]) {
         const d0 = Math.max(z0 - p.camZ, nearD);
         const d1 = z1 - p.camZ;
         if (d1 <= nearD) continue;
