@@ -61,6 +61,7 @@
       return audio;
     }
     function playNote(index) {
+      if (!window.NOVERSE.AmbientAudio?.isEnabled?.()) return;
       const ctx = getAudio();
       if (!ctx) return;
       const now = ctx.currentTime;
