@@ -22,7 +22,9 @@ if (native) {
       const result=await UpdatesPlugin.requestNotificationPermission();
       return result.granted===true;
     },
-    showUpdateNotification: async options => UpdatesPlugin.showUpdateNotification(options)
+    showUpdateNotification: async options => UpdatesPlugin.showUpdateNotification(options),
+    startDownloadAndInstall: async options => UpdatesPlugin.startDownloadAndInstall(options),
+    getDownloadStatus: async downloadId => UpdatesPlugin.getDownloadStatus({ downloadId })
   });
 
   const configureSystemUI = async () => {
