@@ -313,6 +313,26 @@ body {
 
 /* ───────────── HUD de la partida ───────────── */
 
+.hud-pause-btn {
+  position: absolute;
+  top: calc(34px * var(--u));
+  right: var(--pad);
+  z-index: 5;
+  width: max(44px, calc(72px * var(--u)));
+  height: max(44px, calc(72px * var(--u)));
+  display: grid;
+  place-items: center;
+  border: 1.5px solid rgba(255,255,255,.28);
+  border-radius: 50%;
+  color: #fff;
+  background: rgba(36,10,70,.72);
+  box-shadow: 0 5px 18px rgba(10,2,30,.28);
+  font: 900 max(19px, calc(30px * var(--u)))/1 system-ui,sans-serif;
+  pointer-events: auto;
+  touch-action: manipulation;
+}
+.hud-pause-btn:active { transform: scale(.94); background: rgba(255,127,176,.85); }
+
 .hud {
   position: absolute;
   inset: 0;
@@ -1918,7 +1938,8 @@ class HudScreen {
         h('div', { class: 'hud-score' }, this.scoreEl, h('span', { class: 'hud-score-label' }, 'Puntos')),
         h('div', { class: 'hud-pill hud-dist', 'aria-label': 'Distancia' }, this.distEl, h('span', { class: 'hud-unit' }, 'm'))
       ),
-      this.hint
+      this.hint,
+      h('button', { class: 'hud-pause-btn', type: 'button', 'aria-label': 'Pausar partida', title: 'Pausar', onclick: () => this.game.bus.emit('game:pause-request') }, 'Ⅱ')
     );
     container.append(this.root);
   }
@@ -3123,7 +3144,7 @@ __m["src/config/gameplay.config.js"] = (function () {
 /** Carriles: tres, centrados en x = -1, 0 y 1. */
 const LANES = Object.freeze({
   count: 3,
-  spacing: 1,
+  spacing: 1.12,
 });
 
 const RUN = Object.freeze({
@@ -3194,7 +3215,7 @@ const TRACK = Object.freeze({
   /** Metros de pista sin nada al empezar. */
   introDistance: 36,
   /** Anchura de la pista (a cada lado del centro) y de los bordillos. */
-  halfWidth: 1.5,
+  halfWidth: 1.82,
   curbWidth: 0.34,
   /** Metros por detrás del jugador que se conservan antes de descartar. */
   keepBehind: 6,
@@ -5597,6 +5618,7 @@ class GameScene extends Scene {
     g.audio.startMusic();
 
     this._offSwipe = g.bus.on('gesture:swipe', (dir) => this._onSwipe(dir));
+    this._offPause = g.bus.on('game:pause-request', () => this.pause());
     this._offHidden = g.bus.on('app:hidden', () => this.pause());
     this._offKey = g.bus.on('input:keydown', (code, e) => {
       if ((code === 'Escape' || code === 'KeyP') && !e.repeat) this.paused ? this.resume() : this.pause();
@@ -5609,6 +5631,7 @@ class GameScene extends Scene {
 
   exit() {
     this._offSwipe();
+    this._offPause();
     this._offHidden();
     this._offKey();
     this._offQuality();
