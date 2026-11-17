@@ -63,6 +63,9 @@ if (/\bStyle\.Light/.test(await read("js/native-android.js"))) fail("native-andr
 if (!html.includes('id="store-screen"') || !html.includes('id="store-detail"')) fail("index.html: falta la Store integrada.");
 if (!existsSync("js/store.js") || !existsSync("css/store.css")) fail("Faltan los archivos de NOVERSE Store.");
 if (!precache.has("js/store.js") || !precache.has("css/store.css")) fail("La Store no está completamente precargada para uso offline.");
+if (!existsSync("native/UpdatesPlugin.java")) fail("Falta el plugin Android de actualizaciones y notificaciones.");
+if (!html.includes('id="store-updates"')) fail("Falta el panel de actualizaciones de Store.");
+if (!existsSync("updates.json")) fail("Falta el feed compartido de actualizaciones.");
 
 if (problems.length) {
   console.error("NOVERSE verify: " + problems.length + " problema(s)\n - " + problems.join("\n - "));

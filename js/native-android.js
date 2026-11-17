@@ -1,9 +1,11 @@
 import { App } from "@capacitor/app";
+import { registerPlugin } from "@capacitor/core";
 import { Haptics, ImpactStyle } from "@capacitor/haptics";
 import { SplashScreen } from "@capacitor/splash-screen";
 import { StatusBar, Style } from "@capacitor/status-bar";
 
 const native = window.Capacitor?.isNativePlatform?.() === true;
+const UpdatesPlugin = registerPlugin("Updates");
 if (native) {
   document.documentElement.classList.add("native-android");
   window.NOVERSE = window.NOVERSE || {};
@@ -11,7 +13,16 @@ if (native) {
     isNative: true,
     tap: async () => {
       try { await Haptics.impact({ style: ImpactStyle.Light }); } catch (_) {}
-    }
+    },
+    getInstalledVersions: async packageNames => {
+      const result=await UpdatesPlugin.getInstalledVersions({packageNames});
+      return result.versions||{};
+    },
+    requestNotificationPermission: async () => {
+      const result=await UpdatesPlugin.requestNotificationPermission();
+      return result.granted===true;
+    },
+    showUpdateNotification: async options => UpdatesPlugin.showUpdateNotification(options)
   });
 
   const configureSystemUI = async () => {
@@ -23,6 +34,7 @@ if (native) {
     try { await SplashScreen.hide(); } catch (_) {}
   };
   configureSystemUI();
+  document.dispatchEvent(new CustomEvent("noverse:native-ready"));
 
   document.addEventListener("click", event => {
     if (event.target.closest(".bottom-nav-item,.game-card,.settings,.detail-play,.nav-back,.game-back,.theme-option")) {

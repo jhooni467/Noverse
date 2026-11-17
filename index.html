@@ -67,6 +67,7 @@
         <span class="market-spark" aria-hidden="true">✳</span>
       </header>
       <label class="store-search"><span aria-hidden="true">⌕</span><input id="store-search" type="search" placeholder="Buscar apps y juegos..." autocomplete="off"><kbd>⌕</kbd></label>
+      <section id="store-updates" class="store-updates" hidden aria-live="polite"></section>
       <section class="market-spotlight" aria-label="Aplicación destacada"><div class="market-spotlight-head"><span>EDITOR'S CHOICE</span><span>✦ SELECCIÓN NOVERSE</span></div><div id="store-featured" class="store-featured"></div></section>
       <section class="market-section"><div class="market-section-heading"><div><span class="market-overline">PARA EMPEZAR</span><h2>Explora por categoría</h2></div></div><nav id="store-categories" class="store-categories" aria-label="Categorías de aplicaciones"></nav></section>
       <section class="market-section"><div class="market-section-heading"><div><span class="market-overline">EL CATÁLOGO</span><h2>Aplicaciones para ti</h2></div><span class="store-count" id="store-result-count">2 apps</span></div><div id="store-grid" class="store-grid"></div><p class="store-empty" id="store-empty" hidden>No encontramos aplicaciones con esa búsqueda.</p></section>
@@ -83,7 +84,7 @@
   </section>
   <nav id="bottom-nav" class="bottom-nav" aria-label="Navegación principal">
     <button class="bottom-nav-item active" type="button" data-tab="home" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1Z"/></svg><span>Inicio</span></button>
-    <button class="bottom-nav-item" type="button" data-tab="store" aria-current="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9h18l-1.5-5h-15L3 9Z"/><path d="M5 9v11h14V9M9 20v-6h6v6M3 9a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0"/></svg><span>Store</span></button>
+    <button class="bottom-nav-item" type="button" data-tab="store" aria-current="false"><i class="store-update-dot" aria-hidden="true"></i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9h18l-1.5-5h-15L3 9Z"/><path d="M5 9v11h14V9M9 20v-6h6v6M3 9a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0"/></svg><span>Store</span></button>
     <button class="bottom-nav-item" type="button" data-tab="stats" aria-current="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V5M4 19h17M8 16v-5m5 5V7m5 9v-8"/></svg><span>Estadísticas</span></button>
   </nav>
   <section id="settings-screen" class="settings-screen" aria-label="Ajustes" hidden>
@@ -114,7 +115,7 @@
           <span class="theme-option-check" aria-hidden="true">✓</span>
         </button>
       </div>
-      <p class="settings-version">NOVERSE · Versión 1.15</p>
+      <p class="settings-version">NOVERSE · Versión 1.16</p>
     </div>
   </section>
 

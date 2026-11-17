@@ -303,6 +303,38 @@
   if (homePlayed) { const played = readNumber("noverse-games-played"); homePlayed.textContent = played ? `${played} partidas iniciadas · sigue explorando` : "Tu próxima aventura te espera"; }
   document.addEventListener("noverse:catalog-updated", () => { renderFeatured(); renderGames(); });
   document.addEventListener("noverse:stats-updated", renderStats);
+
+  function compareVersions(a,b) {
+    const left=String(a||"0").split(/[.+-]/).map(x=>Number(x)||0);
+    const right=String(b||"0").split(/[.+-]/).map(x=>Number(x)||0);
+    for(let i=0;i<Math.max(left.length,right.length);i++){const x=left[i]||0,y=right[i]||0;if(x!==y)return x-y;}
+    return 0;
+  }
+  async function checkForStoreUpdates() {
+    const native=window.NOVERSE?.Native;
+    if(!native?.isNative||!native.getInstalledVersions||!window.NOVERSE?.Store?.setPendingUpdates)return;
+    try {
+      const response=await fetch("https://raw.githubusercontent.com/jhooni467/Noverse/main/updates.json?ts="+Date.now(),{cache:"no-store"});
+      if(!response.ok)throw new Error("Feed de actualizaciones no disponible.");
+      const feed=await response.json();
+      const packageNames=(feed.apps||[]).map(item=>item.packageName);
+      const installed=await native.getInstalledVersions(packageNames);
+      const pending=(feed.apps||[]).filter(item=>installed[item.packageName]&&compareVersions(installed[item.packageName],item.latestVersion)<0).map(item=>({...item,installedVersion:installed[item.packageName]}));
+      window.NOVERSE.Store.setPendingUpdates(pending);
+      if(!pending.length)return;
+      const fingerprint=pending.map(item=>item.id+":"+item.latestVersion).sort().join("|");
+      let notified="",denied=false;
+      try{notified=localStorage.getItem("noverse-updates-notified")||"";denied=localStorage.getItem("noverse-notifications-denied")==="yes";}catch(_){}
+      if(notified===fingerprint||denied)return;
+      const granted=await native.requestNotificationPermission();
+      if(!granted){try{localStorage.setItem("noverse-notifications-denied","yes");}catch(_){}return;}
+      await native.showUpdateNotification({id:116,title:pending.length===1?"Actualización disponible":"Actualizaciones disponibles",body:pending.length===1?pending[0].name+" · Nueva versión "+pending[0].latestVersion:pending.length+" aplicaciones tienen nuevas versiones."});
+      try{localStorage.setItem("noverse-updates-notified",fingerprint);}catch(_){}
+    } catch(error){console.info("NOVERSE: no se pudieron comprobar actualizaciones",error);}
+  }
+  window.NOVERSE = window.NOVERSE || {};
+  window.NOVERSE.Updates = Object.freeze({check:checkForStoreUpdates});
+  document.addEventListener("noverse:native-ready",checkForStoreUpdates);
   window.NOVERSE = window.NOVERSE || {};
   window.NOVERSE.App = Object.freeze({
     refreshStats: renderStats,
