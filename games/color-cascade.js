@@ -6,7 +6,7 @@
 (() => {
   "use strict";
   const GAME_ID = "game-02";
-  const LEVELS = [5, 6, 7, 8, 9];
+  const MAX_COLORS = 12;
 
   function mount(container) {
     let level = 1;
@@ -19,7 +19,7 @@
     let startIndex = -1;
     let moves = 0;
     let hue = 260;
-    let destroyed = false;
+    let destroyed = false;\n    let advanceTimer = null;
 
     container.innerHTML = `
       <section class="color-game" aria-label="Color Cascade">
@@ -29,7 +29,7 @@
           <p>Mantén presionada una ficha y muévela<br>para ordenar los tonos de claro a oscuro.</p>
         </header>
         <div class="color-levelbar">
-          <span data-level>NIVEL 1 / 5</span><span data-count>5 COLORES</span><span data-moves>0 MOVIMIENTOS</span>
+          <span data-level>PALETA 01</span><span data-count>5 COLORES</span><span data-moves>0 MOVIMIENTOS</span>
         </div>
         <div class="color-board" data-board aria-label="Fichas de colores"></div>
         <div class="color-direction"><span>MÁS CLARO</span><span>MÁS OSCURO</span></div>
@@ -64,7 +64,7 @@
 
     function makeLevel() {
       cancelDrag();
-      const count = LEVELS[Math.min(level - 1, LEVELS.length - 1)];
+      const count = Math.min(MAX_COLORS, 5 + Math.floor((level - 1) / 2));
       hue = Math.floor(Math.random() * 360);
       const ordered = Array.from({ length: count }, (_, i) => ({
         id: `c${i}`,
@@ -91,7 +91,7 @@
         button.addEventListener("pointerdown", startDrag);
         board.appendChild(button);
       });
-      levelNode.textContent = `NIVEL ${level} / 5`;
+      levelNode.textContent = `PALETA ${String(level).padStart(2,"0")}`;
       countNode.textContent = `${tiles.length} COLORES`;
       updateMoves();
     }
@@ -262,27 +262,15 @@
       feedback.textContent = "¡Degradado perfecto!";
       win.hidden = false;
       win.className = "color-win";
-      win.innerHTML = `<div class="color-win-symbol">✦</div><h3>¡Paleta completada!</h3><p>Ordenaste todos los tonos en ${moves} movimientos.</p><button class="color-button primary" type="button" data-next>${level === 5 ? "Jugar otra vez" : "Siguiente nivel"}</button>`;
-      win.querySelector("[data-next]").addEventListener("click", () => {
-        level = level === 5 ? 1 : level + 1;
+      win.innerHTML = `<div class="color-win-symbol">✦</div><h3>¡Degradado perfecto!</h3><p>Paleta ${level} completada en ${moves} movimientos.</p><small>Preparando nuevos tonos…</small>`;
+      window.NOVERSE.AmbientAudio?.playEffect("success");
+      advanceTimer = window.setTimeout(() => {
+        if (destroyed) return;
+        level += 1;
         makeLevel();
-      });
+      }, 1250);
     }
 
-    function checkOrder() {
-      if (completed) return;
-      if (isSolved()) finishLevel();
-      else {
-        feedback.textContent = "Aún hay tonos fuera de lugar. ¡Tú puedes!";
-        feedback.classList.remove("feedback-shake");
-        void feedback.offsetWidth;
-        feedback.classList.add("feedback-shake");
-      }
-    }
-
-    function resetLevel() { makeLevel(); }
-    reset.addEventListener("click", resetLevel);
-    check.addEventListener("click", checkOrder);
     makeLevel();
 
     return {
