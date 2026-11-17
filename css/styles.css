@@ -2570,3 +2570,21 @@ body[data-theme="glassy"] .home-mode.is-liquid-pressed:after{border-radius:inher
 .pasteluna-overlay-v12 button{background:linear-gradient(110deg,#fff28c,#ffcf68 48%,#ff8fc0);color:#78365e;border:1px solid #fff8d9;box-shadow:0 8px 24px #a73d7955,inset 0 2px #fff}
 .pasteluna-v12 .pasteluna-footnote{color:#fff8e9;text-shadow:0 1px 8px #9b3f6c;font-weight:950;letter-spacing:1.1px}
 @media(orientation:landscape) and (max-height:520px){.pasteluna-v12 .pasteluna-heading{display:block}.pasteluna-v12 .pasteluna-heading span{font-size:8px}.pasteluna-v12 .pasteluna-heading p{font-size:10px}.pasteluna-v12 .pasteluna-stage{min-height:0}}
+
+
+/* QUASAR · NOVERSE EXPERIENCES */
+#experience-placeholder:not([hidden]){display:block;min-height:48vh;padding:28px 5% 50px;overflow:visible}
+.experience-heading{max-width:900px;margin:0 auto 22px}
+.experience-heading h2{margin:7px 0;font-size:clamp(30px,7vw,44px);letter-spacing:-1.5px}
+.experience-heading>p:last-child{margin:0;color:var(--muted);font-size:13px;line-height:1.6}
+.experience-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),360px));gap:16px;max-width:1000px;margin:0 auto}
+.experience-grid .game-card{min-width:0}
+.experience-grid .game-art{overflow:hidden;position:relative;background:radial-gradient(circle at 50% 30%,#b78aff55,transparent 55%),linear-gradient(145deg,#39205d,#160d35)}
+.experience-grid .game-art img{width:100%;height:100%;object-fit:cover}
+.detail-game-icon img{display:block;width:100%;height:100%;object-fit:cover;border-radius:inherit}
+.preview-gallery .experience-shot{flex:0 0 min(42vw,210px);margin:0;overflow:hidden;border:1px solid #ffffff20;border-radius:17px;background:#160d35;scroll-snap-align:start}
+.experience-shot img{display:block;width:100%;aspect-ratio:9/16;object-fit:cover}
+.game-screen[data-game-id="experience-quasar"]{background:#0b0820}
+.game-screen[data-game-id="experience-quasar"] .game-root{position:relative;min-height:0;height:calc(100dvh - 68px);padding:0;overflow:hidden}
+.game-screen[data-game-id="experience-quasar"] .quasar-embed{display:block;width:100%;height:100%;min-height:0;border:0;background:#0b0820}
+@media(min-width:700px){.experience-grid{grid-template-columns:repeat(auto-fit,minmax(280px,360px))}}
