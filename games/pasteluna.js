@@ -29,7 +29,7 @@
       layers.push({x:left,w:overlap,y:top.y-moving.h,color:moving.color});score++;scoreNode.textContent=String(score);
       if(score>best){best=score;bestNode.textContent=String(best);try{localStorage.setItem("noverse-pasteluna-best",String(best))}catch(_){}}
       window.NOVERSE.AmbientAudio?.playEffect(score%5===0?"success":"pop");
-      const shift=Math.max(0,layers[layers.length-1].y-height*.55);if(shift>0)layers.forEach(layer=>layer.y+=shift);spawn();
+      const shift=Math.max(0,height*.42-layers[layers.length-1].y);if(shift>0)layers.forEach(layer=>layer.y+=shift);spawn();
     }
     function finish(){playing=false;moving=null;window.NOVERSE.GameManager?.recordCompleted?.();window.NOVERSE.AmbientAudio?.playEffect("fail");title.textContent="¡Torre terminada!";message.textContent="Apilaste "+score+(score===1?" capa.":" capas.")+" Tu récord es "+best+".";startButton.textContent="Intentar de nuevo";overlay.hidden=false;}
     function rr(x,y,w,h,r){ctx.beginPath();ctx.roundRect(x,y,w,h,r);}
@@ -38,7 +38,7 @@
       if(!ctx||!width||!height)return;const g=ctx.createLinearGradient(0,0,0,height);g.addColorStop(0,"#3b2447");g.addColorStop(.58,"#5a3155");g.addColorStop(1,"#24172f");ctx.fillStyle=g;ctx.fillRect(0,0,width,height);
       ctx.fillStyle="#ffd9a0";ctx.globalAlpha=.1;ctx.beginPath();ctx.arc(width*.78,height*.2,Math.min(width,height)*.18,0,Math.PI*2);ctx.fill();ctx.globalAlpha=1;
       ctx.strokeStyle="#ffebd51e";ctx.lineWidth=2;for(let i=0;i<4;i++){const x=width*(.12+i*.24);ctx.strokeRect(x,28,Math.min(70,width*.13),height*.42);}
-      const offset=Math.max(0,layers[layers.length-1].y-height*.62);layers.forEach(layer=>cake({...layer,y:layer.y+offset}));if(moving&&playing)cake({...moving,y:moving.y+offset});
+      const offset=Math.max(0,layers[layers.length-1].y-height*.62);layers.slice(-Math.ceil(height/30)-3).forEach(layer=>cake({...layer,y:layer.y+offset}));if(moving&&playing)cake({...moving,y:moving.y+offset});
       ctx.fillStyle="#ffe8d0";ctx.globalAlpha=.7;ctx.fillRect(0,height-12,width,12);ctx.globalAlpha=1;
     }
     function loop(t){if(!alive){raf=0;return;}const dt=last?Math.min(.04,(t-last)/1000):0;last=t;phase+=dt*30;if(playing&&moving){moving.x+=moving.dir*moving.speed*dt;if(moving.x+moving.w>width){moving.x=width-moving.w;moving.dir=-1}if(moving.x<0){moving.x=0;moving.dir=1}}draw();raf=requestAnimationFrame(loop);}
