@@ -2393,7 +2393,7 @@ body[data-theme="glassy"] .home-mode.is-liquid-pressed:after{border-radius:inher
 .star-game-tip{font-size:10px;color:#d7c9ee}
 
 /* Color Cascade — laboratorio cromático sin botones redundantes */
-.color-game{width:100%;max-width:1050px;height:100%;min-height:0;justify-content:center;gap:clamp(12px,2.5vh,24px);padding:clamp(8px,2vh,22px) 0}
+ .color-game{position:relative;width:100%;max-width:1050px;height:100%;min-height:0;justify-content:center;gap:clamp(12px,2.5vh,24px);padding:clamp(8px,2vh,22px) 0}
 .color-intro{margin:0 auto;text-align:center}
 .color-kicker{background:#9cf5de20;color:#9cf5de}
 .color-intro h2{font-size:clamp(25px,4vh,40px);margin:7px 0}
@@ -2421,7 +2421,7 @@ body[data-theme="glassy"] .home-mode.is-liquid-pressed:after{border-radius:inher
 .hopper-overlay{background:linear-gradient(145deg,#122950aa,#162b55aa);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
 
 /* Echo Six — xilófono táctil tipo juguete musical, horizontal y cómodo */
-.echo-xylophone{width:100%;max-width:760px;height:100%;min-height:0;margin:0 auto;padding:clamp(10px,2vh,20px);display:flex;flex-direction:column;justify-content:center;gap:clamp(10px,2vh,18px);border:1px solid #ffffffaa;border-radius:28px;background:linear-gradient(160deg,#fff4da,#ffe8c5 55%,#f5d9c4);color:#3e2940;box-shadow:0 18px 50px #6b3b4b33,inset 0 2px #fff}
+ .echo-xylophone{position:relative;width:100%;max-width:760px;height:100%;min-height:0;margin:0 auto;padding:clamp(10px,2vh,20px);display:flex;flex-direction:column;justify-content:center;gap:clamp(10px,2vh,18px);border:1px solid #ffffffaa;border-radius:28px;background:linear-gradient(160deg,#fff4da,#ffe8c5 55%,#f5d9c4);color:#3e2940;box-shadow:0 18px 50px #6b3b4b33,inset 0 2px #fff}
 .echo-x-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .echo-kicker{font-size:9px;letter-spacing:1.5px;color:#9a6874;font-weight:900}
 .echo-x-head h2{font-size:clamp(26px,4vh,38px);margin:4px 0 0;color:#39253d}
