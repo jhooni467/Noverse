@@ -1,4 +1,4 @@
-const VERSION = "1.12";
+const VERSION = "1.13";
 const CACHE_NAME = `noverse-v${VERSION}`;
 const FILES = [
   "./?v=" + VERSION,
@@ -18,6 +18,12 @@ const FILES = [
   "./games/cloud-hopper.js?v=" + VERSION,
   "./games/echo-six.js?v=" + VERSION,
   "./games/pasteluna.js?v=" + VERSION,
+  "./games/quasar.js?v=" + VERSION,
+  "./games/quasar/index.html",
+  "./images/experiences/quasar-logo.svg",
+  "./images/experiences/quasar-1.webp",
+  "./images/experiences/quasar-2.webp",
+  "./images/experiences/quasar-4.webp",
   "./js/app.js?v=" + VERSION,
   "./js/store.js?v=" + VERSION,
   "./css/store.css?v=" + VERSION
@@ -49,7 +55,30 @@ self.addEventListener("fetch", event => {
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
 
-  // Las navegaciones siempre consultan primero la versión publicada.
+  // La navegación del juego embebido es un documento local independiente.
+  // Se cachea con su propia URL y nunca se sustituye por la portada de NOVERSE.
+  if (request.mode === "navigate" && url.pathname.endsWith("/games/quasar/index.html")) {
+    event.respondWith((async () => {
+      const cached = await caches.match(request);
+      try {
+        const response = await fetch(request, { cache: "no-store" });
+        if (response && response.ok) {
+          const copy = response.clone();
+          const cache = await caches.open(CACHE_NAME);
+          await cache.put(request, copy);
+        }
+        return response;
+      } catch (error) {
+        return cached || new Response("QUASAR no está disponible sin conexión.", {
+          status: 503,
+          headers: { "Content-Type": "text/plain; charset=utf-8" }
+        });
+      }
+    })());
+    return;
+  }
+
+  // Las navegaciones de NOVERSE siempre consultan primero la versión publicada.
   if (request.mode === "navigate") {
     event.respondWith((async () => {
       try {
