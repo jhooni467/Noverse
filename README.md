@@ -9,7 +9,8 @@ NOVERSE reúne minijuegos casuales en una sola experiencia. Cada juego tiene su 
 - **Star Catcher** — atrapa estrellas antes de que termine el tiempo.
 - **Color Cascade** — ordena tonos en un reto infinito de degradados.
 - **Cloud Hopper** — guía a Nubi entre arcos de cristal.
-- **Echo Six** — memoriza secuencias musicales de seis notas.\n- **Pasteluna** — apila capas de pastel y supera tu récord en una torre infinita.
+- **Echo Six** — memoriza secuencias musicales de seis notas.
+- **Pasteluna** — apila capas de pastel y supera tu récord en una torre infinita.
 
 ## NOVERSE Store
 
@@ -17,7 +18,8 @@ La Store reúne aplicaciones y juegos del ecosistema NOVERSE, con catálogo, cat
 
 ## La experiencia
 
-- Juegos a pantalla completa, con identidad visual, animaciones, música y efectos propios.\n- Interfaz diseñada para teléfonos y tabletas, con estilos Predeterminado, Glassy y Material.
+- Juegos a pantalla completa, con identidad visual, animaciones, música y efectos propios.
+- Interfaz diseñada para teléfonos y tabletas, con estilos Predeterminado, Glassy y Material.
 - Se puede usar sin conexión después de cargar la aplicación.
 - Sin anuncios ni compras dentro de la app.
 - Los récords, partidas iniciadas y completadas se guardan localmente en el dispositivo.
