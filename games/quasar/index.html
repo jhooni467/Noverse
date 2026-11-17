@@ -2000,7 +2000,7 @@ class PauseScreen {
         h('div', { class: 'over-score' }, h('span', { class: 'over-score-value' }, String(summary.score)), h('span', { class: 'over-score-label' }, 'Puntos')),
         h('label', { class: 'music-volume-control' },
           h('span', { class: 'music-volume-heading' }, 'Música', h('strong', { class: 'music-volume-value' }, `${Math.round(musicVolume * 100)}%`)),
-          h('input', { class: 'music-volume-slider', type: 'range', min: '0', max: '100', step: '1', value: String(Math.round(musicVolume * 100)), 'aria-label': 'Volumen de la música', oninput: (event) => {
+          h('input', { class: 'music-volume-slider', type: 'range', min: '0', max: '100', step: '1', value: String(Math.round(musicVolume * 100)), style: `--volume-progress: ${Math.round(musicVolume * 100)}%`, 'aria-label': 'Volumen de la música', oninput: (event) => {
             const value = Number(event.target.value) / 100;
             event.target.parentElement.querySelector('.music-volume-value').textContent = `${event.target.value}%`;
             event.target.style.setProperty('--volume-progress', `${event.target.value}%`);
