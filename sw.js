@@ -1,4 +1,4 @@
-const VERSION = "1.13";
+const VERSION = "1.14";
 const CACHE_NAME = `noverse-v${VERSION}`;
 const FILES = [
   "./?v=" + VERSION,
@@ -24,6 +24,7 @@ const FILES = [
   "./images/experiences/quasar-1.webp",
   "./images/experiences/quasar-2.webp",
   "./images/experiences/quasar-4.webp",
+  "./games/quasar/assets/music/next-round.mp3",
   "./js/app.js?v=" + VERSION,
   "./js/store.js?v=" + VERSION,
   "./css/store.css?v=" + VERSION
