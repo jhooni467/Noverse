@@ -25,7 +25,7 @@
     container.innerHTML = `
       <section class="color-game" aria-label="Color Cascade">
         <header class="color-intro">
-          <span class="color-kicker">PUZZLE · JUEGO 02</span>
+          <span class="color-kicker">ESTUDIO CROMÁTICO</span>
           <h2>Color Cascade</h2>
           <p>Mantén presionada una ficha y muévela<br>para ordenar los tonos de claro a oscuro.</p>
         </header>
@@ -69,7 +69,7 @@
       moves = 0;
       completed = false;
       win.hidden = true;
-      feedback.textContent = "Mantén una ficha y deslízala hasta su nueva posición.";
+      feedback.textContent = "Desliza los tonos hasta que fluyan de claro a oscuro.";
       render();
     }
 
