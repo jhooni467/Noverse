@@ -1489,6 +1489,8 @@ class AudioManager {
     this._musicGain = null;
     this._musicVolume = 0.85;
     this._musicGeneration = 0;
+    this._musicOffset = 0;
+    this._musicStartedAt = 0;
   }
 
   _ensureContext() {
@@ -1582,7 +1584,7 @@ class AudioManager {
 
   getMusicVolume() { return this._musicVolume; }
 
-  async _startMusic({ fadeSeconds = 1.25 } = {}) {
+  async _startMusic({ fadeSeconds = 1.25, offset = 0 } = {}) {
     const generation = ++this._musicGeneration;
     const ctx = this._ensureContext();
     if (!ctx) return;
@@ -1609,13 +1611,17 @@ class AudioManager {
         this._musicGain = null;
       }
     };
-    source.start(0);
+    const safeOffset = buffer.duration > 0 ? ((offset % buffer.duration) + buffer.duration) % buffer.duration : 0;
+    source.start(0, safeOffset);
+    this._musicOffset = safeOffset;
+    this._musicStartedAt = ctx.currentTime;
     gain.gain.linearRampToValueAtTime(1, ctx.currentTime + fadeSeconds);
   }
 
   async startMusic() {
+    this._musicOffset = 0;
     this.setMusicVolume(this._musicVolume);
-    try { await this._startMusic({ fadeSeconds: 1.8 }); }
+    try { await this._startMusic({ fadeSeconds: 1.8, offset: 0 }); }
     catch (_) { /* La partida debe seguir funcionando aunque falle el audio. */ }
   }
 
@@ -1626,6 +1632,10 @@ class AudioManager {
     const now = ctx.currentTime;
     const end = now + 1.15;
     try {
+      // La velocidad baja progresivamente de 1.0 a 0.72; conserva la posición
+      // musical aproximada para que Continuar no reinicie la canción.
+      this._musicOffset += Math.max(0, now - this._musicStartedAt) + (1.15 * (1 + 0.72) / 2);
+      if (this._musicBuffer?.duration) this._musicOffset %= this._musicBuffer.duration;
       source.playbackRate.cancelScheduledValues(now);
       source.playbackRate.setValueAtTime(source.playbackRate.value, now);
       source.playbackRate.linearRampToValueAtTime(0.72, end);
@@ -1637,7 +1647,7 @@ class AudioManager {
   }
 
   async resumeMusic() {
-    try { await this._startMusic({ fadeSeconds: 1.05 }); }
+    try { await this._startMusic({ fadeSeconds: 1.05, offset: this._musicOffset }); }
     catch (_) { /* No bloquear la reanudación de la partida. */ }
   }
 
