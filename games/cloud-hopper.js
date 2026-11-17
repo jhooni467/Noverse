@@ -8,7 +8,7 @@
     container.innerHTML = `
       <section class="hopper-game" aria-label="Cloud Hopper">
         <div class="hopper-heading">
-          <span class="hopper-kicker">ARCADE · JUEGO 03</span>
+          <span class="hopper-kicker">VUELO ENTRE CRISTALES</span>
           <h2>¡A volar, Nubi!</h2>
           <p>Toca la pantalla para impulsarte y atraviesa los arcos de cristal.</p>
         </div>
