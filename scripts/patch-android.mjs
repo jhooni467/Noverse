@@ -60,7 +60,13 @@ await writeFile("android/app/src/main/java/com/noverse/gamehub/UpdatesPlugin.jav
 
 const manifestPath = "android/app/src/main/AndroidManifest.xml";
 let androidManifest = await readFile(manifestPath,"utf8");
-if (!androidManifest.includes("android.permission.REQUEST_INSTALL_PACKAGES")) {\n  const marker=androidManifest.indexOf("<application");\n  androidManifest=androidManifest.slice(0,marker)+"<uses-permission android:name=\\\"android.permission.REQUEST_INSTALL_PACKAGES\\\" />\\n"+androidManifest.slice(marker);\n}\nif (!androidManifest.includes("android.permission.POST_NOTIFICATIONS")) {
+if (!androidManifest.includes("android.permission.REQUEST_INSTALL_PACKAGES")) {
+  const marker=androidManifest.indexOf("<application");
+  const nl=String.fromCharCode(10);
+  const declaration="<uses-permission android:name=\\"android.permission.REQUEST_INSTALL_PACKAGES\\" />"+nl;
+  androidManifest=androidManifest.slice(0,marker)+declaration+androidManifest.slice(marker);
+}
+if (!androidManifest.includes("android.permission.POST_NOTIFICATIONS")) {
   const marker=androidManifest.indexOf("<application");
   const nl=String.fromCharCode(10);
   const declarations="<uses-permission android:name=\"android.permission.POST_NOTIFICATIONS\" />"+nl+"<queries><package android:name=\"com.noverse.gamehub\" /><package android:name=\"com.noverse.astralworld\" /></queries>"+nl;
