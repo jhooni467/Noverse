@@ -179,7 +179,7 @@ body[data-theme="glassy"] .store-detail-top{background:linear-gradient(#09080dec
 .store-update-copy h3{margin:5px 0 2px;font-size:16px}
 .store-update-copy p{margin:3px 0 0;color:#aaa5b9;font-size:11px;line-height:1.45}
 .store-update-copy p:nth-of-type(1){color:#e3d7ff;font-weight:800}
-.store-update-action{flex:0 0 auto;padding:10px 13px;border-radius:12px;background:#d6c2ff;color:#211633;text-decoration:none;font-size:11px;font-weight:900}
+.store-update-action{flex:0 0 auto;border:0;cursor:pointer;font-family:inherit;line-height:1.2;padding:10px 13px;border-radius:12px;background:#d6c2ff;color:#211633;text-decoration:none;font-size:11px;font-weight:900}
 .bottom-nav-item{position:relative}
 .store-update-dot{display:none;position:absolute;top:7px;right:calc(50% - 19px);width:7px;height:7px;border-radius:50%;background:#ff668e;box-shadow:0 0 0 3px #ff668e24,0 0 12px #ff668e99}
 .bottom-nav-item.has-updates .store-update-dot{display:block}
