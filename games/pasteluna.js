@@ -37,7 +37,8 @@
     }
     function spawn(){
       const top=stack[stack.length-1],width=Math.max(62,top.w);
-      moving={x:-width,y:top.y-48,w:width,h:48,color:COLORS[score%COLORS.length],dir:1,speed:Math.min(245,108+score*2.1),phase:0,vy:0,angle:0,falling:false};
+      const fallDistance=Math.min(150,Math.max(82,h*.25));
+      moving={x:-width,y:top.y-48-fallDistance,w:width,h:48,color:COLORS[score%COLORS.length],dir:1,speed:Math.min(245,108+score*2.1),phase:0,vy:0,angle:0,fallDistance,falling:false};
     }
     function start(){if(!alive)return;reset();playing=true;overlay.hidden=true;spawn();last=0;window.NOVERSE.AmbientAudio?.playEffect("tap")}
     function burst(x,y,color){
@@ -125,14 +126,14 @@
           moving.x+=moving.dir*moving.speed*dt/1000;
           if(moving.x+moving.w>w){moving.x=w-moving.w;moving.dir=-1}
           if(moving.x<0){moving.x=0;moving.dir=1}
-          moving.y=stack[stack.length-1].y-moving.h+5+Math.sin(moving.phase)*1.5;
+          moving.y=stack[stack.length-1].y-moving.h-moving.fallDistance+Math.sin(moving.phase)*1.5;
         }else{
-          moving.vy+=.58*s;moving.y+=moving.vy*s;
+          moving.vy+=.34*s;moving.y+=moving.vy*s;
           const contact=stack[stack.length-1].y-moving.h+5;
           if(moving.y>=contact)land();
         }
       }
-      falling.forEach(p=>{p.vy+=.58*s;p.y+=p.vy*s;p.x+=(p.spin||0)*s;p.angle=(p.angle||0)+(p.spin||0)*.012*s});
+      falling.forEach(p=>{p.vy+=.34*s;p.y+=p.vy*s;p.x+=(p.spin||0)*s;p.angle=(p.angle||0)+(p.spin||0)*.012*s});
       falling=falling.filter(p=>p.y+cameraY<h+130);
       particles.forEach(p=>{p.x+=p.vx*dt/1000;p.y+=p.vy*dt/1000;p.vy+=190*dt/1000;p.life-=dt/1000;p.rot+=dt*.004});
       particles=particles.filter(p=>p.life>0);shake=Math.max(0,shake-dt*.018);landFlash=Math.max(0,landFlash-dt/1000);
