@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+<defs><radialGradient id="bg" cx="32%" cy="25%"><stop stop-color="#6b4ba4"/><stop offset="1" stop-color="#160d35"/></radialGradient><linearGradient id="q" x2="0" y2="1"><stop stop-color="#fff7dc"/><stop offset=".55" stop-color="#ffc66e"/><stop offset="1" stop-color="#ff8eb9"/></linearGradient><filter id="glow"><feGaussianBlur stdDeviation="12"/></filter></defs>
+<rect width="512" height="512" rx="116" fill="url(#bg)"/>
+<circle cx="256" cy="230" r="145" fill="none" stroke="#f6c6dc" stroke-opacity=".35" stroke-width="3"/>
+<ellipse cx="256" cy="230" rx="194" ry="62" fill="none" stroke="#ffd39b" stroke-width="17" transform="rotate(-22 256 230)" opacity=".9"/>
+<circle cx="256" cy="230" r="94" fill="#ffb2a7" opacity=".25" filter="url(#glow)"/>
+<circle cx="256" cy="230" r="82" fill="url(#q)"/>
+<path d="M305 286l67 67" stroke="#fff1cf" stroke-width="27" stroke-linecap="round"/>
+<path d="M256 104l17 87 86 39-86 17-17 86-17-86-86-17 86-39z" fill="#fff9e8" opacity=".9"/>
+<circle cx="91" cy="112" r="5" fill="#fff"/><circle cx="414" cy="115" r="4" fill="#fff"/><circle cx="102" cy="376" r="3" fill="#ffd8a0"/><circle cx="411" cy="384" r="5" fill="#fff"/>
+<text x="256" y="455" text-anchor="middle" font-family="Arial,sans-serif" font-size="43" font-weight="800" letter-spacing="10" fill="#fff0dc">QUASAR</text>
+</svg>
