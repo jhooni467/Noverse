@@ -87,6 +87,7 @@
       result.hidden = false;
       hint.hidden = true;
       window.NOVERSE.GameManager?.recordCompleted?.();
+      window.NOVERSE.AmbientAudio?.playEffect("success");
 
       const isRecord = score > best;
       if (isRecord) {
@@ -132,6 +133,7 @@
       target.classList.remove("star-pop");
       void target.offsetWidth;
       target.classList.add("star-pop");
+      window.NOVERSE.AmbientAudio?.playEffect("pop");
       moveTarget();
     }
 
