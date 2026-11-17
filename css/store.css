@@ -147,3 +147,21 @@
 body[data-theme="glassy"] .store-app-card,body[data-theme="glassy"] .store-hero-card{border-color:#ffffff2c;box-shadow:inset 0 1px #ffffff25,0 12px 32px #0007}
 body[data-theme="glassy"] .store-detail-top{background:linear-gradient(#09080dec,#09080d9c);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
 @media(prefers-reduced-motion:reduce){.store-card-icon,.store-app-card,.store-install-track i{transition:none!important}}
+
+/* NOVERSE 1.16 — carga visual más ligera y degradado de banner sutil */
+.store-hero-card:after{
+  background:linear-gradient(100deg,
+    color-mix(in srgb,var(--app-accent,#5736c9) 16%,#080711) 0%,
+    #08071130 48%,
+    transparent 82%);
+  opacity:.48;
+}
+.store-detail-hero.has-banner:after,
+.store-detail-hero:has(video):after{
+  background:linear-gradient(100deg,
+    color-mix(in srgb,var(--app-accent,#5736c9) 22%,#080711) 0%,
+    #08071145 55%,
+    #08071108 100%);
+}
+.store-detail-hero.has-banner:before{opacity:.38}
+.store-detail-hero.has-banner{background-blend-mode:normal}
