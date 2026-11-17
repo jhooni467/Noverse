@@ -216,7 +216,7 @@
         void tile.offsetWidth;
         tile.classList.add("tile-drop");
         if (isSolved()) finishLevel();
-        else feedback.textContent = "¡Bien! Sigue acomodando los tonos.";
+        else { feedback.textContent = "¡Buen movimiento! Sigue buscando el degradado."; window.NOVERSE.AmbientAudio?.playEffect("soft"); }
       }
       startIndex = -1;
     }
