@@ -167,7 +167,12 @@
     card.style.setProperty("--game-secondary", game.palette.secondary);
     card.style.setProperty("--game-glow", game.palette.glow);
     const art = document.createElement("div");
-    art.className = "game-art"; art.setAttribute("aria-hidden", "true"); art.textContent = game.icon;
+    art.className = "game-art"; art.setAttribute("aria-hidden", "true");
+    if (game.logo) {
+      const logo = document.createElement("img");
+      logo.src = game.logo; logo.alt = ""; logo.loading = "lazy";
+      art.appendChild(logo);
+    } else art.textContent = game.icon;
     const title = document.createElement("h3"); title.textContent = game.name;
     const description = document.createElement("p"); description.textContent = game.description;
     const status = document.createElement("span"); status.className = "game-status";
