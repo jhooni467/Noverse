@@ -58,20 +58,20 @@ jobs:
 
       - name: Set app version
         run: |
-          sed -i -E 's/versionCode [0-9]+/versionCode 113/; s/versionName .*/versionName "1.13"/' android/app/build.gradle
+          sed -i -E 's/versionCode [0-9]+/versionCode 114/; s/versionName .*/versionName "1.14"/' android/app/build.gradle
 
       - name: Build installable APK
         run: |
           chmod +x android/gradlew
           cd android
           ./gradlew assembleDebug
-          cp app/build/outputs/apk/debug/app-debug.apk ../NOVERSE-v1.13.apk
+          cp app/build/outputs/apk/debug/app-debug.apk ../NOVERSE-v1.14.apk
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: NOVERSE-v1.13-APK
-          path: NOVERSE-v1.13.apk
+          name: NOVERSE-v1.14-APK
+          path: NOVERSE-v1.14.apk
           if-no-files-found: error
           retention-days: 30
 
@@ -79,10 +79,10 @@ jobs:
         if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v1.13
-          name: NOVERSE v1.13
+          tag_name: v1.14
+          name: NOVERSE v1.14
           body: |
-            NOVERSE v1.13 — Android release.
+            NOVERSE v1.14 — Android release.
 
             - APK instalable directamente.
             - Integración nativa de barra de estado, navegación del sistema, pantalla de inicio y retroceso Android.
@@ -91,6 +91,6 @@ jobs:
             - Música ambiental original para cada juego, con control de silencio.
             
             Esta es una compilación de prueba (debug), no una publicación de producción.
-          files: NOVERSE-v1.13.apk
+          files: NOVERSE-v1.14.apk
           overwrite_files: true
           make_latest: true
