@@ -50,6 +50,21 @@
       palette: { primary: "#a9c9ff", secondary: "#9be5df", background: "#172b4b", surface: "#263f65", glow: "#7ba8ff" },
       previews: ["Un momento de calma", "Próximamente"]
     }
+    ,{
+      id: "experience-quasar", name: "QUASAR",
+      description: "Corre entre mundos cósmicos, esquiva obstáculos y supera tu propio récord.",
+      shortInfo: "Una experiencia runner de ritmo rápido con tres carriles, saltos, deslizamientos, monedas y escenarios ilustrados. Juega directamente dentro de Noverse.",
+      category: "Experiencias", icon: "✦", featured: false,
+      duration: "Libre", difficulty: "Progresiva",
+      palette: { primary: "#ffc66e", secondary: "#ff8eb9", background: "#160d35", surface: "#38205d", glow: "#b78aff" },
+      previews: ["Explora el primer mundo", "Supera tu propio récord"],
+      logo: "images/experiences/quasar-logo.svg",
+      screenshots: [
+        "images/experiences/quasar-1.webp",
+        "images/experiences/quasar-2.webp",
+        "images/experiences/quasar-4.webp"
+      ]
+    }
   ];
   const byId = new Map(catalog.map(game => [game.id, game]));
   function getAll() {
