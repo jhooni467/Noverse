@@ -352,6 +352,8 @@
   window.NOVERSE = window.NOVERSE || {};
   window.NOVERSE.Updates = Object.freeze({check:checkForStoreUpdates});
   document.addEventListener("noverse:native-ready",checkForStoreUpdates);
+  document.addEventListener("noverse:store-ready",checkForStoreUpdates);
+  document.addEventListener("noverse:app-resumed",checkForStoreUpdates);
   window.NOVERSE = window.NOVERSE || {};
   window.NOVERSE.App = Object.freeze({
     refreshStats: renderStats,
