@@ -184,3 +184,36 @@ body[data-theme="glassy"] .store-detail-top{background:linear-gradient(#09080dec
 .store-update-dot{display:none;position:absolute;top:7px;right:calc(50% - 19px);width:7px;height:7px;border-radius:50%;background:#ff668e;box-shadow:0 0 0 3px #ff668e24,0 0 12px #ff668e99}
 .bottom-nav-item.has-updates .store-update-dot{display:block}
 @media(max-width:420px){.store-update-card{align-items:flex-start;flex-direction:column}.store-update-action{align-self:flex-start}}
+
+/* NOVERSE 1.18 — fichas promocionales y progreso real de instalación */
+.store-detail-content{padding-bottom:calc(28px + env(safe-area-inset-bottom))}
+.store-detail-hero{min-height:255px;display:flex;align-items:flex-end;padding:25px 22px 24px;isolation:isolate;background-image:var(--app-hero);background-size:cover;background-position:center 42%;border-bottom:1px solid #ffffff14}
+.store-detail-hero:after{content:"";position:absolute;z-index:-1;inset:0;background:linear-gradient(90deg,color-mix(in srgb,var(--app-accent,#8055d6) 38%,#080711) 0%,#08071172 58%,#08071125 100%)}
+.store-detail-hero.has-banner{min-height:285px}
+.store-detail-hero.has-banner:after{background:linear-gradient(90deg,color-mix(in srgb,var(--app-accent,#8055d6) 35%,#080711) 0%,#08071165 60%,#08071112 100%)}
+.store-detail-identity{gap:16px;align-items:center}
+.store-app-icon{width:94px;height:94px;border-radius:25px;box-shadow:0 14px 38px #0008,0 0 28px color-mix(in srgb,var(--app-accent,#8055d6) 32%,transparent)}
+.store-app-heading{max-width:calc(100% - 110px)}
+.store-detail-kicker{display:block;margin-bottom:8px;color:#f0ddff;font-size:8px;font-weight:900;letter-spacing:1.8px}
+.store-app-heading h1{font-size:clamp(27px,7vw,36px);line-height:1.04;text-shadow:0 2px 18px #0008}
+.store-app-heading p{font-size:12px;color:#eee8f5}
+.store-app-facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:18px 0 16px}
+.store-app-facts>div{display:flex;flex-direction:column;gap:5px;min-width:0;padding:12px 13px;border:1px solid #ffffff12;border-radius:14px;background:linear-gradient(145deg,#ffffff0c,#ffffff04)}
+.store-app-facts small{color:#91899f;font-size:8px;font-weight:900;letter-spacing:1.2px}
+.store-app-facts strong{overflow-wrap:anywhere;color:#f4f0fa;font-size:12px}
+.store-install-area{margin:0 0 25px}
+.store-install{min-height:58px;margin:0;border-radius:16px;font-size:15px;transition:transform .28s cubic-bezier(.2,.8,.2,1),border-radius .28s,box-shadow .28s,background .28s}
+.store-install:active{transform:scale(.99)}
+.store-install.is-installing{min-height:13px;height:13px;border-radius:99px;box-shadow:0 0 0 1px #ffffff12,0 0 20px color-mix(in srgb,var(--app-accent,#8d62e8) 32%,transparent)}
+.store-install.is-installing .store-install-label{opacity:0}
+.store-install.is-installing .store-install-track{opacity:1;background:#ffffff18}
+.store-install-track{inset:0;border-radius:99px}
+.store-install-track i{width:0!important;height:100%;border-radius:99px;transition:width .45s cubic-bezier(.2,.75,.25,1)}
+.store-install-progress{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:8px;color:#aaa2b6;font-size:10px}
+.store-install-progress[hidden]{display:none}
+.store-install-progress strong{color:#e3c5ff;font-size:12px;font-weight:950;font-variant-numeric:tabular-nums}
+.store-install.is-installing+.store-install-progress strong{color:#d9a6ff}
+.store-detail-section{margin:25px 0}
+.store-detail-section h2{font-size:18px}
+@media(min-width:680px){.store-detail-hero,.store-detail-hero.has-banner{min-height:330px;padding:34px;border-radius:0 0 22px 22px}.store-app-icon{width:108px;height:108px}.store-app-facts{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:370px){.store-detail-hero,.store-detail-hero.has-banner{min-height:225px;padding:19px 15px}.store-app-icon{width:78px;height:78px}.store-app-heading{max-width:calc(100% - 92px)}}
