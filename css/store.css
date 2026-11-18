@@ -208,7 +208,7 @@ body[data-theme="glassy"] .store-detail-top{background:linear-gradient(#09080dec
 .store-install.is-installing .store-install-label{opacity:0}
 .store-install.is-installing .store-install-track{opacity:1;background:#ffffff18}
 .store-install-track{inset:0;border-radius:99px}
-.store-install-track i{width:0!important;height:100%;border-radius:99px;transition:width .45s cubic-bezier(.2,.75,.25,1)}
+.store-install-track i{width:0;height:100%;border-radius:99px;transition:width .45s cubic-bezier(.2,.75,.25,1)}
 .store-install-progress{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:8px;color:#aaa2b6;font-size:10px}
 .store-install-progress[hidden]{display:none}
 .store-install-progress strong{color:#e3c5ff;font-size:12px;font-weight:950;font-variant-numeric:tabular-nums}
