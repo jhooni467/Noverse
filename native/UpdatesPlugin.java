@@ -89,7 +89,7 @@ public class UpdatesPlugin extends Plugin {
       long id = manager.enqueue(request);
       JSObject result = new JSObject();
       result.put("status", "downloading");
-      result.put("downloadId", id);
+      result.put("downloadId", String.valueOf(id));
       call.resolve(result);
     } catch (Exception error) {
       call.reject("No se pudo iniciar la descarga del APK.", error);
@@ -98,8 +98,13 @@ public class UpdatesPlugin extends Plugin {
 
   @PluginMethod
   public void getDownloadStatus(PluginCall call) {
-    long id = call.getLong("downloadId", -1L);
-    if (id < 0) { call.reject("ID de descarga no válido."); return; }
+    long id = -1L;
+    try {
+      Object rawId = call.getData().opt("downloadId");
+      if (rawId instanceof Number) id = ((Number) rawId).longValue();
+      else if (rawId != null) id = Long.parseLong(String.valueOf(rawId).trim());
+    } catch (Exception ignored) { }
+    if (id <= 0L) { call.reject("ID de descarga no válido: Android no recibió un identificador numérico."); return; }
     DownloadManager manager = (DownloadManager) getContext().getSystemService(Context.DOWNLOAD_SERVICE);
     DownloadManager.Query query = new DownloadManager.Query().setFilterById(id);
     try (android.database.Cursor cursor = manager.query(query)) {
