@@ -108,6 +108,11 @@ public class UpdatesPlugin extends Plugin {
       }
       int statusIndex = cursor.getColumnIndex(DownloadManager.COLUMN_STATUS);
       int reasonIndex = cursor.getColumnIndex(DownloadManager.COLUMN_REASON);
+      int downloadedIndex = cursor.getColumnIndex(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR);
+      int totalIndex = cursor.getColumnIndex(DownloadManager.COLUMN_TOTAL_SIZE_BYTES);
+      long downloaded = downloadedIndex >= 0 ? cursor.getLong(downloadedIndex) : 0L;
+      long total = totalIndex >= 0 ? cursor.getLong(totalIndex) : -1L;
+      int progress = total > 0 ? (int) Math.min(100L, (downloaded * 100L) / total) : 0;
       int status = cursor.getInt(statusIndex);
       String state = "pending";
       if (status == DownloadManager.STATUS_RUNNING) state = "downloading";
@@ -130,6 +135,9 @@ public class UpdatesPlugin extends Plugin {
       }
       JSObject result = new JSObject();
       result.put("status", state);
+      result.put("downloadedBytes", downloaded);
+      result.put("totalBytes", total);
+      result.put("progress", status == DownloadManager.STATUS_SUCCESSFUL ? 100 : progress);
       if (status == DownloadManager.STATUS_FAILED && reasonIndex >= 0) result.put("reason", cursor.getInt(reasonIndex));
       call.resolve(result);
     } catch (Exception error) {
