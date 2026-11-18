@@ -1,6 +1,7 @@
 package com.noverse.gamehub;
 
 import android.Manifest;
+import android.app.DownloadManager;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -9,7 +10,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
+import android.provider.Settings;
 
 import com.getcapacitor.JSArray;
 import com.getcapacitor.JSObject;
@@ -21,7 +25,8 @@ import com.getcapacitor.annotation.CapacitorPlugin;
 import com.getcapacitor.annotation.Permission;
 import com.getcapacitor.annotation.PermissionCallback;
 
-import org.json.JSONException;
+import java.util.HashSet;
+import java.util.Set;
 
 @CapacitorPlugin(
   name = "Updates",
@@ -31,6 +36,7 @@ import org.json.JSONException;
 )
 public class UpdatesPlugin extends Plugin {
   private static final String CHANNEL_ID = "noverse_app_updates";
+  private final Set<Long> openedDownloads = new HashSet<>();
 
   @PluginMethod
   public void getInstalledVersions(PluginCall call) {
@@ -49,6 +55,99 @@ public class UpdatesPlugin extends Plugin {
     JSObject result = new JSObject();
     result.put("versions", versions);
     call.resolve(result);
+  }
+
+  @PluginMethod
+  public void startDownloadAndInstall(PluginCall call) {
+    String url = call.getString("url", "");
+    String fileName = call.getString("fileName", "NOVERSE-app.apk");
+    if (!url.startsWith("https://")) {
+      call.reject("La descarga debe utilizar una URL HTTPS.");
+      return;
+    }
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O &&
+        !getContext().getPackageManager().canRequestPackageInstalls()) {
+      Intent settings = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES,
+        Uri.parse("package:" + getContext().getPackageName()));
+      settings.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+      getActivity().startActivity(settings);
+      JSObject result = new JSObject();
+      result.put("status", "permission_required");
+      call.resolve(result);
+      return;
+    }
+    try {
+      DownloadManager manager = (DownloadManager) getContext().getSystemService(Context.DOWNLOAD_SERVICE);
+      DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+      request.setTitle(fileName);
+      request.setDescription("Descargando desde NOVERSE Store");
+      request.setMimeType("application/vnd.android.package-archive");
+      request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+      request.setAllowedOverMetered(true);
+      request.setAllowedOverRoaming(false);
+      request.setDestinationInExternalFilesDir(getContext(), Environment.DIRECTORY_DOWNLOADS, fileName);
+      long id = manager.enqueue(request);
+      JSObject result = new JSObject();
+      result.put("status", "downloading");
+      result.put("downloadId", String.valueOf(id));
+      call.resolve(result);
+    } catch (Exception error) {
+      call.reject("No se pudo iniciar la descarga del APK.", error);
+    }
+  }
+
+  @PluginMethod
+  public void getDownloadStatus(PluginCall call) {
+    long id = -1L;
+    try {
+      Object rawId = call.getData().opt("downloadId");
+      if (rawId instanceof Number) id = ((Number) rawId).longValue();
+      else if (rawId != null) id = Long.parseLong(String.valueOf(rawId).trim());
+    } catch (Exception ignored) { }
+    if (id <= 0L) { call.reject("ID de descarga no válido: Android no recibió un identificador numérico."); return; }
+    DownloadManager manager = (DownloadManager) getContext().getSystemService(Context.DOWNLOAD_SERVICE);
+    DownloadManager.Query query = new DownloadManager.Query().setFilterById(id);
+    try (android.database.Cursor cursor = manager.query(query)) {
+      if (cursor == null || !cursor.moveToFirst()) {
+        JSObject missing = new JSObject(); missing.put("status", "missing"); call.resolve(missing); return;
+      }
+      int statusIndex = cursor.getColumnIndex(DownloadManager.COLUMN_STATUS);
+      int reasonIndex = cursor.getColumnIndex(DownloadManager.COLUMN_REASON);
+      int downloadedIndex = cursor.getColumnIndex(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR);
+      int totalIndex = cursor.getColumnIndex(DownloadManager.COLUMN_TOTAL_SIZE_BYTES);
+      long downloaded = downloadedIndex >= 0 ? cursor.getLong(downloadedIndex) : 0L;
+      long total = totalIndex >= 0 ? cursor.getLong(totalIndex) : -1L;
+      int progress = total > 0 ? (int) Math.min(100L, (downloaded * 100L) / total) : 0;
+      int status = cursor.getInt(statusIndex);
+      String state = "pending";
+      if (status == DownloadManager.STATUS_RUNNING) state = "downloading";
+      else if (status == DownloadManager.STATUS_PENDING) state = "pending";
+      else if (status == DownloadManager.STATUS_PAUSED) state = "paused";
+      else if (status == DownloadManager.STATUS_FAILED) state = "failed";
+      else if (status == DownloadManager.STATUS_SUCCESSFUL) {
+        state = "ready";
+        if (!openedDownloads.contains(id)) {
+          Uri apkUri = manager.getUriForDownloadedFile(id);
+          if (apkUri != null) {
+            Intent install = new Intent(Intent.ACTION_VIEW);
+            install.setDataAndType(apkUri, "application/vnd.android.package-archive");
+            install.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_ACTIVITY_NEW_TASK);
+            getActivity().startActivity(install);
+            openedDownloads.add(id);
+            state = "installer_opened";
+          } else state = "failed";
+        } else state = "installer_opened";
+      }
+      JSObject result = new JSObject();
+      result.put("status", state);
+      result.put("downloadedBytes", downloaded);
+      result.put("totalBytes", total);
+      result.put("progress", status == DownloadManager.STATUS_SUCCESSFUL ? 100 : progress);
+      if (status == DownloadManager.STATUS_FAILED && reasonIndex >= 0) result.put("reason", cursor.getInt(reasonIndex));
+      call.resolve(result);
+    } catch (Exception error) {
+      call.reject("No se pudo consultar la descarga.", error);
+    }
   }
 
   @PluginMethod

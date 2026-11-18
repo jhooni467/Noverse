@@ -267,31 +267,48 @@
     try { seen = localStorage.getItem("noverse-onboarding-v1") === "done"; } catch (_) {}
     if (seen) return;
     const slides = [
-      {title:"NOVERSE",copy:"Un lugar donde muchos universos se encuentran."},
-      {title:"EXPLORA",copy:"Descubre juegos distintos: reflejos, color, vuelo y memoria musical."},
-      {title:"TU UNIVERSO",copy:"Juega a tu ritmo, supera tus récords y vuelve para descubrir más."}
+      {title:"NOVERSE",copy:"Un lugar donde muchos universos se encuentran.",kicker:"BIENVENIDO A TU UNIVERSO"},
+      {title:"EXPLORA",copy:"Descubre juegos distintos, experiencias y mundos por explorar.",kicker:"DESCUBRE NUEVAS EXPERIENCIAS"},
+      {title:"TU UNIVERSO",copy:"Juega a tu ritmo, supera tus récords y encuentra tu próximo mundo favorito.",kicker:"TODO COMIENZA AQUÍ"}
     ];
-    let index = 0;
+    let index = 0, busy = false;
+    const content = screen.querySelector(".onboarding-content");
     const title = screen.querySelector("[data-onboarding-title]");
     const copy = screen.querySelector("[data-onboarding-copy]");
+    const kicker = screen.querySelector(".onboarding-kicker");
     const dots = [...screen.querySelectorAll(".onboarding-dots span")];
     const next = screen.querySelector("[data-onboarding-next]");
+    const skip = screen.querySelector("[data-onboarding-skip]");
     const finish = () => {
+      if (busy) return;
+      busy = true;
       try { localStorage.setItem("noverse-onboarding-v1", "done"); } catch (_) {}
+      screen.classList.remove("onboarding-copy-in");
       screen.classList.add("onboarding-out");
-      setTimeout(() => { screen.hidden = true; screen.classList.remove("onboarding-out"); }, 420);
+      screen.setAttribute("aria-hidden","true");
+      setTimeout(() => { screen.hidden = true; screen.classList.remove("onboarding-out"); screen.removeAttribute("aria-hidden"); }, 850);
     };
-    const paint = () => {
-      const content = screen.querySelector(".onboarding-content");
-      content.classList.remove("onboarding-copy-in"); void content.offsetWidth;
-      title.textContent = slides[index].title; copy.textContent = slides[index].copy;
+    const paint = direction => {
+      content.classList.remove("onboarding-copy-in","onboarding-copy-back");
+      void content.offsetWidth;
+      screen.dataset.slide = String(index);
+      title.textContent = slides[index].title;
+      copy.textContent = slides[index].copy;
+      kicker.textContent = slides[index].kicker;
       dots.forEach((dot,i) => dot.classList.toggle("active",i===index));
-      next.innerHTML = index === slides.length - 1 ? "Explorar NOVERSE <span>✦</span>" : "Continuar <span>→</span>";
-      content.classList.add("onboarding-copy-in");
+      next.innerHTML = index === slides.length - 1 ? "Iniciar NOVERSE <span>✦</span>" : "Continuar <span>→</span>";
+      next.setAttribute("aria-label",index===slides.length-1?"Iniciar NOVERSE":"Continuar");
+      content.classList.add(direction<0?"onboarding-copy-back":"onboarding-copy-in");
     };
-    next.addEventListener("click", () => { if (index < slides.length - 1) { index++; paint(); } else finish(); });
-    screen.querySelector("[data-onboarding-skip]").addEventListener("click", finish);
-    screen.hidden = false; paint();
+    next.addEventListener("click", () => {
+      if (busy) return;
+      if (index < slides.length - 1) { index++; paint(1); }
+      else finish();
+    });
+    skip.addEventListener("click", finish);
+    screen.hidden = false;
+    screen.dataset.slide = "0";
+    paint(1);
   }
 
   renderCategories(); renderFeatured(); renderGames(); renderStats(); initOnboarding();
@@ -335,6 +352,8 @@
   window.NOVERSE = window.NOVERSE || {};
   window.NOVERSE.Updates = Object.freeze({check:checkForStoreUpdates});
   document.addEventListener("noverse:native-ready",checkForStoreUpdates);
+  document.addEventListener("noverse:store-ready",checkForStoreUpdates);
+  document.addEventListener("noverse:app-resumed",checkForStoreUpdates);
   window.NOVERSE = window.NOVERSE || {};
   window.NOVERSE.App = Object.freeze({
     refreshStats: renderStats,
