@@ -1,4 +1,4 @@
-const VERSION = "1.19";
+const VERSION = "1.20";
 const CACHE_NAME = `noverse-v${VERSION}`;
 const OPTIONAL_FILES = [
   "./games/quasar/assets/music/Next_Round_Quasar.mp3"
