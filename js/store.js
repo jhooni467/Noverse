@@ -20,29 +20,60 @@ async function installApk(app,button){
  const native=window.NOVERSE?.Native;
  if(!native?.isNative||!native.startDownloadAndInstall||!native.getDownloadStatus){button.textContent="Instalación disponible en Android";return;}
  if(button.dataset.busy==="yes")return;
- button.dataset.busy="yes";button.disabled=true;
+ button.dataset.busy="yes";button.disabled=true;button.classList.add("is-installing");
  const label=button.querySelector?.(".store-install-label")||button;
+ const track=button.querySelector?.(".store-install-track i");
+ const progress=button.parentElement?.querySelector?.(".store-install-progress");
  const setLabel=value=>{label.textContent=value;};
+ const setProgress=value=>{
+  const pct=Math.max(0,Math.min(100,Math.round(Number(value)||0)));
+  if(track)track.style.width=pct+"%";
+  if(progress){progress.hidden=false;progress.querySelector("strong").textContent=pct+"%";}
+  button.setAttribute("aria-valuenow",String(pct));
+ };
  try{
-  setLabel("Comprobando permisos…");
+  setLabel("Preparando descarga…");setProgress(0);
   const started=await native.startDownloadAndInstall({url:app.downloadUrl,fileName:(app.id||"app")+"-"+(app.version||"latest")+".apk"});
-  if(started.status==="permission_required"){setLabel("Permite instalar apps y vuelve a tocar");button.disabled=false;button.dataset.busy="no";return;}
+  if(started.status==="permission_required"){setLabel("Permite instalar apps y vuelve a tocar");button.disabled=false;button.dataset.busy="no";button.classList.remove("is-installing");if(progress)progress.hidden=true;return;}
   if(!started.downloadId)throw new Error("No se pudo iniciar la descarga.");
-  setLabel("Descargando APK…");
+  setLabel("Descargando…");
   const id=started.downloadId,deadline=Date.now()+10*60*1000;
   while(Date.now()<deadline){
-   await new Promise(resolve=>setTimeout(resolve,850));
+   await new Promise(resolve=>setTimeout(resolve,650));
    const state=await native.getDownloadStatus(id);
-   if(state.status==="downloading"||state.status==="pending"){setLabel("Descargando APK…");continue;}
+   if(Number.isFinite(Number(state.progress)))setProgress(state.progress);
+   if(state.status==="downloading"||state.status==="pending"){setLabel("Descargando…");continue;}
    if(state.status==="paused"){setLabel("Descarga pausada…");continue;}
-   if(state.status==="installer_opened"){setLabel("Instalador de Android abierto");return;}
+   if(state.status==="installer_opened"){setProgress(100);setLabel("Instalador de Android abierto");if(progress)progress.querySelector("span").textContent="Descarga completada";return;}
    if(state.status==="failed"||state.status==="missing")throw new Error("La descarga no se completó. Comprueba tu conexión e inténtalo de nuevo.");
   }
   throw new Error("La descarga está tardando demasiado. Inténtalo de nuevo.");
- }catch(error){console.error("NOVERSE Store install:",error);setLabel("No se pudo instalar · Reintentar");}
+ }catch(error){console.error("NOVERSE Store install:",error);setLabel("No se pudo instalar · Reintentar");button.classList.remove("is-installing");if(progress)progress.hidden=true;}
  finally{if(button.dataset.busy==="yes"&&button.textContent!=="Permite instalar apps y vuelve a tocar"){button.disabled=false;button.dataset.busy="no";}}
 }
-async function openDetail(app){previousFocus=document.activeElement;detail.hidden=false;detail.scrollTop=0;content.replaceChildren();document.body.style.overflow="hidden";const hero=document.createElement("div");hero.className="store-detail-hero";hero.style.setProperty("--app-accent",app.accent);hero.style.setProperty("--app-hero","radial-gradient(ellipse at 78% 22%,"+app.glow+"88,transparent 43%),linear-gradient(135deg,"+app.accent+",#090a18 72%)");const identity=document.createElement("div");identity.className="store-detail-identity";identity.innerHTML='<div class="store-app-icon">'+esc(app.glyph)+'</div><div class="store-app-heading"><h1>'+esc(app.name)+'</h1><p>'+esc(app.subtitle)+'</p></div>';hero.appendChild(identity);content.appendChild(hero);const [icon,banner,video]=await Promise.all([probe(app.assets.icon,false),probe(app.assets.banner,false),probe(app.assets.video,true)]);if(!detail.contains(hero))return;if(icon&&detail.contains(identity))identity.querySelector(".store-app-icon").innerHTML=img(icon,app.name,"");if(banner&&detail.contains(hero)){hero.classList.add("has-banner");hero.style.backgroundImage="linear-gradient(105deg,color-mix(in srgb,"+app.accent+" 24%,#090711) 0%,#09071155 62%,#09071110 100%),url("+JSON.stringify(banner)+")"}if(video&&detail.contains(hero)){const v=document.createElement("video");v.src=video;v.autoplay=true;v.muted=true;v.loop=true;v.playsInline=true;hero.prepend(v)}const facts=document.createElement("div");facts.className="store-app-facts";facts.innerHTML='<span>Desarrollador <strong>'+esc(app.developer)+'</strong></span><span>Categoría <strong>'+esc(app.category)+'</strong></span><span>Versión <strong>'+esc(app.version)+'</strong></span><span>Tamaño <strong>'+esc(app.size)+'</strong></span>';const install=document.createElement("button");install.className="store-install";install.type="button";install.style.setProperty("--app-accent",app.accent);install.style.setProperty("--app-deep",app.deep||"#17102b");if(app.downloadUrl){install.innerHTML='<span class="store-install-label">↓  Instalar</span><span class="store-install-track" aria-hidden="true"><i></i></span>';install.addEventListener("click",()=>installApk(app,install))}else{install.textContent="Próximamente";install.disabled=true;}const gallery=document.createElement("div");gallery.className="store-gallery";const galleryUrls=await Promise.all(app.assets.screens.map(base=>probe(base,false)));if(!detail.contains(hero))return;galleryUrls.forEach((url,i)=>{if(url){const fig=document.createElement("figure");fig.innerHTML=img(url,app.name+" captura "+(i+1),"")+"<figcaption>"+esc(app.screens[i]||"Vista de la aplicación")+"</figcaption>";gallery.appendChild(fig)}});const about=document.createElement("section");about.className="store-detail-section";about.innerHTML='<h2>Acerca de esta aplicación</h2><p class="store-description">'+esc(app.description)+'</p>';const features=document.createElement("section");features.className="store-detail-section";features.innerHTML='<h2>Lo que encontrarás</h2><div class="store-feature-pills">'+app.features.map(x=>'<span>'+esc(x)+'</span>').join("")+'</div>';const news=document.createElement("section");news.className="store-detail-section store-whats-new";news.innerHTML='<small>NOVEDADES · v'+esc(app.version)+'</small><p>'+esc(app.whatsNew)+'</p>';const close=document.createElement("button");close.type="button";close.className="store-detail-close";close.textContent="Volver a Noverse Store";close.addEventListener("click",closeDetail);content.append(facts,install);if(gallery.childElementCount)content.append(gallery);content.append(about,features,news,close);detail.scrollTop=0;$("#store-detail-back").focus({preventScroll:true})}
+async function openDetail(app){
+ previousFocus=document.activeElement;detail.hidden=false;detail.scrollTop=0;content.replaceChildren();document.body.style.overflow="hidden";
+ const hero=document.createElement("div");hero.className="store-detail-hero";hero.style.setProperty("--app-accent",app.accent);hero.style.setProperty("--app-hero","radial-gradient(ellipse at 78% 22%,"+app.glow+"88,transparent 43%),linear-gradient(135deg,"+app.accent+",#090a18 72%)");
+ const identity=document.createElement("div");identity.className="store-detail-identity";identity.innerHTML='<div class="store-app-icon">'+esc(app.glyph)+'</div><div class="store-app-heading"><span class="store-detail-kicker">APLICACIÓN DESTACADA</span><h1>'+esc(app.name)+'</h1><p>'+esc(app.subtitle)+'</p></div>';hero.appendChild(identity);content.appendChild(hero);
+ const [icon,banner,video]=await Promise.all([probe(app.assets.icon,false),probe(app.assets.banner,false),probe(app.assets.video,true)]);
+ if(!detail.contains(hero))return;
+ if(icon&&detail.contains(identity))identity.querySelector(".store-app-icon").innerHTML=img(icon,app.name,"");
+ if(banner&&detail.contains(hero)){hero.classList.add("has-banner");hero.style.backgroundImage="linear-gradient(105deg,color-mix(in srgb,"+app.accent+" 22%,#090711) 0%,#09071145 58%,#09071110 100%),url("+JSON.stringify(banner)+")";}
+ if(video&&detail.contains(hero)){const v=document.createElement("video");v.src=video;v.autoplay=true;v.muted=true;v.loop=true;v.playsInline=true;hero.prepend(v);}
+ const facts=document.createElement("div");facts.className="store-app-facts";facts.innerHTML='<div><small>DESARROLLADOR</small><strong>'+esc(app.developer)+'</strong></div><div><small>CATEGORÍA</small><strong>'+esc(app.category)+'</strong></div><div><small>VERSIÓN</small><strong>'+esc(app.version)+'</strong></div><div><small>TAMAÑO</small><strong>'+esc(app.size)+'</strong></div>';
+ const installArea=document.createElement("div");installArea.className="store-install-area";
+ const install=document.createElement("button");install.className="store-install";install.type="button";install.style.setProperty("--app-accent",app.accent);install.style.setProperty("--app-deep",app.deep||"#17102b");
+ if(app.downloadUrl){install.innerHTML='<span class="store-install-label">↓  Instalar aplicación</span><span class="store-install-track" aria-hidden="true"><i></i></span>';install.setAttribute("aria-label","Instalar "+app.name);install.addEventListener("click",()=>installApk(app,install));}
+ else{install.textContent="Próximamente";install.disabled=true;}
+ const progress=document.createElement("div");progress.className="store-install-progress";progress.hidden=true;progress.innerHTML='<span>Descargando aplicación</span><strong>0%</strong>';installArea.append(install,progress);
+ const gallery=document.createElement("div");gallery.className="store-gallery";const galleryUrls=await Promise.all(app.assets.screens.map(base=>probe(base,false)));if(!detail.contains(hero))return;
+ galleryUrls.forEach((url,i)=>{if(url){const fig=document.createElement("figure");fig.innerHTML=img(url,app.name+" captura "+(i+1),"")+"<figcaption>"+esc(app.screens[i]||"Vista de la aplicación")+"</figcaption>";gallery.appendChild(fig);}});
+ const about=document.createElement("section");about.className="store-detail-section";about.innerHTML='<h2>Acerca de esta aplicación</h2><p class="store-description">'+esc(app.description)+'</p>';
+ const features=document.createElement("section");features.className="store-detail-section";features.innerHTML='<h2>Lo que encontrarás</h2><div class="store-feature-pills">'+app.features.map(x=>'<span>'+esc(x)+'</span>').join("")+'</div>';
+ const news=document.createElement("section");news.className="store-detail-section store-whats-new";news.innerHTML='<small>NOVEDADES · v'+esc(app.version)+'</small><p>'+esc(app.whatsNew)+'</p>';
+ const close=document.createElement("button");close.type="button";close.className="store-detail-close";close.textContent="Volver a Noverse Store";close.addEventListener("click",closeDetail);
+ content.append(facts,installArea);if(gallery.childElementCount)content.append(gallery);content.append(about,features,news,close);detail.scrollTop=0;$("#store-detail-back").focus({preventScroll:true});
+}
 function setPendingUpdates(items=[]){
  const navButton=document.querySelector('[data-tab="store"]');
  if(navButton)navButton.classList.toggle("has-updates",items.length>0);
