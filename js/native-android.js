@@ -24,7 +24,7 @@ if (native) {
     },
     showUpdateNotification: async options => UpdatesPlugin.showUpdateNotification(options),
     startDownloadAndInstall: async options => UpdatesPlugin.startDownloadAndInstall(options),
-    getDownloadStatus: async downloadId => UpdatesPlugin.getDownloadStatus({ downloadId })
+    getDownloadStatus: async downloadId => UpdatesPlugin.getDownloadStatus({ downloadId: String(downloadId) })
   });
 
   const configureSystemUI = async () => {
@@ -37,6 +37,9 @@ if (native) {
   };
   configureSystemUI();
   document.dispatchEvent(new CustomEvent("noverse:native-ready"));
+  App.addListener("appStateChange", ({ isActive }) => {
+    if (isActive) document.dispatchEvent(new CustomEvent("noverse:app-resumed"));
+  });
 
   document.addEventListener("click", event => {
     if (event.target.closest(".bottom-nav-item,.game-card,.settings,.detail-play,.nav-back,.game-back,.theme-option")) {
