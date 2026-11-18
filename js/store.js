@@ -18,7 +18,7 @@ function appCard(app){const el=document.createElement("article");el.className="s
 function render(){const list=apps.filter(a=>(active==="Todo"||a.category===active)&&[a.name,a.subtitle,a.category].join(" ").toLowerCase().includes(query));grid.replaceChildren();list.forEach(a=>grid.appendChild(appCard(a)));count.textContent=list.length+" "+(list.length===1?"aplicación":"aplicaciones");empty.hidden=list.length>0;featured.replaceChildren();const pick=apps.find(a=>a.featured);if(pick){const hero=document.createElement("article");hero.className="store-hero-card";hero.style.setProperty("--app-accent",pick.accent);hero.style.setProperty("--app-glow",pick.glow);hero.tabIndex=0;hero.setAttribute("role","button");hero.innerHTML='<div class="store-hero-copy"><small>DESTACADA DE LA SEMANA · '+esc(pick.category.toUpperCase())+'</small><h3>'+esc(pick.name)+'</h3><p>'+esc(pick.subtitle)+'</p><span class="store-hero-cta">Explorar aplicación <b>↗</b></span></div><span class="store-hero-art" aria-hidden="true">✦</span>';hero.addEventListener("click",()=>openDetail(pick));hero.addEventListener("keydown",e=>{if(e.key==="Enter")openDetail(pick)});featured.appendChild(hero);probe(pick.assets.banner,false).then(url=>{if(url&&hero.isConnected)hero.style.backgroundImage='linear-gradient(105deg,color-mix(in srgb,'+pick.accent+' 38%,#090711) 0%,#090711bd 54%,#09071130 100%),url("'+url+'")'});probe(pick.assets.icon,false).then(url=>{if(url&&hero.isConnected){const art=hero.querySelector(".store-hero-art");art.innerHTML=img(url,pick.name,"");art.classList.add("has-image")}})}categories.replaceChildren();cats.forEach(c=>{const b=document.createElement("button");b.type="button";b.className="store-category"+(c===active?" active":"");b.textContent=c;b.setAttribute("aria-pressed",String(c===active));b.addEventListener("click",()=>{active=c;render()});categories.appendChild(b)})}
 async function installApk(app,button){
  const native=window.NOVERSE?.Native;
- if(!native?.isNative||!native.startDownloadAndInstall||!native.getDownloadStatus){button.textContent="Instalación disponible en Android";return;}
+ if(!native?.isNative||!native.startDownloadAndInstall||!native.getDownloadStatus){button.disabled=false;button.textContent="Instalación nativa no disponible · Reintentar";console.error("NOVERSE: puente nativo de Android no está disponible.");return;}
  if(button.dataset.busy==="yes")return;
  button.dataset.busy="yes";button.disabled=true;button.classList.add("is-installing");
  const label=button.querySelector?.(".store-install-label")||button;
@@ -45,10 +45,10 @@ async function installApk(app,button){
    if(state.status==="downloading"||state.status==="pending"){setLabel("Descargando…");continue;}
    if(state.status==="paused"){setLabel("Descarga pausada…");continue;}
    if(state.status==="installer_opened"){setProgress(100);setLabel("Instalador de Android abierto");if(progress)progress.querySelector("span").textContent="Descarga completada";return;}
-   if(state.status==="failed"||state.status==="missing")throw new Error("La descarga no se completó. Comprueba tu conexión e inténtalo de nuevo.");
+   if(state.status==="failed"||state.status==="missing"){const reasons={1:"Error de archivo o URL",2:"Error de conexión",3:"La descarga no está permitida",4:"No hay espacio suficiente",5:"La descarga ya no existe",6:"La descarga fue detenida"};throw new Error(state.reason?((reasons[state.reason]||"Error Android "+state.reason)+". Revisa la conexión e inténtalo otra vez."):"Android no pudo completar la descarga.");}
   }
   throw new Error("La descarga está tardando demasiado. Inténtalo de nuevo.");
- }catch(error){console.error("NOVERSE Store install:",error);setLabel("No se pudo instalar · Reintentar");button.classList.remove("is-installing");if(progress)progress.hidden=true;}
+ }catch(error){console.error("NOVERSE Store install:",error);const detail=String(error?.message||error||"Error desconocido").replace(/^Error:\s*/,"").slice(0,105);setLabel("Error: "+detail);button.classList.remove("is-installing");if(progress)progress.hidden=true;}
  finally{if(button.dataset.busy==="yes"&&button.textContent!=="Permite instalar apps y vuelve a tocar"){button.disabled=false;button.dataset.busy="no";}}
 }
 async function openDetail(app){
