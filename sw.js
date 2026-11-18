@@ -30,7 +30,6 @@ const FILES = [
   "./images/experiences/quasar-4.webp",
   "./js/app.js?v=" + VERSION,
   "./js/store.js?v=" + VERSION,
-  "./js/native-android.bundle.js",
   "./updates.json",
   "./css/store.css?v=" + VERSION
 ];
